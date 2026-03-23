@@ -286,7 +286,7 @@ MONOREPO:
 - `superteam:tdd-discipline` — test framework detection based on project framework
 - `superteam:requesting-code-review` — review criteria adapt per type, domain selection per project type
 - `superteam:receiving-code-review` — YAGNI grep uses scope resolution for correct search boundary
-- `superteam:wave-parallelism` — respects config.parallelization
+- `superteam:wave-parallelism` — respects config.parallelization, uses workspace scope for dependency analysis, framework detection for test runner
 - `superteam:verification` — criteria differ by type
 - `superteam:handoff-protocol` — handoff includes project context
 ````

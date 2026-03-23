@@ -277,7 +277,7 @@ MONOREPO:
 - `superteam:tdd-discipline` — detect test framework dua tren project framework
 - `superteam:requesting-code-review` — tieu chi review thich ung theo type, domain selection theo project type
 - `superteam:receiving-code-review` — YAGNI grep dung scope resolution de xac dinh pham vi tim kiem
-- `superteam:wave-parallelism` — ton trong config.parallelization
+- `superteam:wave-parallelism` — ton trong config.parallelization, dung workspace scope cho dependency analysis, framework detection cho test runner
 - `superteam:verification` — tieu chi khac nhau theo type
 - `superteam:handoff-protocol` — handoff bao gom project context
 

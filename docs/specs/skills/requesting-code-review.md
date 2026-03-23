@@ -318,6 +318,7 @@ STRENGTHS:
 **Skills that pair with requesting-code-review:**
 - `superteam:project-awareness` — framework detection for linter selection and pattern detection
 - `superteam:tdd-discipline` — test analysis domain references TDD standards
+- `superteam:wave-parallelism` — post-wave review of all wave outputs
 - `superteam:verification` — post-fix verification
 - `superteam:receiving-code-review` — how to process and act on review feedback
 

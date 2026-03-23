@@ -383,6 +383,7 @@ COMMIT PATTERN:
 - `superteam:scientific-debugging` — Phase 4 references "write failing test first"
 - `superteam:requesting-code-review` — test coverage domain references TDD standards for test quality
 - `superteam:receiving-code-review` — implementing review fixes follows TDD cycle
+- `superteam:wave-parallelism` — parallel executor agents follow TDD cycle for implementation tasks
 - `superteam:verification` — post-implementation verification standards
 
 **Testing anti-patterns:** See `testing-anti-patterns.md` for 5 anti-patterns with gate functions and code examples.
