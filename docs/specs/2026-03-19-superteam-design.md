@@ -150,14 +150,12 @@ superteam/
 │   └── milestone-archive.md
 ├── skills/                      ← cross-cutting patterns, flat namespace
 │   ├── project-awareness/SKILL.md       ← detect + inject project context
-│   ├── atomic-commits/SKILL.md          ← commit pattern
-│   ├── research-methodology/SKILL.md    ← cách research với parallel agents
 │   ├── scientific-debugging/SKILL.md    ← debugging methodology
 │   ├── tdd-discipline/SKILL.md          ← red-green-refactor
-│   ├── code-review-standards/SKILL.md   ← tiêu chí review
+│   ├── requesting-code-review/SKILL.md  ← dispatch reviewer, tiêu chí, severity
+│   ├── receiving-code-review/SKILL.md   ← chống sycophantic, verify trước implement
 │   ├── wave-parallelism/SKILL.md        ← parallel execution pattern
 │   ├── handoff-protocol/SKILL.md        ← pause/resume protocol
-│   ├── plan-quality/SKILL.md            ← tiêu chí plan tốt
 │   └── verification/SKILL.md            ← goal-backward checking
 └── templates/
     ├── readme.md

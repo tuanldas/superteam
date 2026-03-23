@@ -282,9 +282,10 @@ MONOREPO:
 - `hooks/session-start` — orchestrates detection + config + injection
 
 **Skills that reference project-awareness:**
-- `superteam:code-review-standards` — review criteria adapt per type
+- `superteam:scientific-debugging` — auto-detects log locations from framework, techniques.md uses project-type hints
+- `superteam:tdd-discipline` — test framework detection based on project framework
+- `superteam:requesting-code-review` — review criteria adapt per type
 - `superteam:wave-parallelism` — respects config.parallelization
-- `superteam:plan-quality` — granularity adapts to project complexity
 - `superteam:verification` — criteria differ by type
 - `superteam:handoff-protocol` — handoff includes project context
 ````
