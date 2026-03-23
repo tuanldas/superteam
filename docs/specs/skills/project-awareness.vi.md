@@ -273,9 +273,11 @@ MONOREPO:
 - `hooks/session-start` — dieu phoi detection + config + injection
 
 **Skills tham chieu project-awareness:**
-- `superteam:code-review-standards` — tieu chi review thich ung theo type
+- `superteam:scientific-debugging` — tu dong detect log locations tu framework, techniques.md dung project-type hints
+- `superteam:tdd-discipline` — detect test framework dua tren project framework
+- `superteam:requesting-code-review` — tieu chi review thich ung theo type, domain selection theo project type
+- `superteam:receiving-code-review` — YAGNI grep dung scope resolution de xac dinh pham vi tim kiem
 - `superteam:wave-parallelism` — ton trong config.parallelization
-- `superteam:plan-quality` — granularity thich ung theo do phuc tap du an
 - `superteam:verification` — tieu chi khac nhau theo type
 - `superteam:handoff-protocol` — handoff bao gom project context
 

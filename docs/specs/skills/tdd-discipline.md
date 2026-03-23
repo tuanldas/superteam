@@ -381,6 +381,8 @@ COMMIT PATTERN:
 **Skills that pair with tdd-discipline:**
 - `superteam:project-awareness` — framework detection for test framework setup
 - `superteam:scientific-debugging` — Phase 4 references "write failing test first"
+- `superteam:requesting-code-review` — test coverage domain references TDD standards for test quality
+- `superteam:receiving-code-review` — implementing review fixes follows TDD cycle
 - `superteam:verification` — post-implementation verification standards
 
 **Testing anti-patterns:** See `testing-anti-patterns.md` for 5 anti-patterns with gate functions and code examples.
