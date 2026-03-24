@@ -373,19 +373,19 @@ Templates với placeholders, được template engine render với variables t�
 
 | # | Agent | File | Chức năng | Trạng thái |
 |---|---|---|---|---|
-| 8.1 | reviewer | `agents/reviewer.md` | Code review | ⬜ TODO |
-| 8.2 | planner | `agents/planner.md` | Tạo plan | ⬜ TODO |
-| 8.3 | executor | `agents/executor.md` | Thực thi plan, atomic commits | ⬜ TODO |
-| 8.4 | debugger | `agents/debugger.md` | Debug theo scientific method | ⬜ TODO |
-| 8.5 | verifier | `agents/verifier.md` | Kiểm tra phase đạt goal | ⬜ TODO |
-| 8.6 | phase-researcher | `agents/phase-researcher.md` | Research trước khi plan | ⬜ TODO |
-| 8.7 | codebase-mapper | `agents/codebase-mapper.md` | Phân tích codebase | ⬜ TODO |
-| 8.8 | integration-checker | `agents/integration-checker.md` | Kiểm tra cross-phase integration | ⬜ TODO |
-| 8.9 | plan-checker | `agents/plan-checker.md` | Verify plan quality | ⬜ TODO |
-| 8.10 | ui-researcher | `agents/ui-researcher.md` | Tạo UI spec cho frontend | ⬜ TODO |
-| 8.11 | ui-auditor | `agents/ui-auditor.md` | Audit UI đã implement | ⬜ TODO |
-| 8.12 | test-auditor | `agents/test-auditor.md` | Generate tests, verify coverage | ⬜ TODO |
-| 8.13 | research-synthesizer | `agents/research-synthesizer.md` | Tổng hợp kết quả research | ⬜ TODO |
+| 8.1 | reviewer | `agents/reviewer.md` | Code review | ✅ Done |
+| 8.2 | planner | `agents/planner.md` | Tạo plan | ✅ Done |
+| 8.3 | executor | `agents/executor.md` | Thực thi plan, atomic commits | ✅ Done |
+| 8.4 | debugger | `agents/debugger.md` | Debug theo scientific method | ✅ Done |
+| 8.5 | verifier | `agents/verifier.md` | Kiểm tra phase đạt goal | ✅ Done |
+| 8.6 | phase-researcher | `agents/phase-researcher.md` | Research trước khi plan | ✅ Done |
+| 8.7 | codebase-mapper | `agents/codebase-mapper.md` | Phân tích codebase | ✅ Done |
+| 8.8 | integration-checker | `agents/integration-checker.md` | Kiểm tra cross-phase integration | ✅ Done |
+| 8.9 | plan-checker | `agents/plan-checker.md` | Verify plan quality | ✅ Done |
+| 8.10 | ui-researcher | `agents/ui-researcher.md` | Tạo UI spec cho frontend | ✅ Done |
+| 8.11 | ui-auditor | `agents/ui-auditor.md` | Audit UI đã implement | ✅ Done |
+| 8.12 | test-auditor | `agents/test-auditor.md` | Generate tests, verify coverage | ✅ Done |
+| 8.13 | research-synthesizer | `agents/research-synthesizer.md` | Tổng hợp kết quả research | ✅ Done |
 
 > TODO: Chi tiết prompt, trigger, model cho từng agent
 
