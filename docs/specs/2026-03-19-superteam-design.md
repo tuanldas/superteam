@@ -328,16 +328,17 @@ User gõ /st:execute
 
 | # | Skill | File | Dùng bởi commands | Auto-trigger? | Trạng thái |
 |---|---|---|---|---|---|
-| 6.1 | project-awareness | `skills/project-awareness/SKILL.md` | init, mọi command qua session-start | ✅ Mỗi session | ⬜ TODO |
-| 6.2 | atomic-commits | `skills/atomic-commits/SKILL.md` | execute, quick, tdd, phase-execute | ✅ Khi viết code | ⬜ TODO |
-| 6.3 | research-methodology | `skills/research-methodology/SKILL.md` | init, phase-research, brainstorm | ❌ | ⬜ TODO |
-| 6.4 | scientific-debugging | `skills/scientific-debugging/SKILL.md` | debug, debug-quick | ✅ Khi gặp bug | ⬜ TODO |
-| 6.5 | tdd-discipline | `skills/tdd-discipline/SKILL.md` | tdd | ✅ Khi viết test | ⬜ TODO |
-| 6.6 | code-review-standards | `skills/code-review-standards/SKILL.md` | code-review, review-feedback | ✅ Khi review | ⬜ TODO |
-| 6.7 | wave-parallelism | `skills/wave-parallelism/SKILL.md` | execute, phase-execute | ❌ | ⬜ TODO |
-| 6.8 | handoff-protocol | `skills/handoff-protocol/SKILL.md` | pause, resume | ❌ | ⬜ TODO |
-| 6.9 | plan-quality | `skills/plan-quality/SKILL.md` | plan, phase-plan | ✅ Khi tạo plan | ⬜ TODO |
-| 6.10 | verification | `skills/verification/SKILL.md` | phase-validate, milestone-audit | ✅ Trước khi mark done | ⬜ TODO |
+| 6.1 | project-awareness | `skills/project-awareness/SKILL.md` | init, mọi command qua session-start | ✅ Mỗi session | ✅ Done |
+| 6.2 | atomic-commits | `skills/atomic-commits/SKILL.md` | execute, quick, tdd, phase-execute | ✅ Khi viết code | ✅ Done |
+| 6.3 | research-methodology | `skills/research-methodology/SKILL.md` | init, phase-research, brainstorm | ❌ | ✅ Done |
+| 6.4 | scientific-debugging | `skills/scientific-debugging/SKILL.md` | debug, debug-quick | ✅ Khi gặp bug | ✅ Done |
+| 6.5 | tdd-discipline | `skills/tdd-discipline/SKILL.md` | tdd | ✅ Khi viết test | ✅ Done |
+| 6.6a | requesting-code-review | `skills/requesting-code-review/SKILL.md` | code-review | ✅ Khi review | ✅ Done |
+| 6.6b | receiving-code-review | `skills/receiving-code-review/SKILL.md` | review-feedback | ✅ Khi nhận review | ✅ Done |
+| 6.7 | wave-parallelism | `skills/wave-parallelism/SKILL.md` | execute, phase-execute | ❌ | ✅ Done |
+| 6.8 | handoff-protocol | `skills/handoff-protocol/SKILL.md` | pause, resume | ❌ | ✅ Done |
+| 6.9 | plan-quality | `skills/plan-quality/SKILL.md` | plan, phase-plan | ✅ Khi tạo plan | ✅ Done |
+| 6.10 | verification | `skills/verification/SKILL.md` | phase-validate, milestone-audit | ✅ Trước khi mark done | ✅ Done |
 
 ### Quyết định kiến trúc
 
