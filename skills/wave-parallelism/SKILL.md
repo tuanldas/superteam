@@ -208,7 +208,36 @@ AFTER WAVE COMPLETES:
 
 ## While-Waiting Protocol
 
-After dispatching a wave of background agents, the orchestrator MUST NOT go silent. Silence causes the user to think the process has stopped (especially after context compression shows "Crunched for Xm").
+After dispatching a wave of background agents, the orchestrator MUST NOT go silent AND MUST NOT skip ahead.
+
+### MANDATORY WAIT GATE
+
+```
+IRON RULE: DO NOT PROCEED TO THE NEXT WORKFLOW STEP UNTIL ALL AGENTS
+IN THE CURRENT WAVE HAVE COMPLETED AND THEIR OUTPUT FILES EXIST.
+
+Prep work while waiting is NOT a substitute for agent results.
+"I have enough info" is NOT a valid reason to skip waiting.
+Your own knowledge is NOT a substitute for agent research output.
+
+The whole point of dispatching agents is to USE THEIR RESULTS.
+If you proceed without their output, the agents were wasted.
+```
+
+**Wait gate checklist — ALL must be true before moving on:**
+- Every dispatched agent has returned (completion signal received)
+- Every expected output file exists on disk and has content
+- You have READ the output files (not just checked they exist)
+
+**If agents take longer than expected:**
+- Do NOT rationalize "I already know enough" and skip ahead
+- Do NOT use your own training data as a substitute for agent findings
+- DO continue the While-Waiting visible work (see below)
+- DO wait. The agents will finish.
+
+### Visible Work While Waiting
+
+Silence causes the user to think the process has stopped (especially after context compression shows "Crunched for Xm").
 
 **Required behavior while agents run in background:**
 
@@ -217,6 +246,18 @@ After dispatching a wave of background agents, the orchestrator MUST NOT go sile
 3. **Show progress** as individual agents complete: "✓ [agent] complete! Waiting for [remaining]..."
 4. **If prep work finishes before agents**: show elapsed time every 60s: "Still running... [N]m elapsed. [M] agents remaining."
 5. **NEVER** leave user with zero output for more than 60 seconds during background execution.
+
+**What prep work is allowed (does NOT replace waiting):**
+- Scan codebase, count files, identify patterns
+- Pre-read files that the next step will need
+- Prepare questions or context for the next step
+- Ask the user clarifying questions for later steps
+
+**What is NOT allowed while waiting:**
+- Moving to the next workflow step
+- Writing output documents that depend on agent results
+- Making decisions that should be informed by agent findings
+- Saying "I have enough info" and skipping the wait
 
 The goal: the last thing the user sees should ALWAYS be your activity, not a system message like "Crunched for 5m 20s".
 

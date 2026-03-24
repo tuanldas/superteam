@@ -83,8 +83,8 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - STACK: technologies to use. Output: libraries + versions + rationale. Do NOT propose features or architecture.
      - LANDSCAPE: similar products on market. Output: table stakes vs differentiators. Do NOT decide what to build.
 
-     **CRITICAL — While-Waiting Protocol:**
-     After dispatching Wave 1, do NOT go silent. Immediately:
+     **CRITICAL — While-Waiting Protocol (from `superteam:wave-parallelism`):**
+     After dispatching Wave 1, do NOT go silent AND do NOT skip ahead:
      - Show: "Research Wave 1 running (typically 3-7 min). ctrl+o to see agent details."
      - Do visible prep work while waiting:
        a. Analyze PROJECT.md deeper: extract key constraints, identify research questions for Wave 2
@@ -92,11 +92,13 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
        c. Pre-read codebase files relevant to Architecture + Pitfalls research
        d. Show progress when agents complete: "✓ STACK.md complete! Waiting for LANDSCAPE.md..."
      - NEVER leave the user with silence after dispatching background agents.
+     - **MANDATORY WAIT GATE:** Do NOT proceed to Wave 2 until ALL Wave 1 agents have completed AND you have READ their output files. Your own knowledge is NOT a substitute for agent research.
 
    - **Wave 2** (parallel, after Wave 1 completes):
      - ARCHITECTURE: system structure. Input: PROJECT.md + STACK.md. Output: components, data flow, build order. Do NOT choose tech stack or features.
      - PITFALLS: common mistakes in this domain. Input: PROJECT.md + STACK.md + ARCHITECTURE.md. Output: specific risks + mitigations. Do NOT propose new features or architecture.
      - Apply same While-Waiting Protocol: show Wave 1 key findings, preview recommendations while Wave 2 runs
+     - **MANDATORY WAIT GATE:** Do NOT proceed to Synthesize/Requirements until ALL Wave 2 agents have completed AND you have READ their output files.
 
    - Optional extras (AI decides based on PROJECT.md):
      - SECURITY (sensitive data, payments, auth)
