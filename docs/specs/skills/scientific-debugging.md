@@ -301,6 +301,7 @@ RESTART TRIGGERS:
 - `superteam:tdd-discipline` — Phase 4 references "write failing test first"
 - `superteam:receiving-code-review` — review findings may trigger Phase 1 investigation
 - `superteam:wave-parallelism` — parallel executor agents use debugging methodology when encountering errors
+- `superteam:handoff-protocol` — debug session state (hypotheses, eliminated, evidence) serialized in handoff
 - `superteam:verification` — post-fix verification standards
 
 **Investigation techniques:** See `techniques.md` for 12 techniques with selection guidance.

@@ -384,6 +384,7 @@ COMMIT PATTERN:
 - `superteam:requesting-code-review` — test coverage domain references TDD standards for test quality
 - `superteam:receiving-code-review` — implementing review fixes follows TDD cycle
 - `superteam:wave-parallelism` — parallel executor agents follow TDD cycle for implementation tasks
+- `superteam:handoff-protocol` — TDD cycle position (RED/GREEN/REFACTOR) captured in handoff
 - `superteam:verification` — post-implementation verification standards
 
 **Testing anti-patterns:** See `testing-anti-patterns.md` for 5 anti-patterns with gate functions and code examples.
