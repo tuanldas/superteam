@@ -206,6 +206,20 @@ AFTER WAVE COMPLETES:
 - Agents commit only files in their `files_modified` list
 - If agent needs to modify a file not in its ownership: STOP, report, don't modify
 
+## While-Waiting Protocol
+
+After dispatching a wave of background agents, the orchestrator MUST NOT go silent. Silence causes the user to think the process has stopped (especially after context compression shows "Crunched for Xm").
+
+**Required behavior while agents run in background:**
+
+1. **Immediately** show estimated time: "Wave [N] running (typically 3-7 min). ctrl+o to see agent details."
+2. **Do visible prep work** — scan codebase, count files, pre-read files for next wave, report findings
+3. **Show progress** as individual agents complete: "✓ [agent] complete! Waiting for [remaining]..."
+4. **If prep work finishes before agents**: show elapsed time every 60s: "Still running... [N]m elapsed. [M] agents remaining."
+5. **NEVER** leave user with zero output for more than 60 seconds during background execution.
+
+The goal: the last thing the user sees should ALWAYS be your activity, not a system message like "Crunched for 5m 20s".
+
 ## Wave Completion Verification
 
 After all agents in a wave finish, verify BEFORE proceeding to next wave:

@@ -44,27 +44,43 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
      ```
    - Wait for user: approve or adjust focus areas
 
-3. **Spawn 4 researcher agents** (parallel)
+3. **Wave 1: Spawn Stack + Landscape agents** (parallel, background)
    - Follow `superteam:research-methodology` at Deep depth
    - Each agent receives: phase context, CONTEXT.md decisions, codebase info, specific focus area
-   - Agent areas:
+   - Wave 1 agents (independent, no cross-dependency):
      | Agent | Output File | Focus |
      |-------|------------|-------|
      | Stack | STACK.md | Tech, libs, tools suited for the phase. Compare options, recommend. |
+     | Landscape | LANDSCAPE.md | Existing solutions, industry patterns, reference implementations. |
+
+   **CRITICAL — While-Waiting Protocol:**
+   After dispatching Wave 1 agents, do NOT go silent. Immediately:
+   - Show estimated time: "Wave 1 running (typically 3-7 min). ctrl+o to see agent details."
+   - Do visible prep work while waiting:
+     a. Scan codebase deeper: count files, identify key modules, detect patterns
+     b. Report findings: "Found [N] source files across [M] directories. Key modules: [list]"
+     c. Pre-read files that Wave 2 agents will need
+     d. Prepare Wave 2 context: "Preparing Architecture + Pitfalls context for Wave 2..."
+     e. Show progress when an agent completes: "✓ STACK.md complete! Waiting for LANDSCAPE.md..."
+   - NEVER leave the user with silence. If prep work finishes before agents, show a waiting indicator with elapsed time.
+
+4. **Wave 2: Spawn Architecture + Pitfalls agents** (parallel, background)
+   - Run AFTER Wave 1 completes (Wave 2 depends on Stack findings)
+   - Wave 2 agents:
+     | Agent | Output File | Focus |
+     |-------|------------|-------|
      | Architecture | ARCHITECTURE.md | Code organization, patterns, file structure, data flow. |
      | Pitfalls | PITFALLS.md | Common problems, anti-patterns, edge cases, security risks. |
-     | Landscape | LANDSCAPE.md | Existing solutions, industry patterns, reference implementations. |
-   - Agents run in parallel: web search + codebase scan + write output file
-   - Report progress as agents complete
+   - Apply same While-Waiting Protocol: show Wave 1 summary, preview key findings while Wave 2 runs
 
-4. **Synthesize**
+5. **Synthesize**
    - After all 4 agents complete, spawn synthesizer agent:
      - Read all 4 output files
      - Compile key findings
      - Identify conflicts between recommendations
      - Write SUMMARY.md
 
-5. **Present findings**
+6. **Present findings**
    ```
    RESEARCH SUMMARY
    Stack: [key recommendation]
@@ -81,7 +97,7 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
    ```
    - Wait for user review, answer follow-up questions if needed
 
-6. **Save and commit**
+7. **Save and commit**
    - Save files to: `.superteam/phases/[phase-name]/research/`
      - STACK.md
      - ARCHITECTURE.md
@@ -91,7 +107,7 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
    - Follow `superteam:atomic-commits`
    - Commit: `docs: research phase [X] - [name]`
 
-7. **Done**
+8. **Done**
    ```
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     ST > PHASE RESEARCHED
