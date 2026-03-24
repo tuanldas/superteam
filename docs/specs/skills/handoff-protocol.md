@@ -513,6 +513,7 @@ GIT:
 - `superteam:wave-parallelism` — wave execution state needs serialization when paused mid-wave
 - `superteam:scientific-debugging` — debug session state (hypotheses, eliminated, evidence) serialized in handoff
 - `superteam:tdd-discipline` — TDD cycle position (RED/GREEN/REFACTOR) captured in handoff
+- `superteam:verification` — verification state (passed/failed criteria, gaps) captured on pause
 ````
 
 ---
