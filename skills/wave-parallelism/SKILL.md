@@ -225,7 +225,7 @@ If you proceed without their output, the agents were wasted.
 ```
 
 **Wait gate checklist — ALL must be true before moving on:**
-- Every dispatched agent has returned (completion signal received)
+- Every dispatched agent in this wave has returned (completion signal received), regardless of how many were dispatched
 - Every expected output file exists on disk and has content
 - You have READ the output files (not just checked they exist)
 

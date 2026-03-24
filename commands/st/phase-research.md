@@ -64,7 +64,7 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
      e. Show progress when an agent completes: "✓ STACK.md complete! Waiting for LANDSCAPE.md..."
    - NEVER leave the user with silence. If prep work finishes before agents, show a waiting indicator with elapsed time.
 
-   **MANDATORY WAIT GATE:** Do NOT proceed to Wave 2 until BOTH Wave 1 agents have completed AND you have READ their output files (STACK.md, LANDSCAPE.md). Your own knowledge is NOT a substitute for agent research output.
+   **MANDATORY WAIT GATE:** Do NOT proceed to the next step until ALL dispatched agents in this wave have completed AND you have READ their output files. Your own knowledge is NOT a substitute for agent research output.
 
 4. **Wave 2: Spawn Architecture + Pitfalls agents** (parallel, background)
    - Run AFTER Wave 1 completes (Wave 2 depends on Stack findings)
@@ -74,7 +74,7 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
      | Architecture | ARCHITECTURE.md | Code organization, patterns, file structure, data flow. |
      | Pitfalls | PITFALLS.md | Common problems, anti-patterns, edge cases, security risks. |
    - Apply same While-Waiting Protocol: show Wave 1 summary, preview key findings while Wave 2 runs
-   - **MANDATORY WAIT GATE:** Do NOT proceed to Synthesize until BOTH Wave 2 agents have completed AND you have READ their output files (ARCHITECTURE.md, PITFALLS.md).
+   - **MANDATORY WAIT GATE:** Do NOT proceed to Synthesize until ALL dispatched agents in this wave have completed AND you have READ their output files.
 
 5. **Synthesize**
    - After all 4 agents complete, spawn synthesizer agent:

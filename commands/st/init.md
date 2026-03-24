@@ -92,13 +92,13 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
        c. Pre-read codebase files relevant to Architecture + Pitfalls research
        d. Show progress when agents complete: "✓ STACK.md complete! Waiting for LANDSCAPE.md..."
      - NEVER leave the user with silence after dispatching background agents.
-     - **MANDATORY WAIT GATE:** Do NOT proceed to Wave 2 until ALL Wave 1 agents have completed AND you have READ their output files. Your own knowledge is NOT a substitute for agent research.
+     - **MANDATORY WAIT GATE:** Do NOT proceed to the next step until ALL dispatched agents in this wave have completed AND you have READ their output files. Your own knowledge is NOT a substitute for agent research.
 
    - **Wave 2** (parallel, after Wave 1 completes):
      - ARCHITECTURE: system structure. Input: PROJECT.md + STACK.md. Output: components, data flow, build order. Do NOT choose tech stack or features.
      - PITFALLS: common mistakes in this domain. Input: PROJECT.md + STACK.md + ARCHITECTURE.md. Output: specific risks + mitigations. Do NOT propose new features or architecture.
      - Apply same While-Waiting Protocol: show Wave 1 key findings, preview recommendations while Wave 2 runs
-     - **MANDATORY WAIT GATE:** Do NOT proceed to Synthesize/Requirements until ALL Wave 2 agents have completed AND you have READ their output files.
+     - **MANDATORY WAIT GATE:** Do NOT proceed to the next step until ALL dispatched agents in this wave have completed AND you have READ their output files.
 
    - Optional extras (AI decides based on PROJECT.md):
      - SECURITY (sensitive data, payments, auth)
