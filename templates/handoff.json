@@ -1,0 +1,10 @@
+{
+  "project": "{{name}}",
+  "phase": "{{phase}}",
+  "status": "{{status}}",
+  "completed_tasks": [],
+  "remaining_tasks": [],
+  "blockers": [],
+  "context": "{{context}}",
+  "created_at": "{{created_at}}"
+}

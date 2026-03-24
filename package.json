@@ -1,0 +1,12 @@
+{
+  "name": "superteam",
+  "version": "0.1.0",
+  "description": "Customizable agents, skills, and commands for Claude Code",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

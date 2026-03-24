@@ -1,0 +1,18 @@
+{
+  "name": "{{name}}",
+  "type": "{{type}}",
+  "workspaces": [],
+  "preferences": {
+    "defaultBranch": "{{preferences.defaultBranch}}",
+    "commitStyle": "{{preferences.commitStyle}}"
+  },
+  "granularity": "{{granularity}}",
+  "parallelization": true,
+  "commit_docs": true,
+  "model_profile": "{{model_profile}}",
+  "workflow": {
+    "research": true,
+    "plan_check": true,
+    "verifier": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "superteam",
+  "description": "Customizable agents, skills, and commands for Claude Code — replaces Superpowers and GSD",
+  "version": "0.1.0",
+  "author": {
+    "name": "tuanldas"
+  },
+  "license": "MIT",
+  "keywords": ["skills", "agents", "commands", "workflows", "project-management"]
+}
