@@ -43,6 +43,8 @@ Verification prevents false completion claims by enforcing evidence-based checki
 
 Three principles. All three apply to every verification.
 
+**Scope:** This skill verifies *work completion* — is the goal achieved? For evaluating *review feedback validity*, see `superteam:receiving-code-review`. For verifying *review findings before fixing*, see `superteam:requesting-code-review`.
+
 ### 1. Evidence Before Claims
 
 ```

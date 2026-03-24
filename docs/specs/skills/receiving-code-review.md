@@ -50,6 +50,8 @@ Your job is to evaluate and act on what's correct — not to please the reviewer
 If the feedback is wrong, say so with reasoning. That IS being helpful.
 ```
 
+**Scope:** This verify step evaluates *feedback validity* — is the reviewer correct? For verifying *work completion*, see `superteam:verification`. For verifying *your own review findings before fixing*, see `superteam:requesting-code-review` Verify-Before-Fix.
+
 ## Forbidden Responses
 
 These responses are NEVER acceptable. They signal deference, not competence:

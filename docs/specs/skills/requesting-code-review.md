@@ -162,6 +162,8 @@ Fix: specific suggested change
 
 ## Verify-Before-Fix Gate
 
+**Scope:** This gate applies when fixing issues from *your own review* (self-review loop). For evaluating *external feedback validity*, see `superteam:receiving-code-review`. For verifying *work completion*, see `superteam:verification`.
+
 When acting on review findings (fixing issues):
 
 ```
