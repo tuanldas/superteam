@@ -109,6 +109,24 @@ Skip any step = lying, not verifying.
   - Run the COMPLETE command (not partial or cached output)
 ```
 
+## Verification Scope
+
+Not all actions need full verification. Match depth to action type:
+
+| Action | Levels Required | What to Check |
+|--------|----------------|---------------|
+| **Commit** | Level 1-2 | Exists + Substantive. File present, real logic (not stub). |
+| **PR** | Level 1-3 | + Wired. Artifacts connected, imports exist, routes registered. |
+| **Phase / Milestone** | Level 1-4 | Full verification. Data flows end-to-end, no hollow components. |
+| **Bug fix** | Level 1-2 + regression | Fix exists + original symptom gone + related tests pass. |
+| **Refactor** | Level 1-3 + regression | Behavior unchanged. Full test suite passes. |
+
+**Rules:**
+- Iron Law (Evidence Before Claims) applies at ALL scopes — even commit-level.
+- Goal-Backward method applies at Phase/Milestone scope only.
+- Human verification items apply at PR scope and above.
+- When unsure which scope: use the higher scope. Over-verification is safer than under-verification.
+
 ## Goal-Backward Method
 
 When verifying a phase, feature, or milestone:
@@ -309,6 +327,16 @@ RE-VERIFICATION:
 | "Looks good" after reading code | Reading ≠ running. Execute the verification command. |
 | Skipping wiring checks because components "look complete" | 80% of stubs hide in wiring. Check Component→API→DB→Render chain. |
 | Premature "Done!" before Level 4 check | VERIFIED requires all 4 levels. Data must actually flow. |
+
+## Context Budget
+
+| File | When to Load | Trigger |
+|------|-------------|---------|
+| `SKILL.md` | Always | Skill invocation |
+| `artifact-patterns.md` | On demand | Level 2+ check fails — need framework-specific grep patterns to diagnose. |
+| `wiring-patterns.md` | On demand | Level 3+ check needed — verifying imports, API calls, data flow. |
+
+**Rule:** Most commit-level verifications (Level 1-2) resolve with `SKILL.md` alone. Load reference files only when deeper analysis is needed. Typical loading: 60% SKILL.md only, 30% + wiring-patterns, 10% + both reference files.
 
 ## Integration
 

@@ -309,6 +309,15 @@ STRENGTHS:
 | Skipping context gathering | Read requirements first. Review against intent, not preference |
 | Treating reviewer findings as infallible | Reviewers can be wrong. Verify. Push back with reasoning when needed |
 
+## Context Budget
+
+| File | When to Load | Trigger |
+|------|-------------|---------|
+| `SKILL.md` | Always | Skill invocation |
+| `review-domains.md` | On demand | Review agent spawning. Each agent loads only its assigned domain(s), not all 13. |
+
+**Rule:** `review-domains.md` is loaded per-agent, not per-review. A single review spawns multiple agents — each gets only its 1-2 domain checklists. Never load all 13 domains into one agent's context.
+
 ## Integration
 
 **Used by:**

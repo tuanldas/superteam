@@ -371,6 +371,15 @@ COMMIT PATTERN:
 | Adding behavior during REFACTOR | REFACTOR changes structure, not behavior. If tests fail after refactor, undo. |
 | Using TDD for visual layout | TDD for behavior, visual testing for layout. Don't force-fit. |
 
+## Context Budget
+
+| File | When to Load | Trigger |
+|------|-------------|---------|
+| `SKILL.md` | Always | Skill invocation |
+| `testing-anti-patterns.md` | On demand | Writing mocks, test utilities, or when mock count exceeds 2 in a test file. |
+
+**Rule:** Most TDD cycles need only `SKILL.md`. Load `testing-anti-patterns.md` only when mocking is involved — it's a diagnostic reference, not a prerequisite.
+
 ## Integration
 
 **Used by:**

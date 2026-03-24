@@ -501,6 +501,14 @@ GIT:
 | Reconstructing without informing user | "State reconstructed — decisions and context from previous session are lost" |
 | Handoff only captures task list | Task list is the LEAST valuable part. Mental model is the MOST valuable |
 
+## Context Budget
+
+| File | When to Load | Trigger |
+|------|-------------|---------|
+| `SKILL.md` | Always | Skill invocation |
+
+**Self-contained.** No reference files. HANDOFF.json schema and capture/restore protocols fit in SKILL.md. Note: HANDOFF.json and HANDOFF.md are runtime artifacts, not reference files.
+
 ## Integration
 
 **Used by:**

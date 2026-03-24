@@ -401,6 +401,14 @@ ANTI-PATTERNS:
 | Attempting parallel execution without checking config | Check `config.parallelization` from project-awareness context first |
 | Resuming a failed agent instead of spawning fresh | Always spawn fresh continuation agent. Resume breaks with parallel state |
 
+## Context Budget
+
+| File | When to Load | Trigger |
+|------|-------------|---------|
+| `SKILL.md` | Always | Skill invocation |
+
+**Self-contained.** No reference files. Wave protocol is one coherent concept — splitting would fragment understanding.
+
 ## Integration
 
 **Used by:**

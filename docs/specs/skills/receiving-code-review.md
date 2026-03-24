@@ -268,6 +268,59 @@ Awaiting approval before implementing.
 
 User approves which items to fix. Then implement in order: blocking → simple → complex.
 
+## Conflicting Feedback Resolution
+
+When multiple reviewers give contradicting feedback on the same item:
+
+```
+CONFLICT DETECTION:
+  Reviewer A says: "Add error handling here"
+  Reviewer B says: "Keep it simple, no error handling needed"
+
+RESOLUTION PROTOCOL:
+  1. IDENTIFY the conflict explicitly — do not silently pick one
+  2. CLASSIFY the conflict type (see table)
+  3. FOLLOW the resolution rule
+  4. SURFACE to user if escalation required
+```
+
+### Conflict Types
+
+| Type | Example | Resolution |
+|------|---------|------------|
+| **Technical disagreement** | A: "use mutex" vs B: "use channel" | Verify both against codebase. Pick the one that fits existing patterns. If equal: surface to user. |
+| **Scope disagreement** | A: "add retry logic" vs B: "YAGNI" | Apply YAGNI check (grep for usage). If unused: side with YAGNI. If used: side with implementation. |
+| **Style/preference** | A: "use early return" vs B: "use if-else" | Follow existing codebase conventions. If no convention: skip (not worth resolving). |
+| **Architecture conflict** | A: "extract to service" vs B: "keep inline" | Escalate to user. Architectural decisions require human judgment. |
+| **Contradicts prior user decision** | A suggests X, but user previously chose Y | User's decision wins. Inform reviewer: "This was an intentional decision — [reason]." |
+
+### Resolution Rules
+
+1. **User's prior decisions always win.** If either suggestion conflicts with an established architectural choice, that suggestion is automatically Invalid.
+2. **Codebase conventions break ties.** When both suggestions are technically valid, the one matching existing patterns wins.
+3. **Safety over simplicity.** Security, data integrity, and migration safety suggestions take priority over simplicity arguments.
+4. **When you cannot resolve: escalate.** Present both positions with technical reasoning. Do not pick randomly.
+
+### Escalation Format
+
+```
+ST ► CONFLICTING FEEDBACK
+─────────────────────────────
+Item: [description of the code in question]
+
+Reviewer A: [position + reasoning]
+Reviewer B: [position + reasoning]
+
+My assessment: [which is technically stronger and why]
+Recommendation: [your pick, or "need your decision"]
+─────────────────────────────
+```
+
+**Do NOT:**
+- Silently implement one reviewer's suggestion without acknowledging the conflict
+- Merge both suggestions into a compromise that satisfies neither
+- Defer to the reviewer with higher seniority — use technical merit
+
 ## Self-Review Loop Discipline
 
 When receiving feedback from your own prior review (e.g., `/st:execute` → `/st:code-review` → process feedback):
@@ -368,6 +421,14 @@ IMPLEMENTATION:
 | Long apology when pushback was wrong | One line: "You were right. Fixed." Move on |
 | Applying review feedback to code that changed since review | Verify issue still exists in current code first |
 | Implementing CI lint suggestions without checking intent | Lint violation may be intentional. Check for disable comment or reason |
+
+## Context Budget
+
+| File | When to Load | Trigger |
+|------|-------------|---------|
+| `SKILL.md` | Always | Skill invocation |
+
+**Self-contained.** No reference files. All source-trust rules and response patterns fit in SKILL.md.
 
 ## Integration
 

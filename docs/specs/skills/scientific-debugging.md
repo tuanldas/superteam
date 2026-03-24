@@ -290,6 +290,15 @@ RESTART TRIGGERS:
 | "It seems to work" as verification | Run the actual test. Check exit code. Read output. Evidence, not vibes. |
 | Treating own code as correct | Your code is the most likely cause. Read what you WROTE, not what you INTENDED. |
 
+## Context Budget
+
+| File | When to Load | Trigger |
+|------|-------------|---------|
+| `SKILL.md` | Always | Skill invocation |
+| `techniques.md` | On demand | Entering Phase 1 (investigation). Skip if hypothesis is already formed. |
+
+**Rule:** Most debugging sessions resolve with 1-2 techniques. Load `techniques.md` only when the debugger needs to select an investigation approach — not preemptively.
+
 ## Integration
 
 **Used by:**
