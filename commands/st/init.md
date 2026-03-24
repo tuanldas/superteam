@@ -1,0 +1,179 @@
+---
+description: "Initialize project: config, auto-detect, deep questioning, research, requirements, roadmap"
+---
+
+# Project Initialization
+
+Full project setup: configure preferences, auto-detect tech stack, deep questioning to understand the project, research domain, define requirements, create roadmap.
+
+**Arguments:** "$ARGUMENTS"
+
+## Workflow
+
+1. **Configure preferences**
+   - Ask user for:
+     - Granularity preference (coarse / standard / fine)
+     - Parallelization (parallel / sequential)
+     - Git tracking for planning docs (yes / no)
+     - AI models for agents (if applicable)
+   - Write `.superteam/config.json`
+   - Commit: `chore: add project config`
+   - Follow `superteam:atomic-commits`
+
+2. **Setup + Auto-detect**
+   - Check if `.superteam/` already exists
+     - Exists: ask "Project already initialized. Re-init?"
+     - Not exists: continue
+   - Check git, init if needed
+   - Auto-detect by scanning file markers:
+     - package.json, composer.json, go.mod, Dockerfile, tsconfig.json,
+       vite.config.*, next.config.*, Cargo.toml, pyproject.toml, etc.
+     - Detect: project type, frameworks, workspaces
+     - Detect: brownfield vs greenfield
+   - If brownfield: spawn codebase-mapper agent within init flow
+     - Mapping results become context for questioning
+   - Present detection results (display only, no confirmation yet)
+
+3. **Deep questioning (loop)**
+   - Start open-ended: "What are you building?"
+   - Follow up based on answers. Accept image input anytime (wireframe, whiteboard, architecture diagram).
+   - Maintain an internal coverage checklist (do NOT show to user):
+     - WHO: Who are the users, usage context
+     - WHAT: Core problem / pain point
+     - SCOPE: Clear boundaries (v1 does what, does NOT do what)
+     - EXIST: What exists already, technical constraints
+     - DONE: What does "done" look like? Success criteria
+   - Each area needs at least 1 specific answer to check off.
+   - Make detection-aware suggestions:
+     - Suggest things user hasn't thought about based on detection
+     - Example: "You mentioned API but haven't discussed auth."
+     - Example: "I see React but no test setup."
+   - Questioning techniques:
+     - Follow the thread, do NOT follow a script
+     - Challenge vagueness: what does "good" mean? who are "users"?
+     - Make abstract concrete: "Walk me through using this"
+     - 4 question types: Motivation, Concreteness, Clarification, Success
+     - NEVER: checklist walking, canned questions, interrogation, rushing, shallow acceptance, premature constraints
+   - Checkpoint after 15 exchanges (or >= 4/5 areas covered):
+     - Present summary: "Here is what I understand..."
+       - WHO: [summary]
+       - WHAT: [summary]
+       - SCOPE: [summary]
+       - EXIST: [summary]
+       - DONE: [summary]
+       - Uncovered areas: [list]
+     - Ask: "Is this correct and complete? Anything to fix or add?"
+     - User says enough: continue flow
+     - User says more/fix: new questioning round (15 exchanges), loop unlimited
+
+4. **Write PROJECT.md (living document)**
+   - Synthesize context from detection + questioning + images
+   - Include: preliminary requirements (Validated / Active / Out of Scope)
+   - Brownfield: infer Validated requirements from existing code
+   - Include: Key Decisions, Assumptions (for uncovered areas)
+   - Footer: "*Created: [date] after init*"
+   - Save to `.superteam/PROJECT.md`
+   - Commit: `docs: initialize project`
+   - PROJECT.md is a living doc: later steps auto-update when conflicts found
+
+5. **Research (2 waves + optional extras)**
+   - Input: `.superteam/PROJECT.md` + codebase mapping (if brownfield)
+   - Follow `superteam:research-methodology`
+   - Wave 1 (parallel agents):
+     - STACK: technologies to use. Output: libraries + versions + rationale. Do NOT propose features or architecture.
+     - LANDSCAPE: similar products on market. Output: table stakes vs differentiators. Do NOT decide what to build.
+   - Wave 2 (parallel, after wave 1 completes):
+     - ARCHITECTURE: system structure. Input: PROJECT.md + STACK.md. Output: components, data flow, build order. Do NOT choose tech stack or features.
+     - PITFALLS: common mistakes in this domain. Input: PROJECT.md + STACK.md + ARCHITECTURE.md. Output: specific risks + mitigations. Do NOT propose new features or architecture.
+   - Optional extras (AI decides based on PROJECT.md):
+     - SECURITY (sensitive data, payments, auth)
+     - PERFORMANCE (real-time, high traffic)
+     - ACCESSIBILITY (public-facing web app)
+     - Other domain-specific research as needed
+   - Synthesize all research into `SUMMARY.md`
+   - If conflicts with PROJECT.md found: update PROJECT.md
+   - Save research to `.superteam/research/`
+   - Commit: `docs: complete research`
+
+6. **Define requirements**
+   - Load research findings (LANDSCAPE.md for feature reference)
+   - Categorize features: table stakes vs differentiators
+   - User scopes: v1 / v2 / out of scope per category
+   - Generate `REQUIREMENTS.md` with REQ-IDs format: `[CATEGORY]-[NUMBER]`
+   - Present full list to user for approval
+   - If conflicts with PROJECT.md: update PROJECT.md
+   - Save to `.superteam/REQUIREMENTS.md`
+   - Commit: `docs: define v1 requirements`
+
+7. **Create roadmap**
+   - Spawn roadmapper agent
+   - Input: PROJECT.md + REQUIREMENTS.md + SUMMARY.md + config
+   - Map requirements to phases
+   - Derive 2-5 success criteria per phase
+   - Validate 100% requirement coverage
+   - Generate `ROADMAP.md`
+   - Present to user for confirm/adjust. Loop until approved.
+   - If conflicts with PROJECT.md: update PROJECT.md
+   - Save to `.superteam/ROADMAP.md`
+   - Commit: `docs: create roadmap ([N] phases)`
+
+8. **Spec review**
+   - Dispatch reviewer agent to check all artifacts:
+     - PROJECT.md: complete, unambiguous
+     - REQUIREMENTS.md: REQ-IDs consistent, coverage sufficient
+     - ROADMAP.md: maps 100% requirements, success criteria clear
+     - Cross-check: requirements <-> roadmap <-> project have no conflicts
+   - If issues found: fix and re-dispatch (max 3 iterations)
+   - If still issues after 3 iterations: surface to user for decision
+   - Commit fixes if any
+
+9. **Done**
+   ```
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    ST > PROJECT INITIALIZED
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   | Artifact       | Location                      |
+   |----------------|-------------------------------|
+   | Config         | .superteam/config.json        |
+   | Project        | .superteam/PROJECT.md         |
+   | Research       | .superteam/research/          |
+   | Requirements   | .superteam/REQUIREMENTS.md    |
+   | Roadmap        | .superteam/ROADMAP.md         |
+
+   [N] phases | [X] requirements | Ready to build
+
+   Next: /st:phase-discuss 1
+   ```
+
+## Output Artifacts
+
+```
+project/
+  .superteam/
+    config.json
+    PROJECT.md
+    REQUIREMENTS.md
+    ROADMAP.md
+    research/
+      STACK.md
+      LANDSCAPE.md
+      ARCHITECTURE.md
+      PITFALLS.md
+      [SECURITY.md]        (optional)
+      [PERFORMANCE.md]     (optional)
+      [ACCESSIBILITY.md]   (optional)
+      SUMMARY.md
+```
+
+## Rules
+
+- This is an INTERACTIVE command. Never run in auto mode.
+- Each step commits separately. Follow `superteam:atomic-commits`.
+- PROJECT.md is a living document. Update it whenever conflicts are discovered in later steps.
+- Research waves respect dependency order: Wave 2 agents need Wave 1 outputs.
+- Each research agent has a strict scope boundary (noted above). Do NOT let agents cross boundaries.
+- Questioning uses 15 exchanges per round with checkpoint summaries. User decides whether to continue.
+- Image input accepted at any point in the flow.
+- Config is step 1 because research agents need config to run properly.
+- Brownfield detection is integrated into init flow (no flow interruption).
