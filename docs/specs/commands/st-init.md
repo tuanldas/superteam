@@ -4,14 +4,14 @@
 
 ## Tổng quan
 
-Khởi tạo project đầy đủ: config → detect → questioning → research → requirements → roadmap.
+Khởi tạo project đầy đủ: config → detect → questioning → research → design system → requirements → roadmap.
 Thay thế hoàn toàn `/gsd:new-project`.
 
 ## Quyết định thiết kế
 
 | Quyết định | Kết quả | Lý do |
 |---|---|---|
-| Flow style | Full flow (8 steps + spec review) | Project cần planning kỹ lưỡng |
+| Flow style | Full flow (9 steps + spec review) | Project cần planning kỹ lưỡng |
 | Config timing | Step 1 (đầu flow) | Cần biết config trước để configure research agents |
 | Detection | Full auto-detect (type, frameworks, workspaces, brownfield) | Questioning được context hóa tốt hơn |
 | Brownfield | Tích hợp trong init (spawn codebase-mapper) | Không gián đoạn flow, giữ context |
@@ -22,6 +22,7 @@ Thay thế hoàn toàn `/gsd:new-project`.
 | Auto mode | Không | User interactive luôn |
 | Global defaults | Không | Mỗi project hỏi riêng |
 | Spec review | Reviewer kiểm tra tất cả artifacts, max 3 iterations | Đảm bảo chất lượng trước khi Done |
+| Design System | Sau Research, trước Requirements. Luôn hỏi, adapted flow (bỏ bước trùng init) | Backend cũng cần UI (404, coming soon). Research cung cấp context, design system inform requirements |
 
 ## Flow
 
@@ -150,7 +151,35 @@ Thay thế hoàn toàn `/gsd:new-project`.
    → Nếu phát hiện conflict với PROJECT.md → update PROJECT.md
    → Commit: "docs: complete research"
     ↓
-6. Define requirements
+6. Design System
+   - Gate: "Dự án này có cần design system không?
+     (Kể cả backend cũng có thể cần trang 404, coming soon, redirect...)"
+     → Không: ghi vào PROJECT.md "## Design System\nKhông cần — [lý do]", skip
+     → Có: chạy adapted flow (4 sub-steps)
+
+   6.1 Tổng hợp context tự động
+       - Đọc: PROJECT.md, research findings, auto-detect results
+       - Trích xuất: product type, users, industry, tech stack
+       - Brownfield: "Phát hiện [fonts/colors/spacing]. Baseline hay zero?"
+       - Không hỏi thêm — context đã đủ từ bước 2-5
+
+   6.2 Đề xuất 7 dimensions
+       - AESTHETIC, DECORATION, TYPOGRAPHY, COLOR, SPACING, LAYOUT, MOTION
+       - SAFE CHOICES vs RISKS + AI SLOP CHECK
+       - Dùng research landscape data nếu có, built-in knowledge nếu không
+       - Áp dụng font rules + AI slop anti-patterns từ /st:design-system
+
+   6.3 Drill-downs + Playwright preview
+       - Approve / Adjust / Different risks / Start over
+       - Coherence check: nudge 1 lần, accept user decision
+       - Playwright nếu có: HTML preview, mockups, light/dark
+       - Không có Playwright: text-based
+
+   6.4 Lưu
+       - Save .superteam/DESIGN-SYSTEM.md
+       - Commit: "design: create design system for [project]"
+    ↓
+7. Define requirements
    - Load research findings (LANDSCAPE.md cho feature reference)
    - Categorize features (table stakes / differentiators)
    - User scope v1/v2/out of scope per category
@@ -159,9 +188,9 @@ Thay thế hoàn toàn `/gsd:new-project`.
    - Nếu phát hiện conflict → update PROJECT.md
    - Commit: "docs: define v1 requirements"
     ↓
-7. Create roadmap
+8. Create roadmap
    - Spawn roadmapper agent
-   - Input: PROJECT.md + REQUIREMENTS.md + SUMMARY.md + config
+   - Input: PROJECT.md + REQUIREMENTS.md + SUMMARY.md + DESIGN-SYSTEM.md (nếu có) + config
    - Map requirements → phases
    - Derive 2-5 success criteria per phase
    - Validate 100% requirement coverage
@@ -171,17 +200,18 @@ Thay thế hoàn toàn `/gsd:new-project`.
    - Nếu phát hiện conflict → update PROJECT.md
    - Commit: "docs: create roadmap ([N] phases)"
     ↓
-7.5 Spec review
+9. Spec review
    - Dispatch reviewer agent kiểm tra tất cả artifacts:
      → PROJECT.md: đầy đủ, không mơ hồ
      → REQUIREMENTS.md: REQ-IDs consistent, coverage đủ
      → ROADMAP.md: map 100% requirements, success criteria rõ
+     → DESIGN-SYSTEM.md (nếu có): coherent, không conflict với requirements
      → Cross-check: requirements ↔ roadmap ↔ project không conflict
    - Nếu có issues → fix, re-dispatch (max 3 iterations)
    - Nếu vượt 3 iterations → surface cho user quyết định
    - Commit fix nếu có
     ↓
-8. Done
+10. Done
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     ST ► PROJECT INITIALIZED ✓
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -191,6 +221,7 @@ Thay thế hoàn toàn `/gsd:new-project`.
    | Config         | .superteam/config.json        |
    | Project        | .superteam/PROJECT.md         |
    | Research       | .superteam/research/          |
+   | Design System  | .superteam/DESIGN-SYSTEM.md   |
    | Requirements   | .superteam/REQUIREMENTS.md    |
    | Roadmap        | .superteam/ROADMAP.md         |
 
@@ -206,6 +237,7 @@ my-project/
 └── .superteam/
     ├── config.json
     ├── PROJECT.md
+    ├── DESIGN-SYSTEM.md       ← optional (step 6)
     ├── REQUIREMENTS.md
     ├── ROADMAP.md
     └── research/
@@ -239,6 +271,7 @@ my-project/
 | **Spec review** | Subagent reviewer cho design spec, max 3 iterations | Không có cho init | Reviewer kiểm tra tất cả artifacts, max 3 iterations |
 | **Auto mode** | Không | Có (`--auto @doc.md`) | Không |
 | **Global defaults** | Không | `~/.gsd/defaults.json` | Không |
+| **Design System** | Không | Không | Tích hợp trong init (adapted flow, luôn hỏi) |
 | **Atomic commits** | 1 commit (spec file) | Mỗi step commit riêng | Mỗi step commit riêng |
 
 ## Cải thiện so với GSD
@@ -250,6 +283,7 @@ my-project/
 5. **Research dependency order** → ARCH cần STACK, PITFALLS cần cả hai
 6. **Living doc** → PROJECT.md luôn up-to-date
 7. **Spec review** → kiểm tra cross-artifact consistency trước khi Done
+8. **Design system tích hợp** → init hỏi về design system, GSD không có
 
 ## Cải thiện so với Superpowers
 
@@ -257,3 +291,4 @@ my-project/
 2. **Research phase** → Superpowers không research domain
 3. **Requirements + Roadmap** → Superpowers không tạo structured requirements hay roadmap
 4. **Questioning có heuristic rõ** → 5 areas checklist + hard stop + checkpoint, Superpowers không có
+5. **Design system trong init** → Superpowers không có design system step trong brainstorming
