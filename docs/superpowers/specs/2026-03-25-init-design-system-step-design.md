@@ -64,7 +64,9 @@ Hiện tại `/st:init` có 9 bước nhưng không cover UI/design. Các tính 
 - Đọc context đã có: PROJECT.md, research findings (đặc biệt LANDSCAPE.md, STACK.md), auto-detect results
 - Trích xuất: product type, target users, industry, tech stack (CSS framework, component library)
 - Brownfield: scan codebase lấy fonts/colors/spacing đang dùng
-  → Hiển thị: "Phát hiện: [fonts], [colors], [spacing]. Dùng làm baseline?"
+  → Hiển thị: "Phát hiện: [fonts], [colors], [spacing]. Dùng làm baseline hay bắt đầu từ zero?"
+  → Baseline: proposal builds on existing tokens
+  → Zero: proposal ignores existing code, đề xuất hoàn toàn mới
 - **Không hỏi thêm câu hỏi context** — tất cả đã có từ bước 2-5
 
 **6.2. Đề xuất đầy đủ 7 dimensions**
