@@ -120,22 +120,22 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Save research to `.superteam/research/`
    - Commit: `docs: complete research`
 
-6. **Design System**
+6. **Define design system**
    - Gate question: "Dự án này có cần design system không? (Kể cả backend cũng có thể cần trang 404, coming soon, redirect...)"
-     - User nói Không: thêm vào PROJECT.md section `## Design System\nKhông cần — [lý do user nêu]`, skip sang bước 7
-     - User nói Có: chạy adapted design system flow (sub-steps bên dưới)
+     - User says No: add to PROJECT.md section `## Design System\nKhông cần — [lý do user nêu]`, skip to step 7
+     - User says Yes: run adapted design system flow (sub-steps below)
 
-   **6.1. Tổng hợp context tự động**
-   - Đọc context đã có: PROJECT.md, research findings (đặc biệt LANDSCAPE.md, STACK.md), auto-detect results
-   - Trích xuất: product type, target users, industry, tech stack (CSS framework, component library)
-   - Brownfield: scan codebase lấy fonts/colors/spacing đang dùng
-     → Hiển thị: "Phát hiện: [fonts], [colors], [spacing]. Dùng làm baseline hay bắt đầu từ zero?"
+   **6.1. Auto-synthesize context**
+   - Read accumulated context: PROJECT.md, research findings (especially LANDSCAPE.md, STACK.md), auto-detect results
+   - Extract: product type, target users, industry, tech stack (CSS framework, component library)
+   - Brownfield: scan codebase for existing fonts/colors/spacing in use
+     → Display: "Phát hiện: [fonts], [colors], [spacing]. Dùng làm baseline hay bắt đầu từ zero?"
      → Baseline: proposal builds on existing tokens
-     → Zero: proposal ignores existing code, đề xuất hoàn toàn mới
-   - Không hỏi thêm câu hỏi context — tất cả đã có từ bước 2-5
+     → Zero: proposal ignores existing code, proposes entirely new system
+   - Do not ask additional context questions — all context already gathered from steps 2-5
 
-   **6.2. Đề xuất đầy đủ 7 dimensions**
-   - Dựa trên accumulated context → tạo proposal hoàn chỉnh:
+   **6.2. Propose full 7 dimensions**
+   - Based on accumulated context → create complete proposal:
      ```
      ┌──────────────────────────────────────────────┐
      │ DESIGN SYSTEM PROPOSAL                       │
@@ -175,7 +175,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - User feedback → adjust → regenerate loop
    - Playwright unavailable → skip preview, text-based only
 
-   **6.4. Lưu và commit**
+   **6.4. Save and commit**
    - Save `.superteam/DESIGN-SYSTEM.md`
    - Follow `superteam:atomic-commits`
    - Commit: `design: create design system for [project]`
