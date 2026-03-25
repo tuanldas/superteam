@@ -35,7 +35,7 @@ When in doubt, execute sequentially.
 □ config.parallelization is true (from project-awareness context)
 □ Tasks touch different files (file-ownership check passes)
 □ No sequential data dependency between tasks
-□ Task() subagent API is available
+□ Agent() tool is available (multiple calls in one message = parallel)
 ```
 
 All boxes must be checked. One failure = sequential execution.
@@ -206,9 +206,21 @@ AFTER WAVE COMPLETES:
 - Agents commit only files in their `files_modified` list
 - If agent needs to modify a file not in its ownership: STOP, report, don't modify
 
-## While-Waiting Protocol
+## Foreground Parallel Spawning
 
-After dispatching a wave of background agents, the orchestrator MUST NOT go silent AND MUST NOT skip ahead.
+To execute a wave, make ALL Agent() calls for that wave in a SINGLE message. This triggers foreground parallel execution — each agent appears in the Claude Code tree view with real-time progress visible to the user.
+
+### Spawn Pattern
+
+```
+FOR EACH WAVE:
+  Collect all tasks in this wave.
+  Make one Agent() call per task — ALL in the SAME message.
+  The orchestrator is naturally blocked until all agents return.
+  → User sees tree view with each agent's name and live status.
+```
+
+This is the ONLY way to get parallel execution with visible progress. Do NOT spawn agents one at a time across separate messages (that is sequential). Do NOT use `run_in_background=true` (that hides progress from the tree view).
 
 ### MANDATORY WAIT GATE
 
@@ -216,7 +228,6 @@ After dispatching a wave of background agents, the orchestrator MUST NOT go sile
 IRON RULE: DO NOT PROCEED TO THE NEXT WORKFLOW STEP UNTIL ALL AGENTS
 IN THE CURRENT WAVE HAVE COMPLETED AND THEIR OUTPUT FILES EXIST.
 
-Prep work while waiting is NOT a substitute for agent results.
 "I have enough info" is NOT a valid reason to skip waiting.
 Your own knowledge is NOT a substitute for agent research output.
 
@@ -232,34 +243,17 @@ If you proceed without their output, the agents were wasted.
 **If agents take longer than expected:**
 - Do NOT rationalize "I already know enough" and skip ahead
 - Do NOT use your own training data as a substitute for agent findings
-- DO continue the While-Waiting visible work (see below)
-- DO wait. The agents will finish.
+- DO wait. The agents will finish. The tree view shows their progress.
 
-### Visible Work While Waiting
+### Background Fallback
 
-Silence causes the user to think the process has stopped (especially after context compression shows "Crunched for Xm").
-
-**Required behavior while agents run in background:**
-
-1. **Immediately** show estimated time: "Wave [N] running (typically 3-7 min). ctrl+o to see agent details."
-2. **Do visible prep work** — scan codebase, count files, pre-read files for next wave, report findings
-3. **Show progress** as individual agents complete: "✓ [agent] complete! Waiting for [remaining]..."
-4. **If prep work finishes before agents**: show elapsed time every 60s: "Still running... [N]m elapsed. [M] agents remaining."
-5. **NEVER** leave user with zero output for more than 60 seconds during background execution.
-
-**What prep work is allowed (does NOT replace waiting):**
-- Scan codebase, count files, identify patterns
-- Pre-read files that the next step will need
-- Prepare questions or context for the next step
-- Ask the user clarifying questions for later steps
-
-**What is NOT allowed while waiting:**
-- Moving to the next workflow step
-- Writing output documents that depend on agent results
-- Making decisions that should be informed by agent findings
-- Saying "I have enough info" and skipping the wait
-
-The goal: the last thing the user sees should ALWAYS be your activity, not a system message like "Crunched for 5m 20s".
+If foreground parallel spawning is unavailable (e.g., older Claude Code version, non-interactive environment):
+- Fall back to `run_in_background=true` for each agent
+- When using background mode, apply visible-work protocol:
+  - Show estimated time after dispatching
+  - Do prep work (scan codebase, pre-read files for next wave)
+  - Show progress as agents complete
+  - Never leave the user with silence for more than 60 seconds
 
 ## Wave Completion Verification
 
@@ -267,7 +261,7 @@ After all agents in a wave finish, verify BEFORE proceeding to next wave:
 
 ```
 VERIFICATION CHECKLIST (per agent):
-□ Completion signal received (Task() returned)
+□ Completion signal received (Agent() returned)
 □ Git commits exist for the task (git log --grep)
 □ Key created files exist on disk
 □ Self-check status is PASS
@@ -358,17 +352,18 @@ Task 2 (PRUNED) → affects:
 
 ## Fallback Path
 
-When parallel execution is not available or not reliable:
+When foreground parallel execution is not available:
 
 ```
 FALLBACK TRIGGERS:
-  - Task() API unavailable or unreliable
+  - Agent() tool unavailable
   - config.parallelization is false
   - Only 1 task in wave (parallel of 1 = sequential)
-  - Runtime environment unknown (Copilot, etc.)
+  - Runtime environment unknown (non-Claude-Code CLI)
 
 FALLBACK BEHAVIOR:
-  Execute tasks sequentially in wave order.
+  1. Try background parallel: run_in_background=true per agent + visible-work protocol
+  2. If background also unavailable: execute tasks sequentially in wave order
   Still apply: dependency validation, completion verification, node repair.
   Skip: git contention handling, agent isolation (not needed sequentially).
 ```
@@ -395,6 +390,7 @@ WAVE ASSIGNMENT:
 
 EXECUTION:
   Lean orchestrator: pass paths, not content
+  Foreground parallel: ALL Agent() calls in ONE message per wave
   Agent isolation: worktree > file-ownership > sequential fallback
   Git: --no-verify during wave, hooks once after wave
 
@@ -413,7 +409,7 @@ AGENT LIMITS:
 ANTI-PATTERNS:
   Shared files in same wave
   Shared runtime state (DB, env, ports) without isolation
-  Trusting Task() without verification
+  Trusting Agent() return without verification
   Horizontal layer decomposition
   Blocking indefinitely on completion
 ```
@@ -431,6 +427,7 @@ ANTI-PATTERNS:
 | Horizontal layer decomposition (all models → all APIs → all UI) | Vertical slices. Each plan = one complete feature |
 | Proceeding to Wave 2 without verifying Wave 1 outputs | Inter-wave dependency validation. Verify key files/exports exist |
 | Attempting parallel execution without checking config | Check `config.parallelization` from project-awareness context first |
+| Using run_in_background for agents | Foreground parallel (multiple Agent calls in one message) shows tree view. Background hides it |
 | Resuming a failed agent instead of spawning fresh | Always spawn fresh continuation agent. Resume breaks with parallel state |
 
 ## Context Budget

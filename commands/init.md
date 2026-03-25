@@ -16,6 +16,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - Parallelization (parallel / sequential)
      - Git tracking for planning docs (yes / no)
      - AI models for agents (if applicable)
+     - Research confirmation (confirm / auto-approve) — default: confirm
    - Write `.superteam/config.json`
    - Commit: `chore: add project config`
    - Follow `superteam:atomic-commits`
@@ -76,36 +77,45 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Commit: `docs: initialize project`
    - PROJECT.md is a living doc: later steps auto-update when conflicts found
 
-5. **Research (2 waves + optional extras)**
+5. **Research (dynamic waves)**
    - Input: `.superteam/PROJECT.md` + codebase mapping (if brownfield)
    - Follow `superteam:research-methodology`
-   - **Wave 1** (parallel agents, background):
-     - STACK: technologies to use. Output: libraries + versions + rationale. Do NOT propose features or architecture.
-     - LANDSCAPE: similar products on market. Output: table stakes vs differentiators. Do NOT decide what to build.
 
-     **CRITICAL — While-Waiting Protocol (from `superteam:wave-parallelism`):**
-     After dispatching Wave 1, do NOT go silent AND do NOT skip ahead:
-     - Show: "Research Wave 1 running (typically 3-7 min). ctrl+o to see agent details."
-     - Do visible prep work while waiting:
-       a. Analyze PROJECT.md deeper: extract key constraints, identify research questions for Wave 2
-       b. Report: "Preparing Wave 2 context: [N] constraints identified, [M] questions for Architecture..."
-       c. Pre-read codebase files relevant to Architecture + Pitfalls research
-       d. Show progress when agents complete: "✓ STACK.md complete! Waiting for LANDSCAPE.md..."
-     - NEVER leave the user with silence after dispatching background agents.
-     - **MANDATORY WAIT GATE:** Do NOT proceed to the next step until ALL dispatched agents in this wave have completed AND you have READ their output files. Your own knowledge is NOT a substitute for agent research.
+   **Step 1 — Select research areas:**
+   - Read PROJECT.md: extract domain, tech decisions, constraints, greenfield/brownfield status
+   - Load research area catalog (`superteam:research-methodology` → `research-catalog.md`)
+   - For each catalog area: evaluate trigger AND brownfield conditions:
+     - Greenfield: include area if trigger matches
+     - Brownfield: check brownfield condition — SKIP, ADJUST focus, or KEEP as-is
+   - If custom areas seem needed: propose separately with justification,
+     ask user to confirm (custom areas are never auto-included)
 
-   - **Wave 2** (parallel, after Wave 1 completes):
-     - ARCHITECTURE: system structure. Input: PROJECT.md + STACK.md. Output: components, data flow, build order. Do NOT choose tech stack or features.
-     - PITFALLS: common mistakes in this domain. Input: PROJECT.md + STACK.md + ARCHITECTURE.md. Output: specific risks + mitigations. Do NOT propose new features or architecture.
-     - Apply same While-Waiting Protocol: show Wave 1 key findings, preview recommendations while Wave 2 runs
-     - **MANDATORY WAIT GATE:** Do NOT proceed to the next step until ALL dispatched agents in this wave have completed AND you have READ their output files.
+   **Step 2 — Build research plan and confirm:**
+   - Build dependency graph from selected areas' `needs` fields
+   - Group into waves: `wave = max(wave[deps]) + 1`
+   - Present research plan:
+     ```
+     RESEARCH PLAN
+     Based on PROJECT.md analysis:
 
-   - Optional extras (AI decides based on PROJECT.md):
-     - SECURITY (sensitive data, payments, auth)
-     - PERFORMANCE (real-time, high traffic)
-     - ACCESSIBILITY (public-facing web app)
-     - Other domain-specific research as needed
-   - Synthesize all research into `SUMMARY.md`
+     Wave [N] (parallel, [M] agents):
+       ├─ [AREA]: [focus description]
+       └─ [AREA]: [focus description]
+     ...
+     Total: [X] agents, [Y] waves
+     Adjust areas or proceed?
+     ```
+   - If `config.research_auto_approve` is true: display plan and proceed immediately
+     (EXCEPT: if custom areas proposed, always pause for confirmation)
+   - If false (default): wait for user to approve, adjust areas, or skip research
+
+   **Step 3 — Execute waves:**
+   - For each wave: make ALL Agent() calls in a SINGLE message (foreground parallel with tree view)
+   - Each agent receives: project context, relevant prior wave outputs, specific focus area
+   - Each agent follows `superteam:research-methodology` at Deep depth
+   - **MANDATORY WAIT GATE** per wave: do NOT proceed until ALL agents
+     have completed AND you have READ their output files
+   - After all waves: synthesize into SUMMARY.md
    - If conflicts with PROJECT.md found: update PROJECT.md
    - Save research to `.superteam/research/`
    - Commit: `docs: complete research`
@@ -171,13 +181,7 @@ project/
     REQUIREMENTS.md
     ROADMAP.md
     research/
-      STACK.md
-      LANDSCAPE.md
-      ARCHITECTURE.md
-      PITFALLS.md
-      [SECURITY.md]        (optional)
-      [PERFORMANCE.md]     (optional)
-      [ACCESSIBILITY.md]   (optional)
+      [dynamic — files depend on selected research areas]
       SUMMARY.md
 ```
 
@@ -186,8 +190,9 @@ project/
 - This is an INTERACTIVE command. Never run in auto mode.
 - Each step commits separately. Follow `superteam:atomic-commits`.
 - PROJECT.md is a living document. Update it whenever conflicts are discovered in later steps.
-- Research waves respect dependency order: Wave 2 agents need Wave 1 outputs.
-- Each research agent has a strict scope boundary (noted above). Do NOT let agents cross boundaries.
+- Research areas are dynamic — AI selects from catalog based on PROJECT.md context. User approves before spawning.
+- Research waves respect dependency order from catalog. Each wave completes before the next starts.
+- Each research agent has a strict scope boundary (per research-areas.md). Do NOT let agents cross boundaries.
 - Questioning uses 15 exchanges per round with checkpoint summaries. User decides whether to continue.
 - Image input accepted at any point in the flow.
 - Config is step 1 because research agents need config to run properly.
