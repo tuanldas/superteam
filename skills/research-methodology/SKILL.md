@@ -2,19 +2,19 @@
 name: research-methodology
 description: >
   Use when conducting research before planning or implementation.
-  Enforces structured investigation (4-area coverage), source triangulation,
-  evidence-over-assumption discipline, and synthesis quality gates that
-  prevent shallow or skipped research.
+  Enforces structured investigation (dynamic area coverage from catalog),
+  source triangulation, evidence-over-assumption discipline, and synthesis
+  quality gates that prevent shallow or skipped research.
 ---
 
 # Research Methodology
 
 ## Overview
 
-Research Methodology prevents Claude from skipping research, doing shallow research, or treating research as a checkbox activity. It applies across contexts — from deep 4-agent phase research to lightweight 1-agent focused research. The methodology scales by depth, but the discipline is constant.
+Research Methodology prevents Claude from skipping research, doing shallow research, or treating research as a checkbox activity. It applies across contexts — from deep multi-agent phase research to lightweight 1-agent focused research. The methodology scales by depth, but the discipline is constant.
 
 **Two responsibilities:**
-1. **Methodology** — 4-area coverage model, depth calibration, source triangulation, evidence evaluation, synthesis protocol.
+1. **Methodology** — dynamic area coverage (from catalog), depth calibration, source triangulation, evidence evaluation, synthesis protocol.
 2. **Discipline** — anti-shortcut rules that resist Claude's defaults of skipping research, relying on training data alone, confirmation bias, and premature conclusions.
 
 ## Core Principle
@@ -49,60 +49,24 @@ This skill is used by commands at different depth levels. Match depth to context
 
 | Context | Depth | Areas | Agents | Output |
 |---------|-------|-------|--------|--------|
-| `/st:phase-research` | Deep | 4 areas, all required | 4 parallel + 1 synthesizer | 4 files + SUMMARY.md |
-| `/st:init` | Deep | 4 areas + optional extras, 2 waves | 4+ parallel + 1 synthesizer | research/ directory |
+| `/st:phase-research` | Deep | Dynamic areas from catalog | Parallel per wave + 1 synthesizer | Area files + SUMMARY.md |
+| `/st:init` | Deep | Dynamic areas from catalog | Parallel per wave + 1 synthesizer | research/ directory |
 | `/st:brainstorm` | Medium | 2 rounds (broad → focused) | AI direct (no subagents) | Inline findings |
 | `/st:plan` (optional) | Light | 1 focused area | 1 researcher | 1-2 page inline |
 
 **The methodology applies at ALL depths.** Even light research must triangulate sources and present alternatives. Deep research just does it more thoroughly.
 
-## The Four Research Areas
+## Research Areas
 
-Each area has a specific scope. Scope boundaries prevent agents from overlapping or producing contradictory recommendations.
+Research areas are selected dynamically from the catalog (`research-catalog.md`), not hardcoded. Each area has a specific scope to prevent agents from overlapping.
 
-### Area 1: Stack
+**Area selection:** Load `research-catalog.md` → evaluate trigger and brownfield conditions → select relevant areas → group into waves by dependency.
 
-Technologies, libraries, tools suitable for the task. Compare options, recommend with rationale.
+**Core areas** (evaluate for every project): STACK, LANDSCAPE, ARCHITECTURE, PITFALLS.
+**Domain-specific areas** (include when relevant): SECURITY, PERFORMANCE, ACCESSIBILITY, DATA, INTEGRATION.
+**Custom areas:** AI may propose with justification — always requires user confirmation.
 
-**Covers:** Language/framework choices, library comparison, tool selection, version requirements.
-**Does NOT cover:** How to organize code (Architecture), what competitors do (Landscape), what could go wrong (Pitfalls).
-**Output criteria:** 2-3 options per key decision, comparison table with project-specific criteria, recommendation with evidence.
-
-### Area 2: Landscape
-
-Existing solutions, industry patterns, table stakes vs differentiators.
-
-**Covers:** Competing implementations, reference architectures, industry norms, prior art.
-**Does NOT cover:** Which specific tech to use (Stack), how to structure code (Architecture).
-**Output criteria:** Comparison against project-specific criteria (not just feature lists), table stakes identified, differentiators highlighted.
-
-### Area 3: Architecture
-
-Code organization, patterns, data flow, component structure.
-
-**Covers:** File structure, design patterns, data flow, component boundaries, API design.
-**Does NOT cover:** Tech stack selection (Stack), competitor analysis (Landscape).
-**Depends on:** Stack findings (architecture decisions need tech context).
-**Output criteria:** Proposed structure with rationale, data flow diagram (textual), pattern choices with trade-offs.
-
-### Area 4: Pitfalls
-
-Common mistakes, anti-patterns, edge cases, security risks specific to the domain + chosen stack.
-
-**Covers:** Known failure modes, security concerns, performance traps, migration risks, edge cases.
-**Does NOT cover:** Architecture proposals (Architecture), tech selection (Stack).
-**Depends on:** Stack + Architecture findings (pitfalls are specific to chosen tech and structure).
-**Output criteria:** Specific pitfalls (not generic "be careful"), severity ranking, mitigation for each.
-
-### Cross-Area Dependencies
-
-```
-Wave 1 (independent):  Stack + Landscape
-    ↓ (Stack findings feed into Wave 2)
-Wave 2 (dependent):    Architecture (needs Stack) + Pitfalls (needs Stack + Architecture)
-```
-
-This wave order is used by `/st:phase-research` and `/st:init`. Each wave completes before the next starts.
+For detailed per-area guidance (search strategies, comparison templates, scope boundaries), see `research-areas.md`.
 
 ## Research Protocol
 
@@ -217,7 +181,7 @@ These thoughts mean you are about to violate the methodology:
 | "I'll research this later / in more detail" | Research happens NOW. This IS the research step. |
 | "The user probably wants X" | Present options. User decides. Your job is to inform, not assume. |
 | "This technology is better because it's newer" | Newer is not better. Compare on actual criteria. |
-| "Let me skip Landscape, it's obvious" | No area is skippable at Deep depth. Even "obvious" domains have surprises. |
+| "Let me skip this area, it's obvious" | Selected areas are not skippable. Even "obvious" domains have surprises. |
 
 ### Common Rationalizations
 
@@ -239,15 +203,15 @@ IRON LAW:
   RESEARCH BEFORE DECISIONS. EVIDENCE BEFORE ASSUMPTIONS.
   Training data is not evidence. Cite sources or flag as assumption.
 
-FOUR AREAS:
-  1. Stack: tech options, compare, recommend
-  2. Landscape: existing solutions, table stakes vs differentiators
-  3. Architecture: code org, patterns, data flow (needs Stack)
-  4. Pitfalls: risks, anti-patterns, edge cases (needs Stack + Arch)
+AREAS (dynamic from catalog):
+  Select areas based on trigger + brownfield conditions.
+  Core: STACK, LANDSCAPE, ARCHITECTURE, PITFALLS
+  Domain: SECURITY, PERFORMANCE, ACCESSIBILITY, DATA, INTEGRATION
+  Custom: max 2, requires user confirmation, max 8 total
 
-WAVE ORDER:
-  Wave 1: Stack + Landscape (independent)
-  Wave 2: Architecture + Pitfalls (depends on Stack)
+WAVE ORDER (dynamic from dependencies):
+  wave = max(wave[deps]) + 1
+  Areas with no deps → Wave 1. Spawn all per wave in one message.
 
 PROTOCOL:
   1. Scope (bound the question)
@@ -259,7 +223,7 @@ PROTOCOL:
   4. Synthesize (options, trade-offs, unknowns)
 
 DEPTH:
-  Deep (phase-research, init): 4 areas, parallel agents, full output
+  Deep (phase-research, init): dynamic areas from catalog, parallel agents, full output
   Medium (brainstorm): 2 rounds, inline
   Light (plan): 1 area, focused, 1-2 pages
 
@@ -292,21 +256,22 @@ NEVER:
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation (via init, phase-research, brainstorm, or plan) |
-| `research-areas.md` | On demand | Deep research (phase-research, init). Skip for light/medium depth. |
+| `research-catalog.md` | When planning research | Area selection: triggers, dependencies, brownfield, guardrails |
+| `research-areas.md` | On demand | Deep research execution guidance: search strategies, templates, scope |
 
-**Rule:** Light research (`/st:plan`) resolves with `SKILL.md` alone. Deep research (`/st:phase-research`, `/st:init`) loads `research-areas.md` for detailed per-area guidance. Typical: 40% SKILL.md only, 60% + research-areas.
+**Rule:** Light research (`/st:plan`) resolves with `SKILL.md` alone. Deep research (`/st:phase-research`, `/st:init`) loads `research-catalog.md` for area selection and `research-areas.md` for execution guidance.
 
 ## Integration
 
 **Used by:**
-- `/st:init` — 2-wave research (Stack+Landscape → Architecture+Pitfalls + optional extras)
-- `/st:phase-research` — 4 parallel researcher agents + synthesizer
+- `/st:init` — dynamic-wave research (areas selected from catalog, grouped by dependencies)
+- `/st:phase-research` — dynamic research agents from catalog + synthesizer
 - `/st:brainstorm` — 2-round inline research (broad → focused)
 - `/st:plan` — optional focused research when AI recommends it
 
 **Skills that pair with research-methodology:**
 - `superteam:project-awareness` — provides framework detection for codebase-aware research
-- `superteam:wave-parallelism` — parallel research agents follow wave protocol (Wave 1: Stack+Landscape, Wave 2: Architecture+Pitfalls)
+- `superteam:wave-parallelism` — parallel research agents follow wave protocol (dynamic waves from catalog dependencies)
 - `superteam:verification` — research findings verified before feeding into plans
 - `superteam:handoff-protocol` — research state (sources, findings, conflicts) captured on pause
 

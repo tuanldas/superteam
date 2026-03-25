@@ -96,27 +96,47 @@ Reference file for `superteam:research-methodology`. Loaded during deep research
 - DO: identify risks, anti-patterns, edge cases specific to chosen Stack + Architecture
 - DO NOT: propose alternative architecture (Architecture area) or different tech stack (Stack area)
 
-## Optional Research Areas
+## Domain-Specific Areas
 
-Triggered by domain-specific needs. Not part of standard 4-area research.
+These areas are selected dynamically from the research catalog (`research-catalog.md`).
+Detailed execution guidance below — same methodology as core areas.
 
-| Area | When to Trigger | Focus |
-|------|----------------|-------|
-| **Security** | Auth, payments, PII handling, public-facing APIs | OWASP top 10, auth patterns, data encryption, compliance |
-| **Performance** | Real-time features, high-traffic endpoints, large data | Load patterns, caching strategies, CDN, database optimization |
-| **Accessibility** | Public web applications, regulated domains | WCAG compliance, screen reader patterns, keyboard navigation |
+### Security Research
 
-## Cross-Area Dependency Rules
+**What to search for:** OWASP top 10, auth patterns (JWT vs session), data encryption at rest/transit, compliance requirements (GDPR, SOC2, HIPAA), dependency vulnerability scanning.
+**Comparison criteria:** threat model coverage, implementation complexity, compliance mapping, maintenance burden.
+**Scope:** Auth, data protection, compliance, threat modeling. Does NOT propose architecture.
 
-```
-Wave 1: Stack + Landscape
-  - Run independently, no dependencies on each other
-  - Stack produces: recommended tech, comparison tables
-  - Landscape produces: competitor analysis, table stakes
+### Performance Research
 
-Wave 2: Architecture + Pitfalls
-  - Architecture READS Stack output (tech choices constrain patterns)
-  - Pitfalls READS Stack + Architecture output (risks are tech + structure specific)
-  - Architecture does NOT read Landscape (competitors don't dictate our structure)
-  - Pitfalls MAY reference Landscape (competitor failures are relevant pitfalls)
-```
+**What to search for:** Load patterns, caching strategies (CDN, Redis, in-memory), database optimization, bundle size analysis, server-side rendering vs client-side.
+**Comparison criteria:** latency targets, throughput requirements, cost at scale, complexity.
+**Scope:** Scaling, caching, optimization, benchmarks. Depends on Architecture findings.
+
+### Accessibility Research
+
+**What to search for:** WCAG 2.1 AA compliance, screen reader testing patterns, keyboard navigation, color contrast, ARIA attributes.
+**Comparison criteria:** compliance level, testing tooling, implementation effort, user impact.
+**Scope:** WCAG compliance, assistive technology support. Independent of other areas.
+
+### Data Research
+
+**What to search for:** Schema design patterns, ORM comparison, migration strategies, backup/recovery, data validation.
+**Comparison criteria:** query performance, migration safety, schema flexibility, tooling ecosystem.
+**Scope:** Schema design, migrations, storage strategy. Depends on Stack findings.
+
+### Integration Research
+
+**What to search for:** API documentation quality, SDK availability, rate limits, error handling patterns, webhook reliability.
+**Comparison criteria:** reliability, documentation quality, community support, cost.
+**Scope:** Third-party APIs, external services, protocols. Depends on Stack findings.
+
+## Cross-Area Dependencies
+
+Area dependencies and wave grouping are defined in the research catalog (`research-catalog.md`).
+Key rules for execution:
+- Architecture READS Stack output (tech choices constrain patterns)
+- Architecture does NOT read Landscape (competitors don't dictate structure)
+- Pitfalls READS Stack + Architecture output (risks are tech + structure specific)
+- Pitfalls MAY reference Landscape (competitor failures are relevant pitfalls)
+- Domain-specific areas read their declared dependencies from the catalog

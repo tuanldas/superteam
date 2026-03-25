@@ -179,8 +179,8 @@ SUMMARY.md: .superteam/phases/[phase-name]/research/SUMMARY.md
 
 Synthesis is complete and correct when ALL of the following hold:
 
-- [ ] All 4 research files (STACK, LANDSCAPE, ARCHITECTURE, PITFALLS) were read in full
-- [ ] SUMMARY.md covers findings from all 4 areas (Area Coverage table is complete)
+- [ ] All research output files from all waves were read in full
+- [ ] SUMMARY.md covers findings from all researched areas (Area Coverage table is complete)
 - [ ] Key Findings section has 3-7 entries with source attribution
 - [ ] Recommendations are ranked by evidence strength, not by order of discovery
 - [ ] Conflicts section is non-empty (trade-offs always exist)

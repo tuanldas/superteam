@@ -127,7 +127,7 @@ describe('Skills', () => {
         if (f !== 'SKILL.md') refFiles.push(`${dir}/${f}`);
       }
     }
-    assert.equal(refFiles.length, 7);
+    assert.equal(refFiles.length, 8);
   });
 });
 

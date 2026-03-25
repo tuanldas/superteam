@@ -82,6 +82,7 @@ describe('saveConfig + loadConfig round-trip', () => {
       preferences: { defaultBranch: 'develop', commitStyle: 'simple' },
       granularity: 'fine',
       parallelization: false,
+      research_auto_approve: false,
       commit_docs: false,
       model_profile: 'quality',
       workflow: { research: false, plan_check: true, verifier: false },

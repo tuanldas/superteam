@@ -17,6 +17,7 @@ const CONFIG_DEFAULTS = Object.freeze({
   },
   granularity: 'standard',
   parallelization: true,
+  research_auto_approve: false,
   commit_docs: true,
   model_profile: 'balanced',
   workflow: {
@@ -40,6 +41,7 @@ const CONFIG_SCHEMA = Object.freeze({
   'preferences.commitStyle': { type: 'string', enum: ['conventional', 'simple'] },
   granularity: { type: 'string', enum: ['coarse', 'standard', 'fine'] },
   parallelization: { type: 'boolean' },
+  research_auto_approve: { type: 'boolean' },
   commit_docs: { type: 'boolean' },
   model_profile: { type: 'string', enum: ['quality', 'balanced', 'budget', 'inherit'] },
   'workflow.research': { type: 'boolean' },
