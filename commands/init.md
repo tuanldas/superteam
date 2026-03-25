@@ -1,10 +1,10 @@
 ---
-description: "Initialize project: config, auto-detect, deep questioning, research, requirements, roadmap"
+description: "Initialize project: config, auto-detect, deep questioning, research, design system, requirements, roadmap"
 ---
 
 # Project Initialization
 
-Full project setup: configure preferences, auto-detect tech stack, deep questioning to understand the project, research domain, define requirements, create roadmap.
+Full project setup: configure preferences, auto-detect tech stack, deep questioning to understand the project, research domain, define design system, define requirements, create roadmap.
 
 **Arguments:** "$ARGUMENTS"
 
@@ -120,7 +120,68 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Save research to `.superteam/research/`
    - Commit: `docs: complete research`
 
-6. **Define requirements**
+6. **Design System**
+   - Gate question: "Dự án này có cần design system không? (Kể cả backend cũng có thể cần trang 404, coming soon, redirect...)"
+     - User nói Không: thêm vào PROJECT.md section `## Design System\nKhông cần — [lý do user nêu]`, skip sang bước 7
+     - User nói Có: chạy adapted design system flow (sub-steps bên dưới)
+
+   **6.1. Tổng hợp context tự động**
+   - Đọc context đã có: PROJECT.md, research findings (đặc biệt LANDSCAPE.md, STACK.md), auto-detect results
+   - Trích xuất: product type, target users, industry, tech stack (CSS framework, component library)
+   - Brownfield: scan codebase lấy fonts/colors/spacing đang dùng
+     → Hiển thị: "Phát hiện: [fonts], [colors], [spacing]. Dùng làm baseline hay bắt đầu từ zero?"
+     → Baseline: proposal builds on existing tokens
+     → Zero: proposal ignores existing code, đề xuất hoàn toàn mới
+   - Không hỏi thêm câu hỏi context — tất cả đã có từ bước 2-5
+
+   **6.2. Đề xuất đầy đủ 7 dimensions**
+   - Dựa trên accumulated context → tạo proposal hoàn chỉnh:
+     ```
+     ┌──────────────────────────────────────────────┐
+     │ DESIGN SYSTEM PROPOSAL                       │
+     ├──────────────────────────────────────────────┤
+     │ AESTHETIC: [direction] -- [rationale]         │
+     │ DECORATION: [level] -- [rationale]            │
+     │ TYPOGRAPHY: [fonts + scale] -- [rationale]    │
+     │ COLOR: [palette + hex] -- [rationale]         │
+     │ SPACING: [base + density] -- [rationale]      │
+     │ LAYOUT: [approach + grid] -- [rationale]      │
+     │ MOTION: [approach + easing] -- [rationale]    │
+     ├──────────────────────────────────────────────┤
+     │ SAFE CHOICES (category baseline):             │
+     │ - [2-3 decisions matching conventions]        │
+     │                                               │
+     │ RISKS (product gets its own face):            │
+     │ - [2-3 departures, each with rationale]       │
+     ├──────────────────────────────────────────────┤
+     │ AI SLOP CHECK: [flagged patterns, if any]     │
+     └──────────────────────────────────────────────┘
+     ```
+   - If init research has landscape data → use to inform proposal
+   - If not → use built-in design knowledge
+   - Apply full font rules (blacklist, overused warnings) and AI slop anti-patterns from `/st:design-system`
+
+   **6.3. Drill-downs + Preview**
+   - User options: Approve, Adjust [section], Different risks, Start over
+   - Each drill-down is 1 focused question (fonts: 3-5 candidates, colors: 2-3 palette options)
+   - Coherence check after each change:
+     - Mismatch → nudge once, explain why unusual, offer alternative
+     - Always accept user decision, never block, never ask again
+   - Playwright preview if available:
+     - Generate self-contained HTML preview page
+     - Load proposed fonts, apply color palette
+     - Realistic mockups by project type (dashboard/marketing/admin)
+     - Light/dark mode toggle, responsive
+     - User feedback → adjust → regenerate loop
+   - Playwright unavailable → skip preview, text-based only
+
+   **6.4. Lưu và commit**
+   - Save `.superteam/DESIGN-SYSTEM.md`
+   - Follow `superteam:atomic-commits`
+   - Commit: `design: create design system for [project]`
+
+7. **Define requirements**
+   - Load DESIGN-SYSTEM.md if exists (design tokens may inform requirements)
    - Load research findings (LANDSCAPE.md for feature reference)
    - Categorize features: table stakes vs differentiators
    - User scopes: v1 / v2 / out of scope per category
@@ -130,9 +191,9 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Save to `.superteam/REQUIREMENTS.md`
    - Commit: `docs: define v1 requirements`
 
-7. **Create roadmap**
+8. **Create roadmap**
    - Spawn roadmapper agent
-   - Input: PROJECT.md + REQUIREMENTS.md + SUMMARY.md + config
+   - Input: PROJECT.md + REQUIREMENTS.md + SUMMARY.md + DESIGN-SYSTEM.md (if exists) + config
    - Map requirements to phases
    - Derive 2-5 success criteria per phase
    - Validate 100% requirement coverage
@@ -142,17 +203,18 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Save to `.superteam/ROADMAP.md`
    - Commit: `docs: create roadmap ([N] phases)`
 
-8. **Spec review**
+9. **Spec review**
    - Dispatch reviewer agent to check all artifacts:
      - PROJECT.md: complete, unambiguous
      - REQUIREMENTS.md: REQ-IDs consistent, coverage sufficient
      - ROADMAP.md: maps 100% requirements, success criteria clear
+     - DESIGN-SYSTEM.md (if exists): coherent, no conflicts with requirements
      - Cross-check: requirements <-> roadmap <-> project have no conflicts
    - If issues found: fix and re-dispatch (max 3 iterations)
    - If still issues after 3 iterations: surface to user for decision
    - Commit fixes if any
 
-9. **Done**
+10. **Done**
    ```
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     ST > PROJECT INITIALIZED
@@ -163,6 +225,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    | Config         | .superteam/config.json        |
    | Project        | .superteam/PROJECT.md         |
    | Research       | .superteam/research/          |
+   | Design System  | .superteam/DESIGN-SYSTEM.md   |
    | Requirements   | .superteam/REQUIREMENTS.md    |
    | Roadmap        | .superteam/ROADMAP.md         |
 
@@ -170,6 +233,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
 
    Next: /st:phase-discuss 1
    ```
+   - Design System row: only show if DESIGN-SYSTEM.md was created (user chose "Có" in step 6)
 
 ## Output Artifacts
 
@@ -178,6 +242,7 @@ project/
   .superteam/
     config.json
     PROJECT.md
+    DESIGN-SYSTEM.md              [optional — created if user chose "Có" in step 6]
     REQUIREMENTS.md
     ROADMAP.md
     research/
