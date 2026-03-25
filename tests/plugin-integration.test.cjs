@@ -44,7 +44,7 @@ describe('Plugin Structure', () => {
 // ---------------------------------------------------------------------------
 
 describe('Commands', () => {
-  const commandsDir = path.join(PLUGIN_ROOT, 'commands', 'st');
+  const commandsDir = path.join(PLUGIN_ROOT, 'commands');
   let commandFiles;
 
   before(() => {
