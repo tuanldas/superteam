@@ -180,6 +180,7 @@ Thay thế hoàn toàn `/gsd:new-project`.
        - Commit: "design: create design system for [project]"
     ↓
 7. Define requirements
+   - Load DESIGN-SYSTEM.md nếu có (design tokens inform requirements)
    - Load research findings (LANDSCAPE.md cho feature reference)
    - Categorize features (table stakes / differentiators)
    - User scope v1/v2/out of scope per category
