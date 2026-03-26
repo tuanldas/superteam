@@ -82,6 +82,7 @@ Present findings and let user choose which to resume.
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Always show status and options before resuming. Let the USER decide.
 - Always validate state consistency before presenting options.
 - Delete handoff files only after successful resume (option 1) or explicit discard (option 4).

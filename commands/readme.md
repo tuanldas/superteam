@@ -88,6 +88,7 @@ Generate or update README.md from the codebase. Supports README-Driven Developme
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Always detect project type and add appropriate dynamic sections. Do not use a one-size-fits-all template.
 - In update mode, always show drift details and let user choose what to apply. Never silently overwrite.
 - Support RDD: when no code exists yet, generate README from PROJECT.md and REQUIREMENTS.md.

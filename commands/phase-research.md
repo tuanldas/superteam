@@ -99,6 +99,7 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Research areas are dynamic — AI selects from catalog based on phase context. User approves before spawning.
 - Agents MUST run in parallel within each wave for efficiency.
 - Synthesizer agent runs AFTER all waves complete — never before.

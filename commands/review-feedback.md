@@ -75,6 +75,7 @@ When receiving review feedback from external sources (human reviewer, CI tool, P
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - NEVER implement feedback blindly. Verify every item against the codebase first.
 - Every item must be classified (VALID/PARTIAL/INVALID/UNCLEAR) with reasoning before implementation.
 - User has final say on which items to implement, regardless of AI assessment.

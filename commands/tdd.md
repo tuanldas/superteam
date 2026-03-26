@@ -102,6 +102,7 @@ Strict Red-Green-Refactor cycle. No production code without a failing test first
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Follow `superteam:tdd-discipline` strictly.
 - One test, one behavior. Never test two things at once.
 - VERIFY RED and VERIFY GREEN are mandatory steps. Never skip running tests.

@@ -118,6 +118,7 @@ Layered code review: linting first, then 12 specialized agents in parallel, conf
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - All 12 agents run by default. Use `--only` to override, never let AI select agents automatically.
 - Confidence threshold is 80%. Do NOT report issues below 80% confidence.
 - Critical = 90+ confidence. Important = 80-89 confidence. This is strict.

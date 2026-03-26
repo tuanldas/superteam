@@ -141,6 +141,7 @@ If no subcommand provided, ask: "What would you like to do? (create / list / swi
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Always ensure `.superteam/worktrees/` is in `.gitignore` before creating worktrees.
 - Use AI-suggested branch naming with `[type]/[kebab-case]` convention. Let user override.
 - Support both new branch creation and checking out existing branches.

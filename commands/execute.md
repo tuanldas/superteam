@@ -99,6 +99,7 @@ Execute an existing plan using wave-based parallelism. Includes node repair (4 s
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Always read the plan file and detect progress before executing. Never restart completed tasks.
 - Critical review gate is mandatory. Raise ANY concern before executing.
 - Deviation levels 1-3 are auto-fixed. Level 4 (architectural) ALWAYS stops and asks user.

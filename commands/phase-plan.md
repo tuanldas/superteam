@@ -128,6 +128,7 @@ Create an implementation plan for a phase in the roadmap. Reuses the planning en
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - must_haves are ALWAYS the success criteria from the phase in ROADMAP.md. Do not invent your own.
 - Plan-checker MUST verify every success criterion has at least one task addressing it.
 - If CONTEXT.md and RESEARCH exist, they are PRIMARY input. Do not ignore them.

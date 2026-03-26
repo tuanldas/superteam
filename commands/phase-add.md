@@ -134,6 +134,7 @@ Status values: `completed` | `in-progress` | `planned`
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - ROADMAP.md must exist. If it does not, stop and instruct user to run `/st:init`.
 - AI must analyze dependencies and suggest position with clear reasoning. Never blindly append.
 - At least 1 REQ-ID must be linked. If none match, create a new one.

@@ -121,6 +121,7 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - PLAN.md is REQUIRED. Do not execute without a plan.
 - Always check prerequisites (preceding phases) before executing.
 - Update ROADMAP status to in-progress at the START of execution, not at the end.
