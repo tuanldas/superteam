@@ -15,9 +15,13 @@ Mỗi command (27 commands) đều đi qua các bước sau:
 ### 2. Đề xuất flow + hỏi user
 - Đưa ra draft flow dựa trên research
 - Hỏi thêm thông tin từ user nếu cần
+- **Tuân thủ `superteam:questioning`** cho mọi tương tác với user:
+  - MỘT câu hỏi mỗi tin nhắn, thích ứng theo câu trả lời trước
+  - Phân biệt ASK (1 câu/msg) vs PRESENT (batch OK) vs CONFIRM (1 câu/msg)
 - Khi hỏi multiple choice: AI phải có **khuyến nghị** (recommend option nào), **lý do** tại sao chọn option đó, và **tại sao không** chọn các options còn lại
 - Giải thích cách các bên tham khảo (GSD, Superpowers, gstack...) đang làm khi relevant
 - Khi có thuật ngữ đặc biệt: giải thích ý nghĩa + ví dụ cụ thể dễ hiểu
+- **Mỗi command mới phải có** `Follow superteam:questioning` trong Rules section
 
 ### 3. So sánh với GSD/Superpowers
 - Khác gì, tốt hơn ở đâu, thiếu gì
