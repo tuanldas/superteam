@@ -189,12 +189,20 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Follow `superteam:atomic-commits`
    - Commit: `design: create design system for [project]`
 
-7. **Define requirements**
-   - Load DESIGN-SYSTEM.md if exists (design tokens may inform requirements)
-   - Load research findings (LANDSCAPE.md for feature reference)
-   - Categorize features: table stakes vs differentiators
-   - User scopes: v1 / v2 / out of scope per category
+7. **Define requirements (scope refine + generate)**
+   - Load new context: research findings + DESIGN-SYSTEM.md (if exists) + PROJECT.md (with preliminary scope from step 3)
+   - Present SCOPE DIFF — only changes vs step 3:
+     - Features changed tier (e.g., "Comment: SHOULD → MUST because research showed...")
+     - Assumptions updated status (e.g., "⚠️ → ✅ research confirmed")
+     - New risks from research
+     - Effort adjusted (e.g., "Real-time sync: [L] → [XL] because tech stack X")
+     - Success signal refined if needed
+     - Confidence: High/Med
+   - If no changes from research: state "Research confirmed step 3 scope. No changes."
+   - User confirm/adjust → finalize scope
    - Generate `REQUIREMENTS.md` with REQ-IDs format: `[CATEGORY]-[NUMBER]`
+     - Each Must/Should feature becomes a REQ-ID
+     - Could/Won't features listed in "Deferred" section with reasoning
    - Present full list to user for approval
    - If conflicts with PROJECT.md: update PROJECT.md
    - Save to `.superteam/REQUIREMENTS.md`
