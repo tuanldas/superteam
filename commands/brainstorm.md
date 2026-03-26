@@ -167,6 +167,7 @@ Explore a vague idea and turn it into a clear, actionable spec. Two rounds of re
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Zero-infrastructure: works without `/st:init`. Project context enhances accuracy.
 - Research round 1 ALWAYS runs. Do not ask, do not skip.
 - Research round 2 is conditional: AI evaluates need after user answers.

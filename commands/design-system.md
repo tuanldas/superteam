@@ -152,6 +152,7 @@ Handling: Nudge once, offer alternative, always accept user decision, never bloc
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Present the full 7-dimension proposal at once. Do not ask dimension by dimension.
 - Always separate SAFE choices from RISKS with rationale for each.
 - Run AI slop check on every proposal. Flag generic patterns.

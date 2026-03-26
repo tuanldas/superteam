@@ -104,6 +104,7 @@ Debug a simple bug fast. Runs in main context (no separate agent), no session fi
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - All 4 debug phases are mandatory. Do not skip any phase.
 - Never fix without investigating root cause first (Iron Law).
 - After 3 failed hypotheses, suggest escalation. Do not keep guessing.

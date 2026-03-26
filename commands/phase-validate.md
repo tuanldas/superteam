@@ -134,6 +134,7 @@ Confirm a phase is truly complete through 4 layers of verification: auto-check s
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Phase MUST be in-progress (or completed for re-validation). Do not validate a planned phase.
 - All 4 layers run in sequence: criteria -> tests -> integration -> UAT.
 - Layer 4 (UAT) ALWAYS requires user input. Do not auto-approve on behalf of the user.
