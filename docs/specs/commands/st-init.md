@@ -23,6 +23,7 @@ Thay thế hoàn toàn `/gsd:new-project`.
 | Global defaults | Không | Mỗi project hỏi riêng |
 | Spec review | Reviewer kiểm tra tất cả artifacts, max 3 iterations | Đảm bảo chất lượng trước khi Done |
 | Design System | Sau Research, trước Requirements. Luôn hỏi, adapted flow (bỏ bước trùng init) | Backend cũng cần UI (404, coming soon). Research cung cấp context, design system inform requirements |
+| Scope Summary | Step 3 full (10 sections) + step 7 diff | Step 3 có đủ context từ questioning; step 7 refine với research. AI recommend, user adjust. |
 
 ## Flow
 
