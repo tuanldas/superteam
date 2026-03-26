@@ -11,12 +11,15 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
 ## Workflow
 
 1. **Configure preferences**
-   - Ask user for:
+   - Ask each preference ONE AT A TIME, adaptive. Follow `superteam:questioning`.
+   - Preferences to cover (order and phrasing adapt based on answers):
      - Granularity preference (coarse / standard / fine)
      - Parallelization (parallel / sequential)
      - Git tracking for planning docs (yes / no)
      - AI models for agents (if applicable)
      - Research confirmation (confirm / auto-approve) — default: confirm
+   - Each question includes AI recommendation + reasoning.
+   - If a previous answer makes a preference obvious, skip it or set default with explanation.
    - Write `.superteam/config.json`
    - Commit: `chore: add project config`
    - Follow `superteam:atomic-commits`
@@ -50,11 +53,12 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - Example: "You mentioned API but haven't discussed auth."
      - Example: "I see React but no test setup."
    - Questioning techniques:
+     - Follow `superteam:questioning` — ONE question per message, adaptive
      - Follow the thread, do NOT follow a script
      - Challenge vagueness: what does "good" mean? who are "users"?
      - Make abstract concrete: "Walk me through using this"
      - 4 question types: Motivation, Concreteness, Clarification, Success
-     - NEVER: checklist walking, canned questions, interrogation, rushing, shallow acceptance, premature constraints
+     - NEVER: checklist walking, canned questions, interrogation, rushing, shallow acceptance, premature constraints, multiple questions in one message
    - Checkpoint after 15 exchanges (or >= 4/5 areas covered):
      - Present summary: "Here is what I understand..."
        - WHO: [summary]
@@ -252,6 +256,7 @@ project/
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - This is an INTERACTIVE command. Never run in auto mode.
 - Each step commits separately. Follow `superteam:atomic-commits`.
 - PROJECT.md is a living document. Update it whenever conflicts are discovered in later steps.

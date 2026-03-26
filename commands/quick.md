@@ -23,7 +23,7 @@ Execute a small task fast: auto-plan 1-3 tasks, execute immediately, atomic comm
 
 3. **Discussion phase** (only with `--discuss`)
    - Identify 2-4 gray areas or assumptions about the task
-   - Ask user 1-2 focused questions
+   - Ask each question individually, adaptive. Follow `superteam:questioning`.
    - Record decisions
 
 4. **Research phase** (only with `--research`)
@@ -78,6 +78,7 @@ Flags are composable: `/st:quick --discuss --full add dark mode toggle`
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Target 1-3 tasks MAXIMUM. If task needs more, suggest `/st:plan` instead.
 - NO user approval for the plan. User already knows what they want.
 - Always create tracking directory and PLAN.md even for single-task execution.

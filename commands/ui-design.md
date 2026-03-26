@@ -28,10 +28,10 @@ Full UI pipeline: generate UI-SPEC (design contract), preview mockup in Playwrig
    - Detect design system library (Tailwind, MUI, shadcn, Vuetify, etc.)
    - User confirms or overrides detected library
 
-3. **Questioning** (light, 2-3 questions)
-   - "What page or component do you want to design?"
-   - "Any reference or inspiration?" (accept images)
-   - Additional context questions as needed
+3. **Questioning** (light, adaptive)
+   - Ask each question individually, adaptive. Follow `superteam:questioning`.
+   - Topics to cover: what page/component, any reference/inspiration (accept images), additional context as needed.
+   - Each question builds on the previous answer. Skip questions already answered.
 
 4. **Generate UI-SPEC** (design contract)
    - Color: from DESIGN-SYSTEM.md (or temporary values)
@@ -117,6 +117,7 @@ Full UI pipeline: generate UI-SPEC (design contract), preview mockup in Playwrig
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - Design system check is mandatory. If DESIGN-SYSTEM.md does not exist, offer `/st:design-system` or use temporary values. Never skip.
 - UI-SPEC is the design contract. All mockup and production code must conform to it.
 - Mockup preview uses Playwright MCP. The mockup must use the actual design system (not placeholder styles).

@@ -62,11 +62,9 @@ Debug complex bugs systematically. Persistent debug session files survive contex
    - Only add filtered logs to Evidence (APPEND)
 
    5b. Ask user (or extract from input/image):
-   - Expected behavior
-   - Actual behavior
-   - Error messages
-   - Reproduction steps
-   - When it started
+   - Symptoms to gather: expected behavior, actual behavior, error messages, reproduction steps, when it started
+   - Ask each symptom ONE AT A TIME, adaptive. Follow `superteam:questioning`.
+   - If previous answer already covers a symptom, skip it.
    - Update file after EACH answer
    - May suggest: "Can you send a screenshot of the console?"
    - Set status -> `investigating`
@@ -231,6 +229,7 @@ Debug complex bugs systematically. Persistent debug session files survive contex
 
 ## Rules
 
+- Follow `superteam:questioning` for all user interactions.
 - IRON LAW: Never attempt a fix before root cause is identified. Investigation first.
 - Update the session file BEFORE every action. This is non-negotiable.
 - Eliminated hypotheses are APPEND-only. Never retry an eliminated hypothesis.
