@@ -44,7 +44,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Maintain an internal coverage checklist (do NOT show to user):
      - WHO: Who are the users, usage context
      - WHAT: Core problem / pain point
-     - SCOPE: Clear boundaries (v1 does what, does NOT do what)
+     - SCOPE: Features, dependencies, effort signals, assumptions
      - EXIST: What exists already, technical constraints
      - DONE: What does "done" look like? Success criteria
    - Each area needs at least 1 specific answer to check off.
@@ -60,15 +60,20 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - 4 question types: Motivation, Concreteness, Clarification, Success
      - NEVER: checklist walking, canned questions, interrogation, rushing, shallow acceptance, premature constraints, multiple questions in one message
    - Checkpoint after 15 exchanges (or >= 4/5 areas covered):
-     - Present summary: "Here is what I understand..."
-       - WHO: [summary]
-       - WHAT: [summary]
-       - SCOPE: [summary]
-       - EXIST: [summary]
-       - DONE: [summary]
-       - Uncovered areas: [list]
-     - Ask: "Is this correct and complete? Anything to fix or add?"
-     - User says enough: continue flow
+     - Present SCOPE SUMMARY (full format, 10 sections):
+       1. WHAT WE KNOW — WHO, WHAT, EXIST, DONE, CONSTRAINTS from answers
+       2. PROJECT OVERVIEW — narrative (2-3 sentences) + functional areas table (effort S/M/L/XL) + user roles table
+       3. CORE USER JOURNEY — end-to-end flow + minimum complete path
+       4. FEATURE MAP — dependency tree (what requires what)
+       5. EFFORT + TINH CHAT — each feature: effort + Foundational/Additive
+       6. RISKIEST ASSUMPTIONS — per feature: assumption + status (Validated/Unvalidated/Unknown). Features on Unknown → v2+.
+       7. SCOPE RECOMMENDATION — MoSCoW (Must/Should/Could) with AI reasoning. Confidence: Med/Low.
+       8. V1 SUCCESS SIGNAL — one observable user behavior that proves v1 works. Gut-check: every Must traces to this moment.
+       9. WHAT V1 DELIBERATELY IGNORES — each excluded feature: why OK, risk if included, trigger to add later. Replaces flat "Won't" list.
+       10. TRADEOFFS — key decisions with AI recommendation
+     - End with: "Adjust scope nao truoc khi tiep tuc?"
+     - User adjusts: move features between tiers, challenge assumptions, refine success signal
+     - User approves: scope decisions saved to PROJECT.md with note "Preliminary scope — se refine sau research"
      - User says more/fix: new questioning round (15 exchanges), loop unlimited
 
 4. **Write PROJECT.md (living document)**
