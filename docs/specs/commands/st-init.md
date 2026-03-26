@@ -61,7 +61,7 @@ Thay thế hoàn toàn `/gsd:new-project`.
    b. Coverage checklist (internal, không hiển thị cho user)
       ☐ WHO   - User là ai, dùng trong context nào
       ☐ WHAT  - Core problem / pain point cần giải quyết
-      ☐ SCOPE - Ranh giới rõ ràng (v1 làm gì, KHÔNG làm gì)
+      ☐ SCOPE - Features, dependencies, effort signals, assumptions
       ☐ EXIST - Đã có gì rồi, constraints kỹ thuật
       ☐ DONE  - Thế nào là "xong"? Success criteria
 
@@ -82,15 +82,20 @@ Thay thế hoàn toàn `/gsd:new-project`.
         rushing, shallow acceptance, premature constraints
 
    e. Checkpoint sau 15 lượt (hoặc ≥ 4/5 areas covered)
-      → Trình bày tổng quan: "Đây là những gì tôi hiểu..."
-        - WHO: [tóm tắt]
-        - WHAT: [tóm tắt]
-        - SCOPE: [tóm tắt]
-        - EXIST: [tóm tắt]
-        - DONE: [tóm tắt]
-        - Areas chưa cover: [liệt kê]
-      → Hỏi: "Đã đúng và đủ chưa? Cần sửa/thêm gì?"
-      → User: "Đủ rồi" → tiếp flow
+      → Trình bày SCOPE SUMMARY (full format, 10 sections):
+        1. WHAT WE KNOW — WHO, WHAT, EXIST, DONE, CONSTRAINTS
+        2. PROJECT OVERVIEW — narrative + bảng mảng chức năng (effort) + bảng user roles
+        3. CORE USER JOURNEY — flow end-to-end + minimum complete path
+        4. FEATURE MAP — dependency tree
+        5. EFFORT + TÍNH CHẤT — mỗi feature: effort (S/M/L/XL) + Foundational/Additive
+        6. RISKIEST ASSUMPTIONS — mỗi feature: giả định + status (✅/⚠️/❌)
+        7. SCOPE RECOMMENDATION — MoSCoW (Must/Should/Could) + AI reasoning. Confidence: Med/Low
+        8. V1 SUCCESS SIGNAL — hành vi user observable khi v1 thành công
+        9. WHAT V1 DELIBERATELY IGNORES — mỗi feature bỏ: why OK, risk nếu thêm, trigger khi nào thêm
+        10. TRADEOFFS — key decisions + AI recommendation
+      → Kết thúc: "Adjust scope nào trước khi tiếp tục?"
+      → User adjust → sửa scope
+      → User approve → lưu vào PROJECT.md (ghi "Preliminary scope — sẽ refine sau research")
       → User: "Cần thêm/sửa" → vòng questioning mới (15 lượt)
       → Lặp không giới hạn số vòng
     ↓
