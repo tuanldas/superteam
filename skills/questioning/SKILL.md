@@ -27,6 +27,8 @@ A question must:
   - Build on the user's previous answer (adaptive)
   - Have clear purpose (why are we asking this?)
   - Include AI recommendation when options are known
+  - Base ONLY on observed facts (user answers, detection results, codebase)
+  - NEVER assume what the user means — if uncertain, CONFIRM or say "I don't know enough yet"
 
 If you want to ask two things, send two messages.
 ```
@@ -46,14 +48,24 @@ Not every user interaction is a "question." Distinguish:
 ```
 ASK = collecting information the AI does not yet have.
 
+TWO PHASES:
+  Exploration (early, low context):
+    - Pure open-ended questions. NO options, NO examples, NO suggestions.
+    - Goal: let user express intent without AI constraining it.
+    - Stays in exploration until AI has concrete facts about: domain, users, core problem.
+    - "For example..." or "such as..." = premature options in disguise. Do NOT use.
+
+  Narrowing (after concrete context established):
+    - Multiple choice OK when options come from KNOWN FACTS, not AI guesses.
+    - Each option must be traceable to something user said or codebase showed.
+
 RULES:
   - ONE question per message. Never bundle 2+ questions.
   - Adaptive: next question DEPENDS on previous answer.
   - No fixed question list. AI decides next question dynamically.
   - If previous answer already covers a planned question → skip it.
   - If previous answer opens a new direction → follow that first.
-  - Prefer multiple choice when options are known.
-  - Open-ended when exploring intent or gathering broad context.
+  - Skip questions whose answers are inferrable from context.
 ```
 
 ### PRESENT Rules
@@ -84,23 +96,24 @@ RULES:
 When asking a multiple choice question, always recommend:
 
 ```
-[Context — why this question matters, 1-2 sentences]
+[Context — why this question matters. Known facts: [cite from user answers/detection]]
 
 - **Option A** — [description]
 - **Option B** — [description]
 - **Option C** — [description]
 
-Recommend: **Option B** — [reason why this is best for this context].
-Not Option A because [reason]. Not Option C because [reason].
+Recommend: **Option B** — [reason]. Confidence: High/Med/Low.
+Not Option A because [fact-based reason]. Not Option C because [fact-based reason].
 ```
 
 ### Format Rules
 
-- Lead with context (why asking), not the options
+- Lead with context (why asking) AND known facts that led to these options
 - 2-4 options. More than 4 → group or split into two questions.
 - Each option has a short label + description
-- AI ALWAYS recommends one option
-- Recommendation includes: why this option + why NOT each other option
+- Every option must be grounded in known facts — no AI-invented options
+- AI ALWAYS recommends one option with confidence level (High/Med/Low)
+- Recommendation includes: why this option + why NOT each other option (fact-based, no assumptions)
 - User can always choose differently — recommendation is guidance, not enforcement
 
 ## Adaptive Questioning
@@ -111,6 +124,7 @@ ADAPTIVE FLOW:
 
   HOW:
   - After each answer, evaluate: what is the most important unknown NOW?
+  - Base ONLY on facts: user answers, detection results, codebase evidence.
   - If the answer gave info about future planned questions → skip those
   - If the answer revealed a new concern → address that first
   - If the answer was vague → follow up for specifics before moving on
@@ -119,6 +133,8 @@ ADAPTIVE FLOW:
   - Ask a question whose answer is obvious from previous context
   - Follow a predetermined script regardless of answers
   - Ask "anything else?" immediately after first answer — follow thread first
+  - Assume domain, users, or constraints not stated by user
+  - Offer options based on AI's guess of what user might mean
 ```
 
 ### Example: Config Preferences (Adaptive)
@@ -151,16 +167,25 @@ Bad (batch):
 > 2. Tech stack: React, Flutter, Laravel?
 > 3. V1 scope: core features?
 
-Good (adaptive):
+Bad (examples-as-options — premature narrowing):
+> User: "They waste too much time on repetitive tasks"
+>
+> AI: "Which repetitive tasks? For example, status reporting, code reviews, deployment steps, data entry?"
+>
+> **Why bad:** AI assumes technical team (no facts support this). Listing examples constrains user to AI's guesses.
+
+Good (adaptive, fact-based):
 > **Message 1:** "What are you building?"
 
-User: "A task management app for small teams"
+User: "A tool to help my team work better"
 
-> **Message 2:** "How many people in a typical team using this, and what do they use now?"
+> **Message 2:** "What does 'work better' mean specifically for your team?"
 
-User: "5-10, currently on Trello but it lacks X"
+User: "They waste too much time on repetitive tasks"
 
-> **Message 3:** "What specifically about X does Trello not handle well?"
+> **Message 3:** "Can you walk me through a typical day? What tasks keep coming up that feel repetitive?"
+
+**Why good:** Message 3 stays pure open-ended. AI knows: team exists, repetitive tasks are the pain point. AI does NOT know: domain, team size, what tasks. So it asks the user to describe, not pick from a list.
 
 ## Anti-Patterns
 
@@ -170,9 +195,11 @@ User: "5-10, currently on Trello but it lacks X"
 | **Checklist walking** — asking scripted questions regardless of answers | Feels robotic, misses context from answers | Adapt based on what user said |
 | **Interrogation** — rapid-fire questions without processing answers | User feels rushed, AI doesn't build understanding | Follow the thread, explore depth |
 | **Redundant question** — asking what's already known from context | Wastes user time, shows AI not listening | Skip questions answered by prior context |
-| **Premature options** — offering choices before understanding intent | Constrains user thinking too early | Start open-ended, narrow with multiple choice later |
+| **Premature options** — offering choices before understanding intent | Constrains user thinking too early | Stay in exploration phase until concrete facts exist |
+| **Examples as options** — "e.g., X, Y, Z?" disguised as open-ended | Same as premature options, just hidden | Pure open-ended: no "for example", "such as", "like" lists |
 | **Hidden batch** — one "question" with sub-questions inside | Still a question dump, just formatted as one | Split into separate messages |
-| **Shallow acceptance** — accepting vague answers without follow-up | Builds on weak foundation | Challenge vagueness: "What does 'good' mean here?" |
+| **Assumptions as facts** — treating AI guesses as known context | Hallucinated foundation, wrong direction | List known facts before each question; CONFIRM if uncertain |
+| **Shallow acceptance** — accepting vague answers without follow-up | Builds on weak foundation | Challenge: "What does [vague term] mean specifically?" |
 
 ## How Commands Reference This Skill
 
@@ -195,6 +222,11 @@ For commands with specific questioning steps, also add inline:
 ```
 GOLDEN RULE:
   One question per message. Next question adapts to previous answer.
+  Base ONLY on observed facts. Never assume.
+
+PHASES:
+  Exploration (low context) → pure open-ended, NO options/examples
+  Narrowing (facts established) → multiple choice from known facts
 
 INTERACTION TYPES:
   ASK     → 1 per message, adaptive, recommend for multiple choice
@@ -202,15 +234,16 @@ INTERACTION TYPES:
   CONFIRM → 1 per message, provide context
 
 MULTIPLE CHOICE FORMAT:
-  [Context] → [Options with descriptions] → [AI recommendation + reasoning]
+  [Context + known facts] → [Options from facts] → [Recommendation + confidence]
 
 ADAPTIVE:
-  Answer determines next question.
+  Answer determines next question. Fact-based only.
   Skip covered questions. Follow new threads. Challenge vagueness.
 
 ANTI-PATTERNS:
   No question dumps. No checklist walking. No interrogation.
-  No redundant questions. No premature options. No shallow acceptance.
+  No redundant questions. No premature options. No examples-as-options.
+  No assumptions as facts. No shallow acceptance.
 ```
 
 ## Context Budget
