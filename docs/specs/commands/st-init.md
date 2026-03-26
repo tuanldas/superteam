@@ -184,12 +184,20 @@ Thay thế hoàn toàn `/gsd:new-project`.
        - Save .superteam/DESIGN-SYSTEM.md
        - Commit: "design: create design system for [project]"
     ↓
-7. Define requirements
-   - Load DESIGN-SYSTEM.md nếu có (design tokens inform requirements)
-   - Load research findings (LANDSCAPE.md cho feature reference)
-   - Categorize features (table stakes / differentiators)
-   - User scope v1/v2/out of scope per category
+7. Define requirements (scope refine + generate)
+   - Load context mới: research findings + DESIGN-SYSTEM.md (nếu có) + PROJECT.md (có scope từ step 3)
+   - Trình bày SCOPE DIFF — chỉ thay đổi so với step 3:
+     → Features đổi tier (vd: "Comment: SHOULD → MUST vì research cho thấy...")
+     → Assumptions cập nhật status (vd: "⚠️ → ✅ research confirmed")
+     → Risks mới từ research
+     → Effort điều chỉnh (vd: "Real-time sync: [L] → [XL] vì tech stack X")
+     → Success signal refine nếu cần
+     → Confidence: High/Med
+   - Nếu không có thay đổi: "Research xác nhận scope step 3. Không thay đổi."
+   - User confirm/adjust → finalize scope
    - Generate REQUIREMENTS.md với REQ-IDs ([CATEGORY]-[NUMBER])
+     → Mỗi Must/Should → REQ-ID
+     → Could/Won't → section "Deferred" kèm lý do
    - Trình bày full list, xin user approval
    - Nếu phát hiện conflict → update PROJECT.md
    - Commit: "docs: define v1 requirements"
