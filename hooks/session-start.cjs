@@ -4,9 +4,36 @@ const path = require('node:path');
 const { detectProject } = require(path.resolve(__dirname, '..', 'core', 'detector.cjs'));
 const { loadConfig } = require(path.resolve(__dirname, '..', 'core', 'config.cjs'));
 
+function getPluginVersion() {
+  const fs = require('node:fs');
+  try {
+    const pluginJson = path.resolve(__dirname, '..', '.claude-plugin', 'plugin.json');
+    const data = JSON.parse(fs.readFileSync(pluginJson, 'utf8'));
+    return data.version || 'unknown';
+  } catch (_) {
+    return 'unknown';
+  }
+}
+
+function loadCorePrinciples() {
+  const fs = require('node:fs');
+  try {
+    const skillPath = path.resolve(__dirname, '..', 'skills', 'core-principles', 'SKILL.md');
+    const content = fs.readFileSync(skillPath, 'utf8');
+    // Strip YAML frontmatter
+    const stripped = content.replace(/^---[\s\S]*?---\s*/, '');
+    // Strip meta sections (How Commands Reference, Extensibility, Context Budget, Integration)
+    const cleaned = stripped.replace(/## How Commands Reference[\s\S]*$/, '').trim();
+    return cleaned;
+  } catch (_) {
+    return null;
+  }
+}
+
 function buildContext(cwd) {
   const detection = detectProject(cwd);
   const config = loadConfig(cwd);
+  const pluginVersion = getPluginVersion();
 
   const projectName = config.name || path.basename(cwd);
   const projectType = detection.type;
@@ -18,7 +45,7 @@ function buildContext(cwd) {
     : null;
 
   const lines = [];
-  lines.push(`# Superteam Project Context`);
+  lines.push(`# Superteam Project Context (v${pluginVersion})`);
   lines.push(``);
   lines.push(`- **Project:** ${projectName}`);
   lines.push(`- **Type:** ${projectType}`);
@@ -35,6 +62,28 @@ function buildContext(cwd) {
 
   if (!isInitialized) {
     lines.push(`> Project not initialized. Run \`/st:init\` to set up Superteam for this project.`);
+    lines.push(``);
+  }
+
+  // Version change detection: compare plugin version with last-seen version
+  const versionFile = path.join(cwd, '.superteam', '.plugin-version');
+  if (fs.existsSync(path.join(cwd, '.superteam'))) {
+    const lastVersion = fs.existsSync(versionFile)
+      ? fs.readFileSync(versionFile, 'utf8').trim()
+      : null;
+    if (lastVersion && lastVersion !== pluginVersion) {
+      lines.push(`> **Plugin updated:** v${lastVersion} → v${pluginVersion}. Run \`/clear\` to reload all rules and skills.`);
+      lines.push(``);
+    }
+    try { fs.writeFileSync(versionFile, pluginVersion); } catch (_) { /* ignore */ }
+  }
+
+  // Inject core-principles directly into session context
+  const corePrinciples = loadCorePrinciples();
+  if (corePrinciples) {
+    lines.push(`## Core Principles (MUST FOLLOW)`);
+    lines.push(``);
+    lines.push(corePrinciples);
     lines.push(``);
   }
 
