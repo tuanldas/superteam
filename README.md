@@ -16,6 +16,18 @@ Or from local directory:
 claude plugin add /path/to/superteam
 ```
 
+### Add as Marketplace
+
+To add Superteam as a marketplace source (enables `claude plugin add st@superteam`):
+
+```bash
+# From GitHub
+claude /plugin  →  Add Marketplace  →  tuanldas/superteam
+
+# From local directory
+claude /plugin  →  Add Marketplace  →  /path/to/superteam
+```
+
 Requires Node.js >= 18. Zero external dependencies.
 
 ## Commands
