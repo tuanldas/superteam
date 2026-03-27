@@ -39,7 +39,8 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Present detection results (display only, no confirmation yet)
 
 3. **Deep questioning (loop)**
-   - Start open-ended: "What are you building?"
+   - Start open-ended: "What are you building?" — plain text question, NO choices/options in AskUserQuestion. Let user describe freely.
+   - Do NOT categorize (Web app, Mobile, API, etc.) — let user tell you in their own words.
    - Follow up based on answers. Accept image input anytime (wireframe, whiteboard, architecture diagram).
    - Maintain an internal coverage checklist (do NOT show to user):
      - WHO: Who are the users, usage context

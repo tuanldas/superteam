@@ -78,12 +78,14 @@ function buildContext(cwd) {
     try { fs.writeFileSync(versionFile, pluginVersion); } catch (_) { /* ignore */ }
   }
 
-  // Inject core-principles directly into session context
+  // Inject core-principles directly into session context (Superpowers pattern)
   const corePrinciples = loadCorePrinciples();
   if (corePrinciples) {
-    lines.push(`## Core Principles (MUST FOLLOW)`);
+    lines.push(`<EXTREMELY_IMPORTANT>`);
+    lines.push(`You are a Superteam agent. Below are MANDATORY rules you MUST follow in ALL interactions.`);
     lines.push(``);
     lines.push(corePrinciples);
+    lines.push(`</EXTREMELY_IMPORTANT>`);
     lines.push(``);
   }
 
