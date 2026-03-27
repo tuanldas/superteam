@@ -169,15 +169,19 @@ Thay thế hoàn toàn `/gsd:new-project`.
        - Brownfield: "Phát hiện [fonts/colors/spacing]. Baseline hay zero?"
        - Không hỏi thêm — context đã đủ từ bước 2-5
 
-   6.2 Đề xuất 7 dimensions
-       - AESTHETIC, DECORATION, TYPOGRAPHY, COLOR, SPACING, LAYOUT, MOTION
-       - SAFE CHOICES vs RISKS + AI SLOP CHECK
+   6.2 Đề xuất từng dimension một
+       - Thứ tự: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
+       - Mỗi dimension = 1 message riêng (ASK pattern)
+       - Recommend + rationale → Approve / Adjust
+       - Adjust → drill-down inline (1 focused question)
+       - Coherence check vs dimensions đã approved: nudge 1 lần, accept user decision
+       - Adaptive: skip/pre-fill nếu answer trước đã imply
        - Dùng research landscape data nếu có, built-in knowledge nếu không
        - Áp dụng font rules + AI slop anti-patterns từ /st:design-system
 
-   6.3 Drill-downs + Playwright preview
-       - Approve / Adjust / Different risks / Start over
-       - Coherence check: nudge 1 lần, accept user decision
+   6.3 Full summary + Playwright preview
+       - Sau khi 7 dimensions approved → compact summary + SAFE/RISKS + AI SLOP CHECK
+       - Approve all / Adjust [section] / Start over
        - Playwright nếu có: HTML preview, mockups, light/dark
        - Không có Playwright: text-based
 

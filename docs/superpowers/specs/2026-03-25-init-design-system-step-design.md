@@ -19,6 +19,7 @@ Hiện tại `/st:init` có 9 bước nhưng không cover UI/design. Các tính 
 | Điều kiện chạy | Luôn hỏi user, bất kể loại project | Backend cũng có thể cần UI (404, coming soon, redirect) — auto-detect không bắt được |
 | Khi user skip | Ghi lý do vào PROJECT.md, skip sang bước 7 | Các bước sau biết design system không có và tại sao |
 | Adapted flow | Bỏ pre-checks, product context, research (đã có từ init) | Tránh hỏi trùng lặp, trải nghiệm mượt |
+| Proposal style (init) | Từng dimension một (1 message/dimension), summary sau cùng | Batch 7 dimensions gây ngợp. Per-dimension giúp user focus và suy nghĩ kỹ từng phần. Standalone giữ batch vì use case khác (quick one-shot) |
 | Tương thích standalone | Không thay đổi `/st:design-system` | Standalone đã có logic detect file tồn tại → hỏi update/start over |
 
 ## Thay đổi flow init (9 → 10 bước)
@@ -69,42 +70,58 @@ Hiện tại `/st:init` có 9 bước nhưng không cover UI/design. Các tính 
   → Zero: proposal ignores existing code, đề xuất hoàn toàn mới
 - **Không hỏi thêm câu hỏi context** — tất cả đã có từ bước 2-5
 
-**6.2. Đề xuất đầy đủ 7 dimensions**
+**6.2. Đề xuất từng dimension một**
 
-Dựa trên context → tạo proposal hoàn chỉnh:
+Đi từng dimension (primary flow, không phải drill-down). Mỗi dimension = 1 message riêng.
+
+Thứ tự: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
+
+Format mỗi dimension:
+```
+[DIMENSION]: [recommendation]
+  -- [rationale grounded in project context]
+
+Recommend: [recommendation] — [why]. Confidence: High/Med/Low.
+
+→ Approve / Adjust
+```
+
+- Approve → next dimension
+- Adjust → drill-down inline (1 focused question: fonts: 3-5 candidates, colors: 2-3 palette options)
+- Coherence check sau mỗi dimension vs đã approved:
+  - Mismatch → nudge 1 lần, giải thích tại sao unusual, offer alternative
+  - Luôn accept user decision, không block, không hỏi lại
+- Adaptive: nếu answer trước đã imply dimension sau → skip hoặc pre-fill với confirmation
+- Nếu init research có landscape data → dùng để inform recommendation
+- Nếu không → dùng built-in design knowledge
+- Áp dụng đầy đủ font rules (blacklist, overused warnings), AI slop anti-patterns từ `/st:design-system`
+
+**6.3. Full summary + Preview**
+
+Sau khi 7 dimensions approved → trình bày compact summary:
 
 ```
 ┌──────────────────────────────────────────────┐
-│ DESIGN SYSTEM PROPOSAL                       │
+│ DESIGN SYSTEM SUMMARY                        │
 ├──────────────────────────────────────────────┤
-│ AESTHETIC: [direction] -- [rationale]         │
-│ DECORATION: [level] -- [rationale]            │
-│ TYPOGRAPHY: [fonts + scale] -- [rationale]    │
-│ COLOR: [palette + hex] -- [rationale]         │
-│ SPACING: [base + density] -- [rationale]      │
-│ LAYOUT: [approach + grid] -- [rationale]      │
-│ MOTION: [approach + easing] -- [rationale]    │
+│ AESTHETIC: [approved value]                   │
+│ DECORATION: [approved value]                  │
+│ TYPOGRAPHY: [approved value]                  │
+│ COLOR: [approved value]                       │
+│ SPACING: [approved value]                     │
+│ LAYOUT: [approved value]                      │
+│ MOTION: [approved value]                      │
 ├──────────────────────────────────────────────┤
-│ SAFE CHOICES (category baseline):             │
-│ - [2-3 decisions matching conventions]        │
-│                                               │
-│ RISKS (product gets its own face):            │
-│ - [2-3 departures, each with rationale]       │
+│ SAFE CHOICES: [2-3 decisions matching norms]  │
+│ RISKS: [2-3 departures + rationale]           │
 ├──────────────────────────────────────────────┤
 │ AI SLOP CHECK: [flagged patterns, if any]     │
 └──────────────────────────────────────────────┘
 ```
 
-- Nếu init research có landscape data → dùng để inform proposal
-- Nếu init research không cover design landscape → dùng built-in design knowledge
-- Áp dụng đầy đủ font rules (blacklist, overused warnings), AI slop anti-patterns từ `/st:design-system`
-
-**6.3. Drill-downs + Preview**
-- User options: Approve, Adjust [section], Different risks, Start over
-- Mỗi drill-down là 1 câu hỏi focused (fonts: 3-5 candidates, colors: 2-3 palette options)
-- Coherence check sau mỗi thay đổi:
-  - Mismatch → nudge 1 lần, giải thích tại sao unusual, offer alternative
-  - Luôn accept user decision, không block, không hỏi lại
+- User options: Approve all / Adjust [section] / Start over
+- Adjust [section] → revisit dimension đó (1 question), update summary
+- Start over → quay lại 6.2 từ AESTHETIC
 - Playwright preview nếu available:
   - Generate self-contained HTML preview page
   - Load proposed fonts, apply color palette
@@ -126,9 +143,9 @@ Dựa trên context → tạo proposal hoàn chỉnh:
 | 2. Pre-checks | Bỏ | Init đã auto-detect, biết brownfield/greenfield |
 | 3. Product context | Bỏ | Deep questioning (bước 3) đã cover |
 | 4. Research | Bỏ/tái sử dụng | Init research (bước 5) đã có landscape data |
-| 5. Proposal | **Giữ** (6.2) | Core value — đề xuất 7 dimensions |
-| 6. Drill-downs | **Giữ** (6.3) | Core value — user tinh chỉnh |
-| 7. Playwright preview | **Giữ** (6.3) | Core value — visual validation |
+| 5. Proposal | **Giữ, adapted** (6.2) | Core value — đề xuất 7 dimensions. Init: từng dimension một (1 message/dimension). Standalone: batch tất cả |
+| 6. Drill-downs | **Merged** vào 6.2 | Drill-down inline khi user adjust từng dimension, không tách step riêng |
+| 7. Playwright preview | **Giữ** (6.3) | Core value — visual validation. Kết hợp với full summary |
 | 8. Write file | **Giữ** (6.4) | Cần thiết — lưu artifact |
 | 9. Done message | Bỏ | Init có done riêng (bước 10) |
 

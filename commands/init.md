@@ -143,39 +143,51 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      → Zero: proposal ignores existing code, proposes entirely new system
    - Do not ask additional context questions — all context already gathered from steps 2-5
 
-   **6.2. Propose full 7 dimensions**
-   - Based on accumulated context → create complete proposal:
+   **6.2. Propose each dimension one at a time**
+   - Based on accumulated context → propose EACH dimension as a separate message
+   - Order: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
+   - Each dimension = 1 message following `superteam:questioning` ASK pattern:
+     ```
+     [DIMENSION]: [recommendation]
+       -- [rationale grounded in project context]
+
+     Recommend: [recommendation] — [why]. Confidence: High/Med/Low.
+
+     → Approve / Adjust
+     ```
+   - If user approves → next dimension
+   - If user adjusts → drill-down inline (1 focused question: fonts: 3-5 candidates, colors: 2-3 palette options)
+   - Coherence check after each dimension vs previously approved dimensions:
+     - Mismatch → nudge once, explain why unusual, offer alternative
+     - Always accept user decision, never block, never ask again
+   - Adaptive: if user's answer on one dimension already implies another → skip or pre-fill with confirmation
+   - If init research has landscape data → use to inform each recommendation
+   - If not → use built-in design knowledge
+   - Apply full font rules (blacklist, overused warnings) and AI slop anti-patterns from `/st:design-system`
+
+   **6.3. Full summary + Preview**
+   - After all 7 dimensions approved → present compact summary:
      ```
      ┌──────────────────────────────────────────────┐
-     │ DESIGN SYSTEM PROPOSAL                       │
+     │ DESIGN SYSTEM SUMMARY                        │
      ├──────────────────────────────────────────────┤
-     │ AESTHETIC: [direction] -- [rationale]         │
-     │ DECORATION: [level] -- [rationale]            │
-     │ TYPOGRAPHY: [fonts + scale] -- [rationale]    │
-     │ COLOR: [palette + hex] -- [rationale]         │
-     │ SPACING: [base + density] -- [rationale]      │
-     │ LAYOUT: [approach + grid] -- [rationale]      │
-     │ MOTION: [approach + easing] -- [rationale]    │
+     │ AESTHETIC: [approved value]                   │
+     │ DECORATION: [approved value]                  │
+     │ TYPOGRAPHY: [approved value]                  │
+     │ COLOR: [approved value]                       │
+     │ SPACING: [approved value]                     │
+     │ LAYOUT: [approved value]                      │
+     │ MOTION: [approved value]                      │
      ├──────────────────────────────────────────────┤
-     │ SAFE CHOICES (category baseline):             │
-     │ - [2-3 decisions matching conventions]        │
-     │                                               │
-     │ RISKS (product gets its own face):            │
-     │ - [2-3 departures, each with rationale]       │
+     │ SAFE CHOICES: [2-3 decisions matching norms]  │
+     │ RISKS: [2-3 departures + rationale]           │
      ├──────────────────────────────────────────────┤
      │ AI SLOP CHECK: [flagged patterns, if any]     │
      └──────────────────────────────────────────────┘
      ```
-   - If init research has landscape data → use to inform proposal
-   - If not → use built-in design knowledge
-   - Apply full font rules (blacklist, overused warnings) and AI slop anti-patterns from `/st:design-system`
-
-   **6.3. Drill-downs + Preview**
-   - User options: Approve, Adjust [section], Different risks, Start over
-   - Each drill-down is 1 focused question (fonts: 3-5 candidates, colors: 2-3 palette options)
-   - Coherence check after each change:
-     - Mismatch → nudge once, explain why unusual, offer alternative
-     - Always accept user decision, never block, never ask again
+   - User options: Approve all / Adjust [section] / Start over
+   - Adjust [section] → revisit that dimension (1 question), then update summary
+   - Start over → return to 6.2 from AESTHETIC
    - Playwright preview if available:
      - Generate self-contained HTML preview page
      - Load proposed fonts, apply color palette
