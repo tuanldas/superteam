@@ -101,6 +101,7 @@ Compile all findings into the final report using the output format below.
 
 ## Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **tdd-discipline** (`skills/tdd-discipline/SKILL.md`) — Red-Green-Refactor methodology, test framework detection, TDD heuristic for testability, anti-shortcut rules. Governs how tests should be written and what qualifies as a valid test.
 - **verification** (`skills/verification/SKILL.md`) — Evidence-before-claims discipline, goal-backward analysis, Iron Law of verification. Ensures test audit findings are backed by command output, not assumptions.
 

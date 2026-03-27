@@ -11,7 +11,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
 ## Workflow
 
 1. **Configure preferences**
-   - Ask each preference ONE AT A TIME, adaptive. Follow `superteam:questioning`.
+   - Ask each preference ONE AT A TIME, adaptive. Follow `superteam:core-principles` questioning rules.
    - Preferences to cover (order and phrasing adapt based on answers):
      - Granularity preference (coarse / standard / fine)
      - Parallelization (parallel / sequential)
@@ -53,7 +53,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - Example: "You mentioned API but haven't discussed auth."
      - Example: "I see React but no test setup."
    - Questioning techniques:
-     - Follow `superteam:questioning` — ONE question per message, adaptive
+     - Follow `superteam:core-principles` questioning rules — ONE question per message, adaptive
      - Follow the thread, do NOT follow a script
      - Challenge vagueness: what does "good" mean? who are "users"?
      - Make abstract concrete: "Walk me through using this"
@@ -146,7 +146,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    **6.2. Propose each dimension one at a time**
    - Based on accumulated context → propose EACH dimension as a separate message
    - Order: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
-   - Each dimension = 1 message following `superteam:questioning` ASK pattern:
+   - Each dimension = 1 message following `superteam:core-principles` ASK pattern:
      ```
      [DIMENSION]: [recommendation]
        -- [rationale grounded in project context]
@@ -281,7 +281,6 @@ project/
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - This is an INTERACTIVE command. Never run in auto mode.
 - Each step commits separately. Follow `superteam:atomic-commits`.
 - PROJECT.md is a living document. Update it whenever conflicts are discovered in later steps.
@@ -292,3 +291,4 @@ project/
 - Image input accepted at any point in the flow.
 - Config is step 1 because research agents need config to run properly.
 - Brownfield detection is integrated into init flow (no flow interruption).
+- Follow `superteam:core-principles` for all work.

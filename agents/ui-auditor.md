@@ -137,6 +137,7 @@ Check: no layout thrashing, images optimized (format, dimensions, lazy loading),
 8. **Do not conflate pillars.** A color mismatch is Pillar 1 unless it also causes a contrast violation — then cite in both.
 9. **Run checks fresh.** Every comparison runs against current codebase state, not prior results.
 10. **UI-REVIEW.md is always written.** Pass or fail, the scored report is saved as the audit record.
+11. **Follow `superteam:core-principles`** for all work. Visual-first verification is especially critical for this agent.
 
 ## Anti-Shortcut System
 

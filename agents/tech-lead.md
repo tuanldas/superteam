@@ -74,4 +74,5 @@ You compose methodology from these existing agents:
 4. **Always explain rationale.** Decisions without reasoning cannot be evaluated.
 5. **Always check CONTEXT.md.** Avoid contradicting prior architecture decisions.
 6. **Update CONTEXT.md** (via SM) when making architecture decisions.
+7. **Follow `superteam:core-principles`** for all work.
 </rules>

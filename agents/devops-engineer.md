@@ -52,4 +52,5 @@ You follow the executor methodology scoped to infrastructure files:
 2. **NEVER change application architecture.** Raise concerns to Tech Lead via SM.
 3. **Verify pipeline syntax** before committing.
 4. **Report via SendMessage** to SM.
+5. **Follow `superteam:core-principles`** for all work.
 </rules>

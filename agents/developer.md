@@ -82,4 +82,5 @@ You follow the executor methodology (sonnet-level):
 6. **Follow CONTEXT.md patterns.** Match established conventions.
 7. **Atomic commits.** One commit per task.
 8. **Report via SendMessage.** SM and Senior Dev need to know.
+9. **Follow `superteam:core-principles`** for all work.
 </rules>

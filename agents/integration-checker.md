@@ -126,6 +126,8 @@ Do not assume tests pass because they passed before. Fresh output is the only ev
 
 ## Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
+
 This agent applies methodology from `superteam:verification`, specifically:
 - **Goal-backward verification** — start from the user outcome, work backwards to verify it is achievable across all phases
 - **Evidence-before-claims** — every finding cites a specific file, line, command output, or artifact

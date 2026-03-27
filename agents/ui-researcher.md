@@ -120,6 +120,7 @@ Before presenting, verify all quality gates pass:
 
 # Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **`superteam:project-awareness`** — project context loading, framework detection, workspace resolution. Defer to this skill for detection methodology.
 
 # Output Format

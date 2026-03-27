@@ -104,7 +104,6 @@ Debug a simple bug fast. Runs in main context (no separate agent), no session fi
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - All 4 debug phases are mandatory. Do not skip any phase.
 - Never fix without investigating root cause first (Iron Law).
 - After 3 failed hypotheses, suggest escalation. Do not keep guessing.
@@ -112,3 +111,4 @@ Debug a simple bug fast. Runs in main context (no separate agent), no session fi
 - Always write to knowledge base on completion, even for simple bugs.
 - Always add a failing test before implementing the fix.
 - Follow `superteam:atomic-commits` for the fix commit.
+- Follow `superteam:core-principles` for all work.

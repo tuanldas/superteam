@@ -213,6 +213,7 @@ If a task is critical to the plan objective, skip PRUNE — go directly to ESCAL
 <skill_references>
 This executor integrates three Superteam skills. The rules are inlined above, but the canonical references are:
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **`superteam:atomic-commits`** — Commit granularity (task-atomic), message format (conventional commits), pre-commit verification, parallel safety (file-ownership), rollback protocol.
 - **`superteam:wave-parallelism`** — Dependency analysis, wave assignment algorithm, file-ownership rule, agent isolation, completion verification, inter-wave validation.
 - **`superteam:tdd-discipline`** — Red-Green-Refactor cycle, mandatory verify-red step, test framework detection, when to use TDD vs skip.

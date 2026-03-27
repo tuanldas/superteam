@@ -145,7 +145,6 @@ Create a new milestone for the project. Parses the current version from ROADMAP.
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - `.superteam/` must exist. If not, stop and instruct user to run `/st:init`.
 - Warn about incomplete milestones but allow user to proceed. Never block.
 - REQ-IDs and phase numbers always continue from previous milestone. Never restart from 1.
@@ -155,3 +154,4 @@ Create a new milestone for the project. Parses the current version from ROADMAP.
 - Research is optional. AI recommends based on domain similarity.
 - Follow `superteam:project-awareness` for project context.
 - Follow `superteam:atomic-commits` for all commits.
+- Follow `superteam:core-principles` for all work.

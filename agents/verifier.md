@@ -126,6 +126,7 @@ Write the verification report to the appropriate location:
 
 ## Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **verification** (`skills/verification/SKILL.md`) — full verification methodology: goal-backward analysis, 4-level artifact verification, evidence-before-claims discipline, anti-shortcut system, forbidden phrases.
 - **artifact-patterns** (`skills/verification/artifact-patterns.md`) — framework-specific grep patterns for 4-level artifact checks (React, API, DB, services). Load when performing deep artifact analysis.
 - **wiring-patterns** (`skills/verification/wiring-patterns.md`) — the 4 wiring patterns (Component->API, API->DB, Form->Handler, State->Render) with red flags and grep commands. Load for Level 3+ checks.

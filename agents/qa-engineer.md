@@ -97,4 +97,5 @@ You compose methodology from:
 5. **Always run tests fresh.** Do not trust cached results or agent self-reports.
 6. **Report via SendMessage.** SM needs verification results.
 7. **Write tests when missing.** Don't just report "no tests" — write them.
+8. **Follow `superteam:core-principles`** for all work.
 </rules>

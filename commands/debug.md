@@ -63,7 +63,7 @@ Debug complex bugs systematically. Persistent debug session files survive contex
 
    5b. Ask user (or extract from input/image):
    - Symptoms to gather: expected behavior, actual behavior, error messages, reproduction steps, when it started
-   - Ask each symptom ONE AT A TIME, adaptive. Follow `superteam:questioning`.
+   - Ask each symptom ONE AT A TIME, adaptive. Follow `superteam:core-principles` questioning rules.
    - If previous answer already covers a symptom, skip it.
    - Update file after EACH answer
    - May suggest: "Can you send a screenshot of the console?"
@@ -229,7 +229,6 @@ Debug complex bugs systematically. Persistent debug session files survive contex
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - IRON LAW: Never attempt a fix before root cause is identified. Investigation first.
 - Update the session file BEFORE every action. This is non-negotiable.
 - Eliminated hypotheses are APPEND-only. Never retry an eliminated hypothesis.
@@ -241,3 +240,4 @@ Debug complex bugs systematically. Persistent debug session files survive contex
 - Knowledge base matches are candidates only, never confirmed diagnoses.
 - Auto-checkpoint when context is nearly full. Never lose progress.
 - Follow `superteam:scientific-debugging` for investigation discipline.
+- Follow `superteam:core-principles` for all work.

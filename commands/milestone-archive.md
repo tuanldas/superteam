@@ -96,7 +96,6 @@ Clean up files after a milestone is completed. Move phase directories and resear
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - Milestone MUST be completed (entry in MILESTONES.md) before archiving.
 - Always show the full list of what will be moved/removed/kept and get user confirmation before executing.
 - Verify clean state after archive to confirm nothing was missed.
@@ -104,3 +103,4 @@ Clean up files after a milestone is completed. Move phase directories and resear
 - ROADMAP.md is kept because it contains continuous history across milestones.
 - plans/ are kept because they may be referenced across milestones.
 - Commit all changes with a descriptive message.
+- Follow `superteam:core-principles` for all work.

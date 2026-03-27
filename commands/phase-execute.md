@@ -121,7 +121,6 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - PLAN.md is REQUIRED. Do not execute without a plan.
 - Always check prerequisites (preceding phases) before executing.
 - Update ROADMAP status to in-progress at the START of execution, not at the end.
@@ -131,3 +130,4 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
 - Do NOT mark phase as completed here. That is the job of `/st:phase-validate`.
 - One commit per task. Follow `superteam:atomic-commits` strictly.
 - If a task fails node repair after RETRY + DECOMPOSE, ESCALATE to user.
+- Follow `superteam:core-principles` for all work.

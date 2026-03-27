@@ -167,7 +167,6 @@ Explore a vague idea and turn it into a clear, actionable spec. Two rounds of re
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - Zero-infrastructure: works without `/st:init`. Project context enhances accuracy.
 - Research round 1 ALWAYS runs. Do not ask, do not skip.
 - Research round 2 is conditional: AI evaluates need after user answers.
@@ -177,3 +176,4 @@ Explore a vague idea and turn it into a clear, actionable spec. Two rounds of re
 - Output is a spec document, NOT a plan. Suggest `/st:plan` as next step.
 - Image input accepted at any point in the flow.
 - Follow `superteam:research-methodology` for both research rounds.
+- Follow `superteam:core-principles` for all work.

@@ -82,7 +82,6 @@ Present findings and let user choose which to resume.
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - Always show status and options before resuming. Let the USER decide.
 - Always validate state consistency before presenting options.
 - Delete handoff files only after successful resume (option 1) or explicit discard (option 4).
@@ -90,3 +89,4 @@ Present findings and let user choose which to resume.
 - Universal scope: can resume ANY workflow type.
 - Use `superteam:project-awareness` for loading project context.
 - Use `superteam:handoff-protocol` for interpreting handoff data.
+- Follow `superteam:core-principles` for all work.

@@ -152,7 +152,6 @@ Handling: Nudge once, offer alternative, always accept user decision, never bloc
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - Present the full 7-dimension proposal at once. Do not ask dimension by dimension.
 - Always separate SAFE choices from RISKS with rationale for each.
 - Run AI slop check on every proposal. Flag generic patterns.
@@ -161,3 +160,4 @@ Handling: Nudge once, offer alternative, always accept user decision, never bloc
 - Overused fonts trigger a warning but are allowed if user insists.
 - Brownfield projects: always offer to infer from existing code first.
 - Two-way interaction with `/st:ui-design`: this command defines the system, `/st:ui-design` may suggest updates back.
+- Follow `superteam:core-principles` for all work.

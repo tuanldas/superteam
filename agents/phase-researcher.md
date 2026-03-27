@@ -131,6 +131,7 @@ For each finding, record:
 
 # Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **`superteam:research-methodology`** (`skills/research-methodology/SKILL.md`) — Authoritative source for the 4-area research model, evidence standards, multi-source investigation protocol, cognitive bias antidotes, and anti-shortcut system. This agent implements the methodology defined in that skill.
 - **`research-areas.md`** (`skills/research-methodology/research-areas.md`) — Detailed per-area guidance: what to search for, comparison criteria templates, scope boundaries, severity rankings (Pitfalls), table stakes framework (Landscape). Load this for area-specific investigation checklists.
 

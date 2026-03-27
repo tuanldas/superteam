@@ -149,3 +149,4 @@ Audit the entire current milestone through 3 layers: phase completion, requireme
 - Integration check covers ALL phases, not just completed ones — detect issues early.
 - Run all 3 layers even if Layer 1 fails. Provide a complete picture.
 - AUDIT.md is versioned (v[X.Y]-AUDIT.md) and stored in milestones/ directory.
+- Follow `superteam:core-principles` for all work.

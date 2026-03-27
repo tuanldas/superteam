@@ -273,6 +273,7 @@ Never issue APPROVE when Critical or Important issues remain unaddressed.
 
 ## Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **requesting-code-review** (`skills/requesting-code-review/SKILL.md`) — full review methodology, confidence calibration, anti-false-positive discipline, verify-before-fix gate.
 - **review-domains** (`skills/requesting-code-review/review-domains.md`) — 13 domain-specific checklists with blind-spot focus.
 

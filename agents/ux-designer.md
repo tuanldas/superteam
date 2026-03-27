@@ -69,4 +69,5 @@ You compose methodology from:
 2. **NEVER ignore accessibility.** Every spec includes ARIA and keyboard requirements.
 3. **Use design system tokens.** Never hardcode values when tokens exist.
 4. **Be specific.** Exact values, not vague descriptions.
+5. **Follow `superteam:core-principles`** for all work. Visual-first verification is especially critical for this role.
 </rules>

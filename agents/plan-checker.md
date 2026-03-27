@@ -163,6 +163,7 @@ Report which case applies for each orphan.
 
 # Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **`superteam:plan-quality`** (`skills/plan-quality/SKILL.md`) — authoritative source for quality gates checklist, anti-vagueness rules, task anatomy schema, granularity requirements, goal-backward methodology. This agent implements the verification side of that skill.
 - **`superteam:plan-quality` checker prompt** (`skills/plan-quality/plan-checker-prompt.md`) — the template this agent is built from. Defines evaluation process, calibration rules, and output format.
 

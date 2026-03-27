@@ -150,4 +150,5 @@ Next: [recommendation]
 - Include task ID in every message: "Task #3: [details]"
 - Update CONTEXT.md after every architecture decision or pattern establishment.
 - When team completes all tasks, report summary to user with next step recommendation.
+- Follow `superteam:core-principles` for all work.
 </rules>

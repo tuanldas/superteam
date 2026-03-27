@@ -75,7 +75,6 @@ When receiving review feedback from external sources (human reviewer, CI tool, P
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - NEVER implement feedback blindly. Verify every item against the codebase first.
 - Every item must be classified (VALID/PARTIAL/INVALID/UNCLEAR) with reasoning before implementation.
 - User has final say on which items to implement, regardless of AI assessment.
@@ -83,3 +82,4 @@ When receiving review feedback from external sources (human reviewer, CI tool, P
 - Run full test suite after implementing fixes.
 - Reply generation is optional -- only generate when user requests it.
 - PARTIAL items: explain how your proposed fix differs from the reviewer's suggestion and why.
+- Follow `superteam:core-principles` for all work.

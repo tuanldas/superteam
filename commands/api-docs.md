@@ -120,7 +120,6 @@ When docs already exist:
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - Ask format selection only once. Save to config, reuse on subsequent runs.
 - Use `--config` flag to change formats after initial selection.
 - Framework-native detection takes priority over fallback agents.
@@ -128,3 +127,4 @@ When docs already exist:
 - Markdown docs MUST include AI-drafted guides (getting started, auth, errors), not just raw reference.
 - In update mode, always show diff before writing changes.
 - Follow `superteam:project-awareness` for codebase context.
+- Follow `superteam:core-principles` for all work.

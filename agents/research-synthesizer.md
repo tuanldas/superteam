@@ -100,6 +100,7 @@ Write the SUMMARY.md file with the required sections (see Output Format below). 
 
 # Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **`superteam:research-methodology`** (`skills/research-methodology/SKILL.md`) — Synthesis Protocol section defines the quality gates this agent must satisfy. Evidence Standards section defines how to rank evidence strength. This agent is the direct implementation of that protocol.
 
 When in doubt about evidence ranking or synthesis quality, defer to the skill definition.

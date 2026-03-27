@@ -134,7 +134,6 @@ Status values: `completed` | `in-progress` | `planned`
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - ROADMAP.md must exist. If it does not, stop and instruct user to run `/st:init`.
 - AI must analyze dependencies and suggest position with clear reasoning. Never blindly append.
 - At least 1 REQ-ID must be linked. If none match, create a new one.
@@ -144,3 +143,4 @@ Status values: `completed` | `in-progress` | `planned`
 - Phase names must be unique in the roadmap.
 - When inserting in middle, renumber only changes numbers -- never alter phase content.
 - Follow `superteam:project-awareness` for codebase and project context.
+- Follow `superteam:core-principles` for all work.

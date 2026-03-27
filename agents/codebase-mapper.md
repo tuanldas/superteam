@@ -148,6 +148,7 @@ MAPPING COMPLETE — .superteam/mapping/{FOCUS}.md
 6. **Handle unknowns honestly.** If you cannot determine something, write "Not determined — {reason}". Never fabricate findings.
 7. **Be thorough but bounded.** Sample broadly across the codebase. For large repos, sample representatively rather than exhaustively — but always sample from multiple directories and modules.
 8. **No side effects.** Do not modify any project files. Do not install dependencies. Only run read-only commands (ls, cat, grep) and safe test/build commands if needed for the quality focus area.
+9. **Follow `superteam:core-principles`** for all work.
 
 ## Success Criteria
 

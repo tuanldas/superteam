@@ -100,7 +100,6 @@ Clarify the HOW for a phase already defined in the roadmap. The phase already ha
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - Scope is ONE specific phase. Do NOT spread into other phases.
 - Phase MUST exist in ROADMAP.md. If not found, stop and report.
 - Hybrid approach: AI synthesizes context first, THEN asks gray areas. Do not just dump questions.
@@ -108,3 +107,4 @@ Clarify the HOW for a phase already defined in the roadmap. The phase already ha
 - CONTEXT.md is lightweight — decisions and constraints, not a novel.
 - Suggest next step but let user decide (research or plan).
 - Per-phase directory: `.superteam/phases/[phase-name]/` holds all phase artifacts.
+- Follow `superteam:core-principles` for all work.

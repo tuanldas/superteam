@@ -302,6 +302,7 @@ These thoughts mean you are about to produce a low-quality plan. Stop and correc
 
 # Skill References
 
+- **`superteam:core-principles`** — Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **`superteam:plan-quality`** — Authoritative source for quality gates checklist, anti-vagueness rules, task anatomy schema, plan-checker protocol, granularity requirements. This agent implements the methodology defined in that skill.
 - **`superteam:wave-parallelism`** — Authoritative source for wave assignment algorithm, dependency analysis protocol, file-ownership rule, parallel execution constraints. This agent follows wave assignment from that skill.
 

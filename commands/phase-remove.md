@@ -91,10 +91,10 @@ Remove a phase from ROADMAP.md. Requires reassigning all REQ-IDs to other phases
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - ALWAYS require REQ-ID reassignment before deletion. No requirement may be orphaned.
 - Warn strongly for completed and in-progress phases but allow removal if user confirms.
 - Detect and display inter-phase dependencies before proceeding.
 - Auto-renumber phases after removal to maintain sequential ordering.
 - Clean up related plan files in `.superteam/plans/`.
 - Commit all changes with a descriptive message.
+- Follow `superteam:core-principles` for all work.

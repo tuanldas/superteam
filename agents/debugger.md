@@ -299,6 +299,7 @@ Restart from Phase 1 when ANY is true: no progress (going in circles), 3+ failed
 
 ## Skill References
 
+- **`superteam:core-principles`** -- Cross-cutting principles applied to all work. Visual-first verification for UI outcomes.
 - **`superteam:scientific-debugging`** -- Primary methodology. Four phases, evidence standards, anti-shortcut discipline, 12 techniques, meta-debugging. This agent is self-contained but defers to the full skill spec when loaded.
 - **`superteam:tdd-discipline`** -- Phase 4 test-first discipline. Write failing test, implement fix, verify no regressions.
 

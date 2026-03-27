@@ -138,7 +138,6 @@ Finalize the current milestone: pre-flight check (AUDIT must be passed), gather 
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - AUDIT.md MUST exist and be PASSED. This is a hard gate — do not bypass.
 - Archive copies files, does NOT delete originals. Cleanup is a separate concern (`/st:milestone-archive`).
 - MILESTONES.md uses newest-first ordering. Prepend, do not append.
@@ -148,3 +147,4 @@ Finalize the current milestone: pre-flight check (AUDIT must be passed), gather 
 - Do NOT push the tag automatically. Only tell the user how to push.
 - One milestone at a time. This always operates on the current milestone from ROADMAP.md.
 - Each step that writes files gets its own atomic commit.
+- Follow `superteam:core-principles` for all work.

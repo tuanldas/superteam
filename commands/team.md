@@ -228,7 +228,6 @@ When arguments don't match any sub-command:
 
 ## Rules
 
-- Follow `superteam:questioning` for all user interactions.
 - Team composition is recommended, not forced. User can always override.
 - Size detection uses multiple signals. Never rely on file count alone.
 - Scrum Master is always the first agent spawned and last to shut down.
@@ -236,3 +235,4 @@ When arguments don't match any sub-command:
 - Backward compatible: this command does not affect existing `/st:execute`, `/st:plan`, etc.
 - Follow `superteam:team-coordination` for all team interaction protocols.
 - Maximum team size: 8 agents (to prevent communication overhead).
+- Follow `superteam:core-principles` for all work.
