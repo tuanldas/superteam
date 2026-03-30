@@ -162,11 +162,13 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - Mismatch → nudge once, explain why unusual, offer alternative
      - Always accept user decision, never block, never ask again
    - Adaptive: if user's answer on one dimension already implies another → skip or pre-fill with confirmation
+   - After each dimension approved → record in DECISIONS block (follow `superteam:core-principles` Decision Continuity)
    - If init research has landscape data → use to inform each recommendation
    - If not → use built-in design knowledge
    - Apply full font rules (blacklist, overused warnings) and AI slop anti-patterns from `/st:design-system`
 
    **6.3. Full summary + Preview**
+   - Summary and preview MUST use approved values from DECISIONS block verbatim — do NOT re-generate or re-propose
    - After all 7 dimensions approved → present compact summary:
      ```
      ┌──────────────────────────────────────────────┐
@@ -191,13 +193,14 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Start over → return to 6.2 from AESTHETIC
    - Playwright preview if available:
      - Generate self-contained HTML preview page
-     - Load proposed fonts, apply color palette
+     - Load approved fonts, apply approved color palette
      - Realistic mockups by project type (dashboard/marketing/admin)
      - Light/dark mode toggle, responsive
      - User feedback → adjust → regenerate loop
    - Playwright unavailable → skip preview, text-based only
 
    **6.4. Save and commit**
+   - Cross-check: DESIGN-SYSTEM.md content MUST match DECISIONS block values
    - Save `.superteam/DESIGN-SYSTEM.md`
    - Follow `superteam:atomic-commits`
    - Commit: `design: create design system for [project]`

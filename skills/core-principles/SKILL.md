@@ -5,7 +5,8 @@ description: >
   Superteam work. Auto-triggered by all commands and agents.
   Covers: visual-first (design decisions, verification, comparisons, any visual content),
   UI screenshots, Playwright, browser preview, HTML preview,
-  questioning, one question per message, adaptive, ASK/PRESENT/CONFIRM, recommendation.
+  questioning, one question per message, adaptive, ASK/PRESENT/CONFIRM, recommendation,
+  decision continuity, confirmed decisions, DECISIONS block, never re-ask confirmed.
 ---
 
 # Core Principles
@@ -116,6 +117,46 @@ Answer N determines Question N+1. After each answer:
 | Shallow acceptance (accept vague answers) | Challenge: "What does X mean specifically?" |
 | Hidden batch (sub-questions inside one question) | Split into separate messages |
 
+## Principle 3: Decision Continuity
+
+```
+CONFIRMED = PERMANENT. Within a conversation, never re-ask.
+```
+
+### Signal
+
+User said approve/yes/ok, chose from options, or confirmed a PRESENT/CONFIRM interaction.
+The DECISIONS block is the source of truth — not labels in data, templates, or step outputs.
+If a value was confirmed by the user, it is "approved" even if a later step labels it "proposed."
+
+### Action (DECISIONS block)
+
+After each confirmation, record internally:
+
+```
+DECISIONS (internal, running):
+  6.aesthetic: Brutally Minimal — user approved
+  6.color.primary: #1a1a2e — user approved
+```
+
+Before proposing any value:
+1. Scan DECISIONS block
+2. If found: use decided value, state "Using [value] (confirmed earlier)"
+3. Summaries/previews/artifacts: use decided values verbatim, label "approved" not "proposed"
+4. NEVER offer alternatives alongside confirmed values — user must explicitly request changes
+
+### Anti-Patterns
+
+| Anti-Pattern | Fix |
+|---|---|
+| Re-ask a confirmed decision with new options | Use decided value, cite confirmation |
+| Preview shows different values than confirmed | Use confirmed values verbatim |
+| Label confirmed values as "proposed" | Label "approved" — status matters |
+| "I couldn't find the previous confirmation" | Maintain DECISIONS block throughout |
+| Later step silently overrides earlier decision | Earlier confirmation takes precedence |
+| Drill-down question resets parent decision | Answer drill-down within confirmed scope |
+| Offer "alternatives" alongside confirmed values | Confirmed = final. No alternatives unless user requests |
+
 ## Quick Reference
 
 ```
@@ -132,6 +173,12 @@ CORE PRINCIPLES:
    ASK (1/msg) | PRESENT (batch OK) | CONFIRM (1/msg)
    Exploration: open-ended, no options. Narrowing: facts-based options.
    Never: question dumps, checklist walking, assumptions as facts.
+
+3. DECISION CONTINUITY
+   Confirmed = permanent. Maintain DECISIONS block.
+   Before proposing: scan block → use decided value → "Using X (confirmed earlier)"
+   Label: "approved" not "proposed". No alternatives for confirmed values.
+   Never: re-ask confirmed, show different values in preview, silent override.
 ```
 
 ## How Commands Reference This Skill
@@ -161,3 +208,4 @@ Append new principles as numbered sections. Update Quick Reference when adding.
 - `superteam:requesting-code-review` — visual-first when reviewing UI changes
 - `superteam:project-awareness` — detection context informs what questions to ask
 - `superteam:research-methodology` — research area selection uses questioning for user approval
+- `superteam:handoff-protocol` — DECISIONS block transfers confirmed decisions across handoffs
