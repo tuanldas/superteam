@@ -19,11 +19,9 @@ Cross-cutting principles for ALL commands and agents. Reference once per command
 Core Principles > Research findings > Agent preferences.
 
 Research informs WHAT to propose, never HOW to present.
-Research says "dark-first" → propose dark aesthetic as an OPTION.
-Research says "dark-first" → does NOT mean preview HTML becomes dark.
-Research says "dark-first" → does NOT mean mockup content inside preview becomes dark.
 Rules in this file are NEVER overridden by research context.
-"Technically compliant" loopholes (light wrapper but dark content) = violation.
+"Technically compliant" loopholes = violation. Rules apply to spirit, not just letter.
+See "Research Context — Anti-Rationalization" for specific scenarios.
 ```
 
 ### Decision Point Reminder
