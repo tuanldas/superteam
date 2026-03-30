@@ -62,17 +62,22 @@ Xác định design system cho toàn bộ project: aesthetic direction, typograp
      Playwright unavailable → WebSearch only
      WebSearch unavailable → built-in design knowledge
     ↓
+   ⚠️ CONTEXT PRIORITY REMINDER (from core-principles):
+   Research vừa đọc = findings, NOT rules. "Research says dark-first" → propose
+   dark as OPTION, NOT default. Preview HTML = light background (entire page).
+   Core Principles > Research > Agent preferences. Always.
+
 5. Propose từng dimension (1 per message, visual-first)
 
    Propose lần lượt 7 dimensions. Mỗi dimension 1 message.
 
-   Visual dimensions (typography, color, decoration, spacing, layout)
-   → PHẢI có HTML preview + screenshot KÈM THEO khi propose.
-     Không chỉ describe bằng text rồi hỏi approve.
-     (Tuân thủ core-principles: Visual-First)
+   TẤT CẢ dimensions đều visual → PHẢI có HTML preview + screenshot
+   KÈM THEO khi propose. Không chỉ describe bằng text rồi hỏi approve.
+   (Tuân thủ core-principles: Visual-First)
 
-   Non-visual dimensions (aesthetic direction, motion)
-   → Text description + rationale là đủ.
+   Aesthetic direction: preview = moodboard/reference screenshots showing
+   the aesthetic characteristics (surfaces, depth, density, mood).
+   "Refined Functional" means nothing as text — user cần THẤY nó.
 
    Mỗi dimension kèm:
    - Rationale

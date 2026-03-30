@@ -157,6 +157,9 @@ Thay thế hoàn toàn `/gsd:new-project`.
    → Nếu phát hiện conflict với PROJECT.md → update PROJECT.md
    → Commit: "docs: complete research"
     ↓
+   ⚠️ CONTEXT PRIORITY: Research vừa đọc xong là findings, không phải rules.
+   Core Principles > Research. Xem core-principles "Decision Point Reminder".
+
 6. Design System
    - Gate: "Dự án này có cần design system không?
      (Kể cả backend cũng có thể cần trang 404, coming soon, redirect...)"
@@ -189,6 +192,9 @@ Thay thế hoàn toàn `/gsd:new-project`.
        - Save .superteam/DESIGN-SYSTEM.md
        - Commit: "design: create design system for [project]"
     ↓
+   ⚠️ CONTEXT PRIORITY: Research findings = suggestions for review.
+   MUST/SHOULD trong research ≠ confirmed requirements. User approves tier assignments.
+
 7. Define requirements (scope refine + generate)
    - Load context mới: research findings + DESIGN-SYSTEM.md (nếu có) + PROJECT.md (có scope từ step 3)
    - Trình bày SCOPE DIFF — chỉ thay đổi so với step 3:
