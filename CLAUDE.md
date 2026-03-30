@@ -9,6 +9,10 @@ Khi viết hoặc cập nhật skill (`skills/*/SKILL.md`):
 - Main conversation chỉ nhận kết quả tóm tắt
 - KHÔNG làm trực tiếp trong main context
 
+## Agents
+
+- KHÔNG sử dụng `run_in_background: true` khi spawn agents. Luôn chạy foreground parallel (nhiều Agent() calls trong cùng một message).
+
 ## Versioning
 
 Sau mỗi batch thay đổi (feature, refactor, fix), bump version trước khi commit cuối:

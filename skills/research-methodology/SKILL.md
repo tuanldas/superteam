@@ -320,7 +320,8 @@ Wave 1: [areas] → Wave 2: [areas] → ...
 
 ### Step 3 — Execute waves
 
-1. For each wave: make ALL Agent() calls in a SINGLE message (foreground parallel with tree view)
+1. For each wave: make ALL Agent() calls in a SINGLE message (foreground parallel with tree view).
+   **NEVER use `run_in_background: true`.** All agents MUST run in foreground so the orchestrator can read outputs immediately.
 2. Each agent receives: context from `context_inputs`, relevant prior wave outputs, specific focus area
 3. Each agent follows this skill's methodology at Deep depth
 4. **MANDATORY WAIT GATE** per wave: do NOT proceed until ALL agents
