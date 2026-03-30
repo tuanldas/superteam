@@ -251,6 +251,123 @@ NEVER:
 | Landscape section only lists competitors without analysis | Compare on criteria relevant to the project, not just list names. |
 | SUMMARY.md has no conflicts section | There are ALWAYS trade-offs. No conflicts = missed something. |
 
+## Research Orchestration
+
+This section defines the complete orchestration flow for deep research (used by `/st:init` and `/st:phase-research`). Commands delegate to this flow instead of implementing their own.
+
+The orchestration accepts parameters from the calling command:
+- **`context_inputs`**: files to read for research context (e.g., PROJECT.md, CONTEXT.md, ROADMAP.md)
+- **`output_dir`**: where to save research results (e.g., `.superteam/research/`, `.superteam/phases/[name]/research/`)
+- **`research_context`**: label for the research session (e.g., "init", "phase 3: Authentication")
+- **`commit_message`**: format for the final commit
+
+### Step 1 — Select research areas
+
+1. Read `context_inputs` files: extract domain, tech decisions, constraints, greenfield/brownfield status
+2. Load research area catalog (`research-catalog.md`)
+3. For each catalog area: evaluate trigger AND brownfield conditions:
+   - Greenfield: include area if trigger matches
+   - Brownfield: check brownfield condition — SKIP, ADJUST focus, or KEEP as-is
+4. If custom areas seem needed: propose separately with justification,
+   ask user to confirm (custom areas are never auto-included)
+
+### Step 2 — Build research plan and persist
+
+1. Build dependency graph from selected areas' `needs` fields
+2. Group into waves: `wave = max(wave[deps]) + 1`
+3. **Save `RESEARCH-PLAN.md` to `output_dir`** before presenting to user:
+
+```markdown
+# Research Plan
+
+Created: [date]
+Context: [research_context]
+Status: planning
+
+## Selected Areas
+
+| Area | Focus | Wave | Status |
+|------|-------|------|--------|
+| STACK | [focus] | 1 | pending |
+| ARCHITECTURE | [focus] | 2 | pending |
+...
+
+## Wave Structure
+
+Wave 1: [areas] → Wave 2: [areas] → ...
+
+## Decisions
+- [area] included because: [reason]
+- [area] skipped because: [reason]
+```
+
+4. Present research plan to user:
+   ```
+   RESEARCH PLAN — [research_context]
+
+   Wave [N] (parallel, [M] agents):
+     ├─ [AREA]: [focus description]
+     └─ [AREA]: [focus description]
+   ...
+   Total: [X] agents, [Y] waves
+   Saved: [output_dir]/RESEARCH-PLAN.md
+   Adjust areas or proceed?
+   ```
+5. If `config.research_auto_approve` is true: display plan and proceed immediately
+   (EXCEPT: if custom areas proposed, always pause for confirmation)
+6. If false (default): wait for user to approve, adjust areas, or skip research
+7. On approval: update `RESEARCH-PLAN.md` status to `in-progress`
+
+### Step 3 — Execute waves
+
+1. For each wave: make ALL Agent() calls in a SINGLE message (foreground parallel with tree view)
+2. Each agent receives: context from `context_inputs`, relevant prior wave outputs, specific focus area
+3. Each agent follows this skill's methodology at Deep depth
+4. **MANDATORY WAIT GATE** per wave: do NOT proceed until ALL agents
+   have completed AND you have READ their output files
+5. After each wave completes: update `RESEARCH-PLAN.md` — set completed areas' status to `done`
+
+### Step 4 — Synthesize
+
+1. After all waves complete, spawn synthesizer agent
+2. Synthesizer reads all output files from all waves
+3. Compiles key findings, identifies conflicts between recommendations
+4. Writes `SUMMARY.md` to `output_dir`
+5. If conflicts with existing project docs found: note them for the calling command to resolve
+
+### Step 5 — Present findings
+
+```
+RESEARCH SUMMARY — [research_context]
+Areas researched: [list of areas]
+
+Key recommendations:
+  1. [recommendation]
+  2. [recommendation]
+
+Conflicts found:
+  [if any: describe + suggest resolution]
+```
+
+Wait for user review, answer follow-up questions if needed.
+
+### Step 6 — Save and commit
+
+1. All research files already saved to `output_dir` during execution
+2. Update `RESEARCH-PLAN.md` status to `completed`
+3. Follow `superteam:atomic-commits`
+4. Commit using `commit_message` format provided by the calling command
+
+### Resuming interrupted research
+
+If `RESEARCH-PLAN.md` exists with status `in-progress`:
+1. Read the plan: identify which areas are `done` vs `pending`
+2. Skip completed waves
+3. Resume from the first wave with pending areas
+4. Continue the normal flow from Step 3
+
+This makes research resilient to session interruptions — the plan on disk is the source of truth.
+
 ## Context Budget
 
 | File | When to Load | Trigger |

@@ -88,47 +88,12 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - PROJECT.md is a living doc: later steps auto-update when conflicts found
 
 5. **Research (dynamic waves)**
-   - Input: `.superteam/PROJECT.md` + codebase mapping (if brownfield)
-   - Follow `superteam:research-methodology`
-
-   **Step 1 — Select research areas:**
-   - Read PROJECT.md: extract domain, tech decisions, constraints, greenfield/brownfield status
-   - Load research area catalog (`superteam:research-methodology` → `research-catalog.md`)
-   - For each catalog area: evaluate trigger AND brownfield conditions:
-     - Greenfield: include area if trigger matches
-     - Brownfield: check brownfield condition — SKIP, ADJUST focus, or KEEP as-is
-   - If custom areas seem needed: propose separately with justification,
-     ask user to confirm (custom areas are never auto-included)
-
-   **Step 2 — Build research plan and confirm:**
-   - Build dependency graph from selected areas' `needs` fields
-   - Group into waves: `wave = max(wave[deps]) + 1`
-   - Present research plan:
-     ```
-     RESEARCH PLAN
-     Based on PROJECT.md analysis:
-
-     Wave [N] (parallel, [M] agents):
-       ├─ [AREA]: [focus description]
-       └─ [AREA]: [focus description]
-     ...
-     Total: [X] agents, [Y] waves
-     Adjust areas or proceed?
-     ```
-   - If `config.research_auto_approve` is true: display plan and proceed immediately
-     (EXCEPT: if custom areas proposed, always pause for confirmation)
-   - If false (default): wait for user to approve, adjust areas, or skip research
-
-   **Step 3 — Execute waves:**
-   - For each wave: make ALL Agent() calls in a SINGLE message (foreground parallel with tree view)
-   - Each agent receives: project context, relevant prior wave outputs, specific focus area
-   - Each agent follows `superteam:research-methodology` at Deep depth
-   - **MANDATORY WAIT GATE** per wave: do NOT proceed until ALL agents
-     have completed AND you have READ their output files
-   - After all waves: synthesize into SUMMARY.md
-   - If conflicts with PROJECT.md found: update PROJECT.md
-   - Save research to `.superteam/research/`
-   - Commit: `docs: complete research`
+   - Delegate to `superteam:research-methodology` Research Orchestration flow with:
+     - `context_inputs`: `.superteam/PROJECT.md` + codebase mapping (if brownfield)
+     - `output_dir`: `.superteam/research/`
+     - `research_context`: `"init"`
+     - `commit_message`: `"docs: complete research"`
+   - If conflicts with PROJECT.md found during research: update PROJECT.md
 
 6. **Define design system**
    - Gate question: "Dự án này có cần design system không? (Kể cả backend cũng có thể cần trang 404, coming soon, redirect...)"
@@ -279,6 +244,7 @@ project/
     REQUIREMENTS.md
     ROADMAP.md
     research/
+      RESEARCH-PLAN.md
       [dynamic — files depend on selected research areas]
       SUMMARY.md
 ```
@@ -288,9 +254,7 @@ project/
 - This is an INTERACTIVE command. Never run in auto mode.
 - Each step commits separately. Follow `superteam:atomic-commits`.
 - PROJECT.md is a living document. Update it whenever conflicts are discovered in later steps.
-- Research areas are dynamic — AI selects from catalog based on PROJECT.md context. User approves before spawning.
-- Research waves respect dependency order from catalog. Each wave completes before the next starts.
-- Each research agent has a strict scope boundary (per research-areas.md). Do NOT let agents cross boundaries.
+- Research orchestration is owned by `superteam:research-methodology`. Step 5 provides context and delegates.
 - Questioning uses 15 exchanges per round with checkpoint summaries. User decides whether to continue.
 - Image input accepted at any point in the flow.
 - Config is step 1 because research agents need config to run properly.
