@@ -13,10 +13,24 @@ description: >
 
 Cross-cutting principles for ALL commands and agents. Reference once per command instead of duplicating rules.
 
+## Cross-Principle Priority
+
+```
+When Principle 1 (Visual-First) and Principle 2 (Questioning) BOTH apply:
+→ Principle 1 fires FIRST on FORMAT.
+→ Create visual content FIRST, then ask using Principle 2.
+
+Example: presenting design options = visual + questioning.
+WRONG: describe options as text → ask which one → (user requests preview) → create preview
+RIGHT: create visual preview of ALL options → show screenshot → ask "Which do you prefer?"
+```
+
 ## Principle 1: Visual-First
 
 ```
-WHEN IT CAN BE SHOWN, SHOW IT.
+WHEN IT CAN BE SHOWN, SHOW IT — PROACTIVELY, BEFORE THE USER ASKS.
+
+"Show" means: create and present the visual NOW, not wait for user to request it.
 
 Text tells you what SHOULD look like.
 A preview tells you what ACTUALLY looks like.
@@ -35,6 +49,16 @@ Content better understood visually than as text:
 
 ### Action
 
+**When presenting design choices (MUST follow this sequence):**
+```
+1. Create self-contained HTML with ALL options as side-by-side visual cards
+2. Serve: python3 -m http.server [port]
+3. browser_navigate → browser_take_screenshot
+4. Present screenshot + text labels + recommendation
+5. Ask "Which do you prefer?" — user sees options visually BEFORE choosing
+```
+
+**For post-implementation verification:**
 ```
 1. Create self-contained HTML (no framework deps)
 2. Serve: python3 -m http.server [port]
@@ -42,7 +66,6 @@ Content better understood visually than as text:
 4. Present screenshot in conversation
 ```
 
-For post-implementation verification:
 - `browser_navigate` to target URL
 - `browser_take_screenshot` for visual confirmation
 - Do NOT stop at "code compiles." Visual bugs survive compilation.
@@ -59,11 +82,14 @@ NEVER silently skip visual preview.
 
 | Anti-Pattern | Fix |
 |---|---|
+| Describe design options as text, wait for user to request preview | Create visual preview of ALL options FIRST, then ask |
 | Describe visual with text when can show | Create HTML preview + screenshot |
-| List options as text table for design choices | Create side-by-side visual cards |
+| List options as text table for design choices | Create side-by-side visual cards showing each option |
+| Present 1 option visually, make user ask for alternatives | Show ALL options in one visual, side-by-side |
 | Grep CSS class = "verified" | Screenshot the rendered page |
 | "Tokens look correct in code" | Render and screenshot |
 | Skip preview on "simple change" | Simple changes break layouts — always preview |
+| "Just a color/font choice, text is fine" | Colors/fonts are VISUAL — always preview |
 | "Playwright unavailable" then silence | State it, provide URL, flag confidence |
 
 ## Principle 2: Questioning
@@ -160,13 +186,17 @@ Before proposing any value:
 ## Quick Reference
 
 ```
+PRIORITY: When Visual-First + Questioning both apply → Visual-First fires FIRST on format.
+          Create visual → show → THEN ask. Never text-first for design choices.
+
 CORE PRINCIPLES:
 
 1. VISUAL-FIRST
-   Can be shown? → Show it. Before deciding AND after building.
+   Can be shown? → Show it PROACTIVELY. Before deciding AND after building.
+   Design choices: create visual of ALL options → screenshot → ask which one.
    Action: HTML → local server → Playwright screenshot
    Fallback: URL manual → text + reduced confidence
-   Never: text-only when can preview, silent skip
+   Never: text-only when can preview, wait for user to request preview, silent skip
 
 2. QUESTIONING
    One question per message. Adaptive. Recommend with reasoning.
