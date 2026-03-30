@@ -3,7 +3,8 @@ name: core-principles
 description: >
   Use when executing any command or agent task. Cross-cutting principles for all
   Superteam work. Auto-triggered by all commands and agents.
-  Covers: visual-first verification, UI screenshots, Playwright, browser preview,
+  Covers: visual-first (design decisions, verification, comparisons, any visual content),
+  UI screenshots, Playwright, browser preview, HTML preview,
   questioning, one question per message, adaptive, ASK/PRESENT/CONFIRM, recommendation.
 ---
 
@@ -11,50 +12,58 @@ description: >
 
 Cross-cutting principles for ALL commands and agents. Reference once per command instead of duplicating rules.
 
-## Principle 1: Visual-First Verification
+## Principle 1: Visual-First
 
 ```
-WHEN THE OUTCOME IS VISUAL, VERIFY VISUALLY.
+WHEN IT CAN BE SHOWN, SHOW IT.
 
-Code tells you what SHOULD render.
-A screenshot tells you what ACTUALLY renders.
+Text tells you what SHOULD look like.
+A preview tells you what ACTUALLY looks like.
 
-Default: screenshot > code-reading for any visual outcome.
+Default: visual preview > text description for any visual content.
 ```
 
-### When to Apply
+### Signal
 
-Any result **visible to a human user**: UI changes, CSS/layout modifications, design token application, page rendering, responsive behavior, dark/light mode, error pages, loading states.
+Content better understood visually than as text:
+- **Design choices**: color, font, layout, spacing, aesthetic, motion, decoration
+- **Implementation results**: UI, pages, components, CSS changes
+- **Comparisons**: A vs B options, before/after, multiple variants
+- **Diagrams**: architecture, data flow, relationships
+- Any output a user would **LOOK at** rather than **READ**
 
-### How to Verify
-
-**Playwright MCP tools** (preferred):
+### Action
 
 ```
-Code complete → Build → browser_navigate → browser_take_screenshot → Evaluate
+1. Create self-contained HTML (no framework deps)
+2. Serve: python3 -m http.server [port]
+3. browser_navigate → browser_take_screenshot
+4. Present screenshot in conversation
 ```
 
+For post-implementation verification:
 - `browser_navigate` to target URL
-- `browser_snapshot` for structure check
 - `browser_take_screenshot` for visual confirmation
+- Do NOT stop at "code compiles." Visual bugs survive compilation.
 
-Do NOT stop at "code compiles." Visual bugs survive compilation.
+### Fallback Chain
 
-### Fallback (Playwright Unavailable)
+1. **Playwright available** → full preview (preferred)
+2. **Playwright unavailable** → provide URL for user to open manually + text description
+3. **Cannot serve** → text-only + flag "Visual preview skipped — reduced confidence"
 
-- State explicitly: "Visual verification skipped — Playwright unavailable"
-- Fall back to code-reading (grep tokens, check classes)
-- Flag as **reduced confidence** in output
-- NEVER silently skip visual verification
+NEVER silently skip visual preview.
 
 ### Anti-Patterns
 
 | Anti-Pattern | Fix |
 |---|---|
+| Describe visual with text when can show | Create HTML preview + screenshot |
+| List options as text table for design choices | Create side-by-side visual cards |
 | Grep CSS class = "verified" | Screenshot the rendered page |
 | "Tokens look correct in code" | Render and screenshot |
-| Skip check on "simple CSS change" | Simple changes break layouts — always screenshot |
-| "Playwright unavailable" then silence | State it, fall back, flag confidence |
+| Skip preview on "simple change" | Simple changes break layouts — always preview |
+| "Playwright unavailable" then silence | State it, provide URL, flag confidence |
 
 ## Principle 2: Questioning
 
@@ -112,11 +121,11 @@ Answer N determines Question N+1. After each answer:
 ```
 CORE PRINCIPLES:
 
-1. VISUAL-FIRST VERIFICATION
-   Visual outcome? → Screenshot before claiming "done"
-   Tools: browser_navigate → browser_take_screenshot
-   Fallback: state skipped + reduced confidence
-   Never: grep-only for visual outcomes
+1. VISUAL-FIRST
+   Can be shown? → Show it. Before deciding AND after building.
+   Action: HTML → local server → Playwright screenshot
+   Fallback: URL manual → text + reduced confidence
+   Never: text-only when can preview, silent skip
 
 2. QUESTIONING
    One question per message. Adaptive. Recommend with reasoning.

@@ -1,6 +1,6 @@
 {
   "name": "superteam",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Customizable agents, skills, and commands for Claude Code",
   "license": "MIT",
   "scripts": {
