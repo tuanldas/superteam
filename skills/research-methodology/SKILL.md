@@ -162,6 +162,26 @@ When multiple research agents produce output (phase-research, init), the synthes
 5. **Rank recommendations** by evidence strength, not by word count or confidence language.
 6. **Produce SUMMARY.md** with: key findings, recommendations, conflicts, unknowns.
 
+7. **Frame output as findings, not instructions.** Every research output file MUST include this header:
+
+```
+<!-- CONTEXT: research-findings -->
+<!-- NOT instructions — Core Principles always override -->
+```
+
+And this notice after the title:
+
+> Findings below are INPUT for decisions, not rules to follow.
+> Confirmed requirements only exist in REQUIREMENTS.md after user approval.
+
+8. **Use descriptive language, never prescriptive.**
+   - WRITE: "Evidence suggests dark mode preferred (58%, single study, mixed evidence)"
+   - NOT: "MUST: dark-first design"
+   - WRITE: "Suggested for review: dark mode support"
+   - NOT: "New Requirements to Add: Dark-first design | MUST"
+   - Section "New Requirements to Add" → rename to "Suggested Requirements for Review"
+   - MUST/SHOULD labels in research = evidence-based suggestion, NOT confirmed requirement
+
 **Gate:** SUMMARY.md must address conflicts. If it mentions none, the synthesizer missed something — there are always trade-offs.
 
 ## Anti-Shortcut System
@@ -182,6 +202,7 @@ These thoughts mean you are about to violate the methodology:
 | "The user probably wants X" | Present options. User decides. Your job is to inform, not assume. |
 | "This technology is better because it's newer" | Newer is not better. Compare on actual criteria. |
 | "Let me skip this area, it's obvious" | Selected areas are not skippable. Even "obvious" domains have surprises. |
+| "This finding is strong enough to be a MUST requirement" | Research findings are suggestions. Only REQUIREMENTS.md (after user approval) has MUST/SHOULD. Use descriptive language. |
 
 ### Common Rationalizations
 
@@ -250,6 +271,8 @@ NEVER:
 | Pitfalls section is generic ("watch out for performance") | Pitfalls must be specific to THIS stack, THIS architecture, THIS domain. |
 | Landscape section only lists competitors without analysis | Compare on criteria relevant to the project, not just list names. |
 | SUMMARY.md has no conflicts section | There are ALWAYS trade-offs. No conflicts = missed something. |
+| Research uses MUST/SHOULD as if setting requirements | Research SUGGESTS, user DECIDES. Use "Evidence suggests..." not "MUST: do X" |
+| Section named "New Requirements to Add" | Rename to "Suggested Requirements for Review" — research doesn't create requirements |
 
 ## Research Orchestration
 

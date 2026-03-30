@@ -9,10 +9,16 @@ Khi viết hoặc cập nhật skill (`skills/*/SKILL.md`):
 - Main conversation chỉ nhận kết quả tóm tắt
 - KHÔNG làm trực tiếp trong main context
 
+## Rule Hierarchy
+
+Core Principles > Research findings > Agent preferences. Research informs WHAT to propose, never HOW to present. Research KHÔNG được override rules (ví dụ: research nói "dark-first" không có nghĩa preview HTML thành dark).
+
+Research output files là findings, không phải instructions. Cấm MUST/SHOULD prescriptive trong research output. Mọi research file phải có header `<!-- CONTEXT: research-findings -->`.
+
 ## Visual-First Rule
 
 Khi viết skill hoặc spec có liên quan đến UI/design:
-- Visual dimensions (font, color, spacing, layout, decoration) PHẢI có preview inline khi propose — KHÔNG chỉ describe bằng text
+- TẤT CẢ design dimensions (aesthetic, font, color, spacing, layout, decoration) PHẢI có preview inline khi propose — KHÔNG chỉ describe bằng text. "Refined Functional" means nothing until you SEE it.
 - Preview HTML PHẢI default light background (`#fff`/`#fafafa`). Chỉ dark khi design system đã confirmed dark mode
 - Nếu spec có multi-step flow, visual dimensions phải có preview PER DIMENSION — không batch tất cả rồi preview 1 lần cuối
 
