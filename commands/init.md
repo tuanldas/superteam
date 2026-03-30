@@ -110,7 +110,10 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Do not ask additional context questions — all context already gathered from steps 2-5
 
    **6.2. Propose each dimension one at a time**
-   - Based on accumulated context → propose EACH dimension as a separate message
+   - **ONE dimension per message. Wait for user response before proposing the next.**
+   - **NEVER batch multiple dimensions into one message. NEVER present a "full proposal" upfront.**
+     This is the user's chance to choose fonts, colors, spacing etc. according to their taste.
+     Skipping this interaction removes their agency over the design.
    - Order: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
    - Each dimension = 1 message following `superteam:core-principles` ASK pattern:
      ```

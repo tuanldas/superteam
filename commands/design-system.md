@@ -41,40 +41,54 @@ Define the design system for the entire project across 7 dimensions: Aesthetic, 
      - Playwright unavailable: WebSearch only
      - WebSearch unavailable: built-in design knowledge
 
-5. **Complete proposal** (all 7 dimensions at once)
+5. **Propose each dimension one at a time**
+   - **ONE dimension per message. Wait for user response before proposing the next.**
+   - **NEVER batch multiple dimensions into one message. NEVER present a "full proposal" upfront.**
+     This is the user's chance to choose fonts, colors, spacing etc. according to their taste.
+     Skipping this interaction removes their agency over the design.
+   - Order: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
+   - Each dimension = 1 message:
+     ```
+     [DIMENSION]: [recommendation]
+       -- [rationale grounded in project context]
 
-   Present a single cohesive proposal:
-   ```
-   ┌──────────────────────────────────────────────┐
-   │ DESIGN SYSTEM PROPOSAL                       │
-   ├──────────────────────────────────────────────┤
-   │ AESTHETIC: [direction] -- [rationale]         │
-   │ DECORATION: [level] -- [rationale]            │
-   │ TYPOGRAPHY: [fonts + scale] -- [rationale]    │
-   │ COLOR: [palette + hex] -- [rationale]         │
-   │ SPACING: [base + density] -- [rationale]      │
-   │ LAYOUT: [approach + grid] -- [rationale]      │
-   │ MOTION: [approach + easing] -- [rationale]    │
-   ├──────────────────────────────────────────────┤
-   │ SAFE CHOICES (category baseline):             │
-   │ - [2-3 decisions matching conventions]        │
-   │                                               │
-   │ RISKS (product gets its own face):            │
-   │ - [2-3 departures, each with rationale]       │
-   ├──────────────────────────────────────────────┤
-   │ AI SLOP CHECK: [flagged patterns, if any]     │
-   └──────────────────────────────────────────────┘
-   ```
+     Recommend: [recommendation] — [why]. Confidence: High/Med/Low.
 
-   User options: Approve, Adjust [section], Different risks, Start over
+     → Approve / Adjust
+     ```
+   - If user approves → next dimension
+   - If user adjusts → drill-down inline:
+     - Fonts: 3-5 candidates with rationale, explain what each evokes
+     - Colors: 2-3 palette options with hex, explain color theory
+     - Each drill-down is 1 focused question
+   - Coherence check after each dimension vs previously approved dimensions:
+     - Mismatch → nudge once, explain why unusual, offer alternative
+     - Always accept user decision, never block, never ask again
+   - Adaptive: if user's answer on one dimension already implies another → skip or pre-fill with confirmation
 
-6. **Drill-downs** (if user wants to adjust)
-   - Fonts: 3-5 candidates with rationale, explain what each evokes
-   - Colors: 2-3 palette options with hex, explain color theory
-   - Each drill-down is 1 focused question
-   - After each change, run coherence check:
-     - Mismatch? Nudge once, explain why it is unusual, offer alternative
-     - Always accept user decision. Do not block. Do not ask again.
+6. **Full summary + Preview**
+   - After all 7 dimensions approved → present compact summary:
+     ```
+     ┌──────────────────────────────────────────────┐
+     │ DESIGN SYSTEM SUMMARY                        │
+     ├──────────────────────────────────────────────┤
+     │ AESTHETIC: [approved value]                   │
+     │ DECORATION: [approved value]                  │
+     │ TYPOGRAPHY: [approved value]                  │
+     │ COLOR: [approved value]                       │
+     │ SPACING: [approved value]                     │
+     │ LAYOUT: [approved value]                      │
+     │ MOTION: [approved value]                      │
+     ├──────────────────────────────────────────────┤
+     │ SAFE CHOICES: [2-3 decisions matching norms]  │
+     │ RISKS: [2-3 departures + rationale]           │
+     ├──────────────────────────────────────────────┤
+     │ AI SLOP CHECK: [flagged patterns, if any]     │
+     └──────────────────────────────────────────────┘
+     ```
+   - User options: Approve all / Adjust [section] / Start over
+   - Adjust [section] → revisit that dimension (1 question), then update summary
+   - Start over → return to step 5 from AESTHETIC
 
 7. **Preview on Playwright** (if available)
    - Generate self-contained HTML preview page:
@@ -152,7 +166,7 @@ Handling: Nudge once, offer alternative, always accept user decision, never bloc
 
 ## Rules
 
-- Present the full 7-dimension proposal at once. Do not ask dimension by dimension.
+- Propose ONE dimension per message, wait for user response. NEVER batch all dimensions at once.
 - Always separate SAFE choices from RISKS with rationale for each.
 - Run AI slop check on every proposal. Flag generic patterns.
 - Coherence nudges are gentle and one-time only. User decision is final.
