@@ -47,6 +47,8 @@ Content better understood visually than as text:
 - **Diagrams**: architecture, data flow, relationships
 - Any output a user would **LOOK at** rather than **READ**
 
+**Visual dimensions** = any dimension where the output is VISUAL (font, color, spacing, layout, decoration). Text description alone is NEVER sufficient for these — always include a preview.
+
 ### Action
 
 **When presenting design choices (MUST follow this sequence):**
@@ -57,6 +59,8 @@ Content better understood visually than as text:
 4. Present screenshot + text labels + recommendation
 5. Ask "Which do you prefer?" — user sees options visually BEFORE choosing
 ```
+
+**This applies PER DIMENSION, not after all dimensions.** If proposing typography → preview typography NOW. If proposing color → preview color NOW. Do NOT batch all dimensions as text then preview once at the end.
 
 **For post-implementation verification:**
 ```
@@ -69,6 +73,7 @@ Content better understood visually than as text:
 - `browser_navigate` to target URL
 - `browser_take_screenshot` for visual confirmation
 - Do NOT stop at "code compiles." Visual bugs survive compilation.
+- Preview HTML MUST default to **light background** (`#fff` / `#fafafa`). Only default dark when design system has confirmed dark mode.
 
 ### Fallback Chain
 
@@ -90,6 +95,8 @@ NEVER silently skip visual preview.
 | "Tokens look correct in code" | Render and screenshot |
 | Skip preview on "simple change" | Simple changes break layouts — always preview |
 | "Just a color/font choice, text is fine" | Colors/fonts are VISUAL — always preview |
+| Propose visual dimension as text, preview later in batch | Preview EACH visual dimension inline when proposing it |
+| "I'll show a preview after all dimensions are approved" | Each visual dimension gets its own preview NOW |
 | "Playwright unavailable" then silence | State it, provide URL, flag confidence |
 
 ## Principle 2: Questioning
@@ -194,9 +201,11 @@ CORE PRINCIPLES:
 1. VISUAL-FIRST
    Can be shown? → Show it PROACTIVELY. Before deciding AND after building.
    Design choices: create visual of ALL options → screenshot → ask which one.
+   Visual dimensions (font, color, spacing, layout, decoration): preview PER DIMENSION, not batched.
+   Default: light background. Dark only when design system confirmed dark mode.
    Action: HTML → local server → Playwright screenshot
    Fallback: URL manual → text + reduced confidence
-   Never: text-only when can preview, wait for user to request preview, silent skip
+   Never: text-only when can preview, wait for user to request preview, silent skip, batch previews
 
 2. QUESTIONING
    One question per message. Adaptive. Recommend with reasoning.

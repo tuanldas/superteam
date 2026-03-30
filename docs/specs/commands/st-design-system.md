@@ -16,7 +16,7 @@ Xác định design system cho toàn bộ project: aesthetic direction, typograp
 | AI slop | 7 core anti-patterns + nguyên tắc chung | Cụ thể cho patterns phổ biến, flexible cho patterns mới |
 | Font lists | Blacklist (14) + overused (8) + recommended by purpose | Proven từ gstack |
 | Coherence | Nudge nhẹ khi mismatch, luôn chấp nhận user decision | Cảnh báo 1 lần, không block |
-| Preview | Playwright MCP — HTML preview với mockups + dark mode | Consistent với /st:ui-design |
+| Preview | Playwright MCP — HTML preview với mockups | Consistent với /st:ui-design |
 | Output | `.superteam/DESIGN-SYSTEM.md` | Gọn trong .superteam/ |
 | Interaction | Hai chiều với /st:ui-design — suggest update cả hai hướng | System sống, không static |
 | Brownfield | Detect + infer design system từ code hiện tại | Adopt design system không cần từ zero |
@@ -62,27 +62,23 @@ Xác định design system cho toàn bộ project: aesthetic direction, typograp
      Playwright unavailable → WebSearch only
      WebSearch unavailable → built-in design knowledge
     ↓
-5. Complete Proposal (1 lần, toàn bộ system)
+5. Propose từng dimension (1 per message, visual-first)
 
-   ┌──────────────────────────────────────────────┐
-   │ DESIGN SYSTEM PROPOSAL                       │
-   ├──────────────────────────────────────────────┤
-   │ AESTHETIC: [direction] — [rationale]         │
-   │ DECORATION: [level] — [rationale]            │
-   │ TYPOGRAPHY: [fonts + scale] — [rationale]    │
-   │ COLOR: [palette + hex] — [rationale]         │
-   │ SPACING: [base + density] — [rationale]      │
-   │ LAYOUT: [approach + grid] — [rationale]      │
-   │ MOTION: [approach + easing] — [rationale]    │
-   ├──────────────────────────────────────────────┤
-   │ SAFE CHOICES (category baseline):            │
-   │ - [2-3 decisions matching conventions]       │
-   │                                              │
-   │ RISKS (product gets its own face):           │
-   │ - [2-3 departures, each with rationale]      │
-   ├──────────────────────────────────────────────┤
-   │ AI SLOP CHECK: [flagged patterns, if any]    │
-   └──────────────────────────────────────────────┘
+   Propose lần lượt 7 dimensions. Mỗi dimension 1 message.
+
+   Visual dimensions (typography, color, decoration, spacing, layout)
+   → PHẢI có HTML preview + screenshot KÈM THEO khi propose.
+     Không chỉ describe bằng text rồi hỏi approve.
+     (Tuân thủ core-principles: Visual-First)
+
+   Non-visual dimensions (aesthetic direction, motion)
+   → Text description + rationale là đủ.
+
+   Mỗi dimension kèm:
+   - Rationale
+   - SAFE choice vs RISK choice
+   - AI slop check (nếu relevant)
+   - Recommend + Confidence
 
    10 aesthetic directions:
    Brutally Minimal | Maximalist Chaos | Retro-Futuristic |
@@ -131,21 +127,24 @@ Xác định design system cho toàn bộ project: aesthetic direction, typograp
      → Offer alternative
      → Luôn chấp nhận user decision, không block, không hỏi lại
     ↓
-7. Preview trên Playwright
-   - Tạo HTML preview page (self-contained, no framework):
-     → Load proposed fonts từ Google Fonts / Bunny Fonts
-     → Dùng proposed color palette throughout
-     → Font specimen: mỗi font trong proposed role
+7. Full-System Preview trên Playwright (sau khi tất cả dimensions approved)
+   - Tạo HTML preview page tổng hợp (self-contained, no framework):
+     → Load approved fonts từ Google Fonts / Bunny Fonts
+     → Dùng approved color palette throughout
+     → Font specimen: mỗi font trong approved role
      → Color swatches với hex + sample UI components
      → Realistic mockups theo project type:
        Dashboard → data table, sidebar, stat cards
        Marketing → hero, features, testimonial, CTA
        Admin → form, toggles, dropdowns
-     → Light/dark mode toggle
+     → Light/dark mode toggle (default: light)
      → Responsive
-   - Mở qua Playwright MCP → user xem trên browser
+   - Mở qua Playwright MCP → user xem toàn bộ system together
    - User feedback → adjust → regenerate preview
    - Loop cho đến satisfied
+   Note: đây là preview TỔNG HỢP. Mỗi visual dimension đã có
+   preview riêng ở step 5. Step này kiểm tra coherence giữa
+   tất cả dimensions khi kết hợp.
     ↓
 8. Write DESIGN-SYSTEM.md
    - Lưu vào .superteam/DESIGN-SYSTEM.md

@@ -9,6 +9,13 @@ Khi viết hoặc cập nhật skill (`skills/*/SKILL.md`):
 - Main conversation chỉ nhận kết quả tóm tắt
 - KHÔNG làm trực tiếp trong main context
 
+## Visual-First Rule
+
+Khi viết skill hoặc spec có liên quan đến UI/design:
+- Visual dimensions (font, color, spacing, layout, decoration) PHẢI có preview inline khi propose — KHÔNG chỉ describe bằng text
+- Preview HTML PHẢI default light background (`#fff`/`#fafafa`). Chỉ dark khi design system đã confirmed dark mode
+- Nếu spec có multi-step flow, visual dimensions phải có preview PER DIMENSION — không batch tất cả rồi preview 1 lần cuối
+
 ## Agents
 
 - KHÔNG sử dụng `run_in_background: true` khi spawn agents. Luôn chạy foreground parallel (nhiều Agent() calls trong cùng một message).
