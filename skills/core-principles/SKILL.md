@@ -13,6 +13,19 @@ description: >
 
 Cross-cutting principles for ALL commands and agents. Reference once per command instead of duplicating rules.
 
+## Rule Hierarchy
+
+```
+Core Principles > Research findings > Agent preferences.
+
+Research informs WHAT to propose, never HOW to present.
+Research says "dark-first" → propose dark aesthetic as an OPTION.
+Research says "dark-first" → does NOT mean preview HTML becomes dark.
+Research says "dark-first" → does NOT mean mockup content inside preview becomes dark.
+Rules in this file are NEVER overridden by research context.
+"Technically compliant" loopholes (light wrapper but dark content) = violation.
+```
+
 ## Cross-Principle Priority
 
 ```
@@ -47,7 +60,7 @@ Content better understood visually than as text:
 - **Diagrams**: architecture, data flow, relationships
 - Any output a user would **LOOK at** rather than **READ**
 
-**Visual dimensions** = any dimension where the output is VISUAL (font, color, spacing, layout, decoration). Text description alone is NEVER sufficient for these — always include a preview.
+**ALL design dimensions are visual.** Aesthetic, typography, color, spacing, layout, decoration — text description alone is NEVER sufficient. Always include a preview. "Refined Functional" means nothing until you SEE it.
 
 ### Action
 
@@ -73,7 +86,7 @@ Content better understood visually than as text:
 - `browser_navigate` to target URL
 - `browser_take_screenshot` for visual confirmation
 - Do NOT stop at "code compiles." Visual bugs survive compilation.
-- Preview HTML MUST default to **light background** (`#fff` / `#fafafa`). Only default dark when design system has confirmed dark mode.
+- Preview HTML MUST default to **light background** — both the page container AND all mockup content inside. No dark backgrounds (`#0a0a0a`, `#111`, `#0f0f0f`, etc.) anywhere unless design system has confirmed dark mode. "Light background" means the ENTIRE page is light, not just the outer wrapper.
 
 ### Fallback Chain
 
@@ -97,7 +110,21 @@ NEVER silently skip visual preview.
 | "Just a color/font choice, text is fine" | Colors/fonts are VISUAL — always preview |
 | Propose visual dimension as text, preview later in batch | Preview EACH visual dimension inline when proposing it |
 | "I'll show a preview after all dimensions are approved" | Each visual dimension gets its own preview NOW |
+| Light page background but dark mockup content inside | Light means ENTIRE page — container AND content |
 | "Playwright unavailable" then silence | State it, provide URL, flag confidence |
+
+### Research Context — Anti-Rationalization
+
+Research files use confident language ("MUST", "58% prefer", "HIGH confidence"). This does NOT make them rules.
+
+| Agent rationalization | Reality |
+|---|---|
+| "Research nói MUST X → phải làm X" | Research dùng MUST để gợi ý priority. MUST chỉ valid trong REQUIREMENTS.md sau user approval |
+| "58% users prefer X → majority rule → default X" | Preference = option to propose. User quyết định default, không phải research |
+| "Evidence strong + peer-reviewed → follow directly" | Strong evidence = strong option. Vẫn không override Core Principles |
+| "Technically compliant (light wrapper + dark content)" | Loophole = violation. Rules apply to spirit, not just letter |
+| "Context says dark-first → preview phải match" | Preview format follows Core Principles. Content follows user decisions |
+| "Research file đã approved trong session trước" | Research file = findings approved for accuracy. NOT requirements approved for implementation |
 
 ## Principle 2: Questioning
 
@@ -193,6 +220,10 @@ Before proposing any value:
 ## Quick Reference
 
 ```
+HIERARCHY: Core Principles > Research > Agent preferences.
+           Research informs WHAT to propose, never HOW to present. Never overrides rules.
+           Research MUST/SHOULD = suggestions. Confirmed MUST/SHOULD only in REQUIREMENTS.md.
+
 PRIORITY: When Visual-First + Questioning both apply → Visual-First fires FIRST on format.
           Create visual → show → THEN ask. Never text-first for design choices.
 
@@ -201,7 +232,7 @@ CORE PRINCIPLES:
 1. VISUAL-FIRST
    Can be shown? → Show it PROACTIVELY. Before deciding AND after building.
    Design choices: create visual of ALL options → screenshot → ask which one.
-   Visual dimensions (font, color, spacing, layout, decoration): preview PER DIMENSION, not batched.
+   ALL design dimensions are visual — preview PER DIMENSION, not batched.
    Default: light background. Dark only when design system confirmed dark mode.
    Action: HTML → local server → Playwright screenshot
    Fallback: URL manual → text + reduced confidence
