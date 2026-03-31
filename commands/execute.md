@@ -44,14 +44,27 @@ Execute an existing plan using wave-based parallelism. Includes node repair (4 s
    - Display execution plan: "Total [N] steps, [M] waves"
 
 5. **Execute by waves**
-   - For each wave: spawn executor agents in parallel
-   - Each task execution:
-     1. **Read-first gate**: read required files before editing
-     2. **Execute action**: implement the task
-     3. **Verify**: check acceptance criteria (grep) + expected output (runtime)
-     4. **Commit**: task-atomic commit following `superteam:atomic-commits`
-        - Format: `feat: [step description]` (or appropriate conventional commit type)
-   - Mark completed tasks with `[x]` in plan file
+   - **You are the ORCHESTRATOR. Dispatch agents — do NOT write implementation code yourself.**
+   - For each wave: make one `Agent()` call per task — ALL calls in the SAME message (foreground parallel)
+   - Agent type: `executor` (model: opus)
+   - Each Agent() prompt includes:
+     - Task description + acceptance criteria from plan
+     - File paths to read (NOT content — agent reads with fresh context)
+     - Plan file path, CLAUDE.md path, config path
+     - `files_modified` list (agent's ownership boundary)
+     - Commit format instructions
+   - Agent handles: read → implement → verify → commit (one atomic commit per task)
+   - After all agents return: mark completed tasks with `[x]` in plan file
+   - Follow `superteam:wave-parallelism` for full dispatch protocol
+
+   **Anti-rationalization — if you think any of these, STOP:**
+
+   | Thought | Reality |
+   |---|---|
+   | "I can do it faster directly" | Agents run in parallel = faster. You writing sequentially = slower. |
+   | "These are just file writes" | Agents handle full read→verify→commit cycle with fresh context |
+   | "Agent overhead isn't worth it" | Your context gets cluttered. Agents get clean 200k each. |
+   | "Let me just do this one task" | One becomes all. Dispatch EVERY task. |
 
    **Deviation rules** (when encountering unplanned work):
    - Level 1 (Bug found): auto-fix, no need to ask
@@ -105,6 +118,7 @@ Execute an existing plan using wave-based parallelism. Includes node repair (4 s
 - Node repair budget is 2 RETRY attempts per task. After that: DECOMPOSE, PRUNE, or ESCALATE.
 - Checkpoint review (tests + quick review) runs between EVERY wave. Never skip.
 - Each task gets exactly 1 atomic commit. Follow `superteam:atomic-commits`.
+- You are the ORCHESTRATOR. NEVER write implementation code directly. Always dispatch `executor` agents via Agent() tool.
 - Wave-based parallelism follows `superteam:wave-parallelism`: tasks in same wave run parallel, waves run sequentially.
 - Update plan file checkboxes as tasks complete (resumability).
 - If ALL retry budgets exhausted and task is critical: ESCALATE to user, do not silently skip.

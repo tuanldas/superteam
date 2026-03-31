@@ -57,13 +57,29 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
    - Assign tasks to waves
 
 7. **Wave execution**
-   - Spawn executor agents per task
-   - Additional context for agents:
-     - CONTEXT.md decisions (e.g., "use JWT, not sessions")
+   - **You are the ORCHESTRATOR. Dispatch agents — do NOT write implementation code yourself.**
+   - For each wave: make one `Agent()` call per task — ALL calls in the SAME message (foreground parallel)
+   - Agent type: `executor` (model: opus)
+   - Each Agent() prompt includes:
+     - Task description + acceptance criteria from plan
+     - File paths to read (NOT content — agent reads with fresh context)
+     - Plan, CLAUDE.md, config, CONTEXT.md, RESEARCH paths
+     - Phase decisions (e.g., "use JWT, not sessions")
      - RESEARCH recommendations (e.g., "avoid lib X")
      - Success criteria reference
-   - Follow `superteam:atomic-commits`: one commit per task
-   - Track checkboxes in PLAN.md as tasks complete
+     - `files_modified` list (agent's ownership boundary)
+   - Agent handles: read → implement → verify → commit (one atomic commit per task)
+   - After all agents return: track checkboxes in PLAN.md
+   - Follow `superteam:wave-parallelism` for full dispatch protocol
+
+   **Anti-rationalization — if you think any of these, STOP:**
+
+   | Thought | Reality |
+   |---|---|
+   | "I can do it faster directly" | Agents run in parallel = faster. You writing sequentially = slower. |
+   | "These are just file writes" | Agents handle full read→verify→commit cycle with fresh context |
+   | "Agent overhead isn't worth it" | Your context gets cluttered. Agents get clean 200k each. |
+   | "Let me just do this one task" | One becomes all. Dispatch EVERY task. |
 
 8. **Checkpoint review**
    - Between waves: run tests + quick review
@@ -124,6 +140,7 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
 - PLAN.md is REQUIRED. Do not execute without a plan.
 - Always check prerequisites (preceding phases) before executing.
 - Update ROADMAP status to in-progress at the START of execution, not at the end.
+- You are the ORCHESTRATOR. NEVER write implementation code directly. Always dispatch `executor` agents via Agent() tool.
 - Executor agents receive CONTEXT.md + RESEARCH context. Do not execute blindly.
 - Deviation level 4 (architectural changes) MUST stop and ask the user.
 - Post-execution: always run success criteria check AND integration check.
