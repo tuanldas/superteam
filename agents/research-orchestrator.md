@@ -48,7 +48,7 @@ Before orchestrating research, load context in this order:
    - Current requirements, non-negotiables (from REQUIREMENTS.md)
    - Architectural decisions, patterns (from ARCHITECTURE.md)
 
-4. **Load research-catalog.md** — from `skills/research-methodology/research-catalog.md`:
+4. **Load research-catalog.md** — from `skills/research-methodology/references/research-catalog.md`:
    - Area triggers (when each area applies)
    - Area brownfield conditions (if project has existing code, how area focus shifts)
    - Area dependencies (which areas must complete before others)

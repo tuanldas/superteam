@@ -119,7 +119,7 @@ describe('Skills', () => {
     assert.deepEqual(skillDirs.sort(), expected);
   });
 
-  it('has 10 reference files/dirs across skills', () => {
+  it('has 8 references/ dirs across skills', () => {
     const refFiles = [];
     for (const dir of skillDirs) {
       const files = fs.readdirSync(path.join(skillsDir, dir));
@@ -127,7 +127,7 @@ describe('Skills', () => {
         if (f !== 'SKILL.md') refFiles.push(`${dir}/${f}`);
       }
     }
-    assert.equal(refFiles.length, 10);
+    assert.equal(refFiles.length, 8);
   });
 });
 

@@ -58,15 +58,15 @@ This skill is used by commands at different depth levels. Match depth to context
 
 ## Research Areas
 
-Research areas are selected dynamically from the catalog (`research-catalog.md`), not hardcoded. Each area has a specific scope to prevent agents from overlapping.
+Research areas are selected dynamically from the catalog (`references/research-catalog.md`), not hardcoded. Each area has a specific scope to prevent agents from overlapping.
 
-**Area selection:** Load `research-catalog.md` → evaluate trigger and brownfield conditions → select relevant areas → group into waves by dependency.
+**Area selection:** Load `references/research-catalog.md` → evaluate trigger and brownfield conditions → select relevant areas → group into waves by dependency.
 
 **Core areas** (evaluate for every project): STACK, LANDSCAPE, ARCHITECTURE, PITFALLS.
 **Domain-specific areas** (include when relevant): SECURITY, PERFORMANCE, ACCESSIBILITY, DATA, INTEGRATION.
 **Custom areas:** AI may propose with justification — always requires user confirmation.
 
-For detailed per-area guidance (search strategies, comparison templates, scope boundaries), see `research-areas.md`.
+For detailed per-area guidance (search strategies, comparison templates, scope boundaries), see `references/research-areas.md`.
 
 ## Research Protocol
 
@@ -311,7 +311,7 @@ The orchestration accepts parameters from the calling command:
 ### Step 1 — Select research areas
 
 1. Read `context_inputs` files: extract domain, tech decisions, constraints, greenfield/brownfield status
-2. Load research area catalog (`research-catalog.md`)
+2. Load research area catalog (`references/research-catalog.md`)
 3. For each catalog area: evaluate trigger AND brownfield conditions:
    - Greenfield: include area if trigger matches
    - Brownfield: check brownfield condition — SKIP, ADJUST focus, or KEEP as-is
@@ -428,10 +428,10 @@ This makes research resilient to session interruptions — the plan on disk is t
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation (via init, phase-research, brainstorm, or plan) |
-| `research-catalog.md` | When planning research | Area selection: triggers, dependencies, brownfield, guardrails |
-| `research-areas.md` | On demand | Deep research execution guidance: search strategies, templates, scope |
+| `references/research-catalog.md` | When planning research | Area selection: triggers, dependencies, brownfield, guardrails |
+| `references/research-areas.md` | On demand | Deep research execution guidance: search strategies, templates, scope |
 
-**Rule:** Light research (`/st:plan`) resolves with `SKILL.md` alone. Deep research (`/st:phase-research`, `/st:init`) loads `research-catalog.md` for area selection and `research-areas.md` for execution guidance.
+**Rule:** Light research (`/st:plan`) resolves with `SKILL.md` alone. Deep research (`/st:phase-research`, `/st:init`) loads `references/research-catalog.md` for area selection and `references/research-areas.md` for execution guidance.
 
 ## Integration
 

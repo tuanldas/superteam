@@ -50,7 +50,7 @@ Parse arguments to determine action:
 
 4. **Assemble team composition**
    - Load `superteam:team-coordination` skill context
-   - Reference `team-roles-catalog.md` for project type → roles mapping
+   - Reference `references/team-roles-catalog.md` for project type → roles mapping
    - Apply size adaptation:
      - Small: collapse Tech Lead + Senior Dev if both present
      - Medium: use preset as-is

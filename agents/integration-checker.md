@@ -131,7 +131,7 @@ Do not assume tests pass because they passed before. Fresh output is the only ev
 This agent applies methodology from `superteam:verification`, specifically:
 - **Goal-backward verification** — start from the user outcome, work backwards to verify it is achievable across all phases
 - **Evidence-before-claims** — every finding cites a specific file, line, command output, or artifact
-- **Wiring patterns** (`wiring-patterns.md`) — the 7 patterns for detecting stubs, orphans, and hollow implementations at integration points
+- **Wiring patterns** (`references/wiring-patterns.md`) — the 7 patterns for detecting stubs, orphans, and hollow implementations at integration points
 
 ## Output Format
 

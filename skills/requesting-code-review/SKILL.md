@@ -293,9 +293,9 @@ STRENGTHS:
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation |
-| `review-domains.md` | On demand | Review agent spawning. Each agent loads only its assigned domain(s), not all 13. |
+| `references/review-domains.md` | On demand | Review agent spawning. Each agent loads only its assigned domain(s), not all 13. |
 
-**Rule:** `review-domains.md` is loaded per-agent, not per-review. A single review spawns multiple agents — each gets only its 1-2 domain checklists. Never load all 13 domains into one agent's context.
+**Rule:** `references/review-domains.md` is loaded per-agent, not per-review. A single review spawns multiple agents — each gets only its 1-2 domain checklists. Never load all 13 domains into one agent's context.
 
 **Domain Selection Mechanism:** The `superteam:project-awareness` context block determines project type (framework, language, architecture), which maps to relevant review domains. Each review agent loads only the domains assigned to its specific domain specialty, not by reading all domains and selecting — the assignment is predetermined by project type and domain partition.
 
@@ -312,4 +312,4 @@ STRENGTHS:
 - `superteam:verification` — post-fix verification
 - `superteam:receiving-code-review` — how to process and act on review feedback
 
-**Review domains:** See `review-domains.md` for 13 domain-specific checklists.
+**Review domains:** See `references/review-domains.md` for 13 domain-specific checklists.

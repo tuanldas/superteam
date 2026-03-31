@@ -205,7 +205,7 @@ Not all roles participate in every task:
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Any team agent starts work |
-| `team-roles-catalog.md` | Team creation | `/st:team create` |
+| `references/team-roles-catalog.md` | Team creation | `/st:team create` |
 
 ## Integration
 

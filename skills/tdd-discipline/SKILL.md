@@ -203,7 +203,7 @@ If any answer is NO → stop and fix before writing production code.
 □ Am I testing MY code's behavior, not the mock's?
 □ Could I use a real instance instead? (in-memory DB, test server)
 ```
-If using mocks extensively, see `testing-anti-patterns.md`.
+If using mocks extensively, see `references/testing-anti-patterns.md`.
 
 ### Gate: Before Declaring Done
 ```
@@ -355,9 +355,9 @@ COMMIT PATTERN:
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation |
-| `testing-anti-patterns.md` | On demand | Writing mocks, test utilities, or when mock count exceeds 2 in a test file. |
+| `references/testing-anti-patterns.md` | On demand | Writing mocks, test utilities, or when mock count exceeds 2 in a test file. |
 
-**Rule:** Most TDD cycles need only `SKILL.md`. Load `testing-anti-patterns.md` only when mocking is involved — it's a diagnostic reference, not a prerequisite.
+**Rule:** Most TDD cycles need only `SKILL.md`. Load `references/testing-anti-patterns.md` only when mocking is involved — it's a diagnostic reference, not a prerequisite.
 
 ## Integration
 
@@ -375,4 +375,4 @@ COMMIT PATTERN:
 - `superteam:handoff-protocol` — TDD cycle position (RED/GREEN/REFACTOR) captured in handoff
 - `superteam:verification` — post-implementation verification standards
 
-**Testing anti-patterns:** See `testing-anti-patterns.md` for 5 anti-patterns with gate functions and code examples.
+**Testing anti-patterns:** See `references/testing-anti-patterns.md` for 5 anti-patterns with gate functions and code examples.

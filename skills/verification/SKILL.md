@@ -164,7 +164,7 @@ Every artifact must pass all 4 levels:
 
 ### Wiring Patterns to Check
 
-See `wiring-patterns.md` for detailed patterns. Summary:
+See `references/wiring-patterns.md` for detailed patterns. Summary:
 
 | Pattern | Check | Red Flag |
 |---------|-------|----------|
@@ -314,8 +314,8 @@ RE-VERIFICATION:
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation |
-| `artifact-patterns.md` | On demand | Level 2+ check finds suspicious artifacts (stubs, empty returns) — load for framework-specific grep patterns to diagnose. |
-| `wiring-patterns.md` | On demand | Level 3+ check needed — verifying imports, API calls, data flow. |
+| `references/artifact-patterns.md` | On demand | Level 2+ check finds suspicious artifacts (stubs, empty returns) — load for framework-specific grep patterns to diagnose. |
+| `references/wiring-patterns.md` | On demand | Level 3+ check needed — verifying imports, API calls, data flow. |
 
 **Rule:** Most commit-level verifications (Level 1-2) resolve with `SKILL.md` alone. Load reference files only when deeper analysis is needed. Typical loading: 60% SKILL.md only, 30% + wiring-patterns, 10% + both reference files.
 
@@ -336,5 +336,5 @@ RE-VERIFICATION:
 - `superteam:handoff-protocol` — verification state captured on pause
 
 **Reference files:**
-- `artifact-patterns.md` — framework-specific grep patterns for 4-level verification
-- `wiring-patterns.md` — the 4 wiring patterns with red flags and grep commands
+- `references/artifact-patterns.md` — framework-specific grep patterns for 4-level verification
+- `references/wiring-patterns.md` — the 4 wiring patterns with red flags and grep commands

@@ -832,7 +832,7 @@ describe('Tính năng: Kiểm tra file skill team-coordination', () => {
   });
 
   it('team-roles-catalog.md tồn tại và bao phủ mọi loại dự án', () => {
-    const noiDung = fs.readFileSync(path.join(thuMucSkill, 'team-roles-catalog.md'), 'utf8');
+    const noiDung = fs.readFileSync(path.join(thuMucSkill, 'references', 'team-roles-catalog.md'), 'utf8');
     const loaiDuAn = ['frontend', 'backend', 'fullstack', 'monorepo', 'php', 'go', 'python', 'rust', 'unknown'];
     for (const loai of loaiDuAn) {
       assert.ok(noiDung.includes(loai), `Catalog phải đề cập loại dự án: ${loai}`);
@@ -840,7 +840,7 @@ describe('Tính năng: Kiểm tra file skill team-coordination', () => {
   });
 
   it('team-roles-catalog.md mô tả thích ứng theo kích thước', () => {
-    const noiDung = fs.readFileSync(path.join(thuMucSkill, 'team-roles-catalog.md'), 'utf8');
+    const noiDung = fs.readFileSync(path.join(thuMucSkill, 'references', 'team-roles-catalog.md'), 'utf8');
     assert.ok(noiDung.includes('Small') || noiDung.includes('small'));
     assert.ok(noiDung.includes('Medium') || noiDung.includes('medium'));
     assert.ok(noiDung.includes('Large') || noiDung.includes('large'));

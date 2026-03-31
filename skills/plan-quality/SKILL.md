@@ -340,9 +340,9 @@ BANNED: "implement", "add validation", "handle errors",
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation via `/st:plan` or `/st:phase-plan` |
-| `plan-checker-prompt.md` | On demand | When dispatching plan-checker agent |
+| `references/plan-checker-prompt.md` | On demand | When dispatching plan-checker agent |
 
-**Rule:** Most plan creation needs only `SKILL.md`. Load `plan-checker-prompt.md` only when dispatching the checker agent. It is a prompt template, not prerequisite knowledge.
+**Rule:** Most plan creation needs only `SKILL.md`. Load `references/plan-checker-prompt.md` only when dispatching the checker agent. It is a prompt template, not prerequisite knowledge.
 
 ## Integration
 
