@@ -21,6 +21,7 @@ Khi viết skill hoặc spec có liên quan đến UI/design:
 - TẤT CẢ design dimensions (aesthetic, font, color, spacing, layout, decoration) PHẢI có preview inline khi propose — KHÔNG chỉ describe bằng text. "Refined Functional" means nothing until you SEE it.
 - Preview HTML PHẢI default light background (`#fff`/`#fafafa`). Chỉ dark khi design system đã confirmed dark mode
 - Nếu spec có multi-step flow, visual dimensions phải có preview PER DIMENSION — không batch tất cả rồi preview 1 lần cuối
+- Mọi preview HTML phải tạo tại `.superteam/preview/<name>.html` — KHÔNG tạo ở project root hay folder khác
 
 ## Agents
 

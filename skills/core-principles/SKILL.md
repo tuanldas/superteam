@@ -77,8 +77,8 @@ Content better understood visually than as text:
 
 **When presenting design choices (MUST follow this sequence):**
 ```
-1. Create self-contained HTML with ALL options as side-by-side visual cards
-2. Serve: python3 -m http.server [port]
+1. Create HTML at .superteam/preview/<name>.html (ALL options as side-by-side visual cards)
+2. Serve: python3 -m http.server [port] -d .superteam/preview
 3. browser_navigate → browser_take_screenshot
 4. Present screenshot + text labels + recommendation
 5. Ask "Which do you prefer?" — user sees options visually BEFORE choosing
@@ -88,8 +88,8 @@ Content better understood visually than as text:
 
 **For post-implementation verification:**
 ```
-1. Create self-contained HTML (no framework deps)
-2. Serve: python3 -m http.server [port]
+1. Create HTML at .superteam/preview/<name>.html (no framework deps)
+2. Serve: python3 -m http.server [port] -d .superteam/preview
 3. browser_navigate → browser_take_screenshot
 4. Present screenshot in conversation
 ```
@@ -245,7 +245,7 @@ CORE PRINCIPLES:
    Design choices: create visual of ALL options → screenshot → ask which one.
    ALL design dimensions are visual — preview PER DIMENSION, not batched.
    Default: light background. Dark only when design system confirmed dark mode.
-   Action: HTML → local server → Playwright screenshot
+   Action: .superteam/preview/<name>.html → serve -d .superteam/preview → Playwright screenshot
    Fallback: URL manual → text + reduced confidence
    Never: text-only when can preview, wait for user to request preview, silent skip, batch previews
 
