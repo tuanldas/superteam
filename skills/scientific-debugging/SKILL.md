@@ -61,7 +61,7 @@ Phase 1 produces observations. Phase 2 refines them into a hypothesis. Phase 3 t
 2. **Reproduce consistently.** If you can't reproduce, you can't verify a fix.
 3. **Check recent changes.** `git diff`, dependency updates, config changes, environment changes.
 4. **Gather evidence at boundaries.** In multi-component systems, instrument each boundary (API calls, DB queries, IPC) to find where data diverges from expectations.
-5. **Trace data flow.** Follow data from origin to symptom point. Read `techniques.md → Root-Cause Tracing` for methodology.
+5. **Trace data flow.** Follow data from origin to symptom point. For detailed methodology, see `techniques.md → Root-Cause Tracing`.
 6. **Check logs.** Use framework from `superteam:project-awareness` context block to auto-detect log locations.
    When project-awareness type = `unknown`: ask user for log location instead of guessing.
    Fallback locations when project-awareness unavailable:
@@ -272,7 +272,7 @@ RESTART TRIGGERS:
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation |
-| `techniques.md` | On demand | Entering Phase 1 (investigation). Skip if hypothesis is already formed. |
+| `techniques.md` | On demand | Entering Phase 1 when investigation approach is unclear. Not needed if the data-flow path is already visible from error messages and stack traces. |
 
 **Rule:** Most debugging sessions resolve with 1-2 techniques. Load `techniques.md` only when the debugger needs to select an investigation approach — not preemptively.
 

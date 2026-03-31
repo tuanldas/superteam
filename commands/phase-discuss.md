@@ -107,4 +107,4 @@ Clarify the HOW for a phase already defined in the roadmap. The phase already ha
 - CONTEXT.md is lightweight — decisions and constraints, not a novel.
 - Suggest next step but let user decide (research or plan).
 - Per-phase directory: `.superteam/phases/[phase-name]/` holds all phase artifacts.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning, decision-continuity.

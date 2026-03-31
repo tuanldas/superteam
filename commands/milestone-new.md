@@ -154,4 +154,4 @@ Create a new milestone for the project. Parses the current version from ROADMAP.
 - Research is optional. AI recommends based on domain similarity.
 - Follow `superteam:project-awareness` for project context.
 - Follow `superteam:atomic-commits` for all commits.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning, decision-continuity.

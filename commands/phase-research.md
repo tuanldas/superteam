@@ -47,4 +47,4 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
 - Research orchestration is owned by `superteam:research-methodology`. This command provides context and delegates.
 - If CONTEXT.md exists (from phase-discuss), pass it as part of `context_inputs` for all agents.
 - If CONTEXT.md does not exist, warn user and recommend running `/st:phase-discuss` first, but proceed if user wants.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

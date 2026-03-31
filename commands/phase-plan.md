@@ -135,4 +135,4 @@ Create an implementation plan for a phase in the roadmap. Reuses the planning en
 - Plan goes in `.superteam/phases/[name]/PLAN.md`, NOT in `.superteam/plans/`.
 - If the phase requires UI work and no UI design exists, suggest `/st:ui-design` but do not block.
 - Max 3 plan-checker iterations. If still failing, present to user with issues noted.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

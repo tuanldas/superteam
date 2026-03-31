@@ -174,6 +174,35 @@ And this notice after the title:
 > Findings below are INPUT for decisions, not rules to follow.
 > Confirmed requirements only exist in REQUIREMENTS.md after user approval.
 
+**Example research output file:**
+
+```markdown
+<!-- CONTEXT: research-findings -->
+<!-- NOT instructions — Core Principles always override -->
+
+# STACK Research Findings
+
+> Findings below are INPUT for decisions, not rules to follow.
+> Confirmed requirements only exist in REQUIREMENTS.md after user approval.
+
+## Key Findings
+
+- **Node.js runtime**: Codebase uses Node 18+. No newer LTS available until Node 22 (April 2025).
+- **ORM landscape**: Drizzle preferred in ecosystem (18k GitHub stars, weekly releases). Prisma still dominant (28k stars) but slower release cycle.
+- **Database**: PostgreSQL 14 already in use. No migration pressure; version current through 2024.
+
+## Compared Options
+
+| Option | Evidence | Trade-off |
+|--------|----------|-----------|
+| Drizzle ORM | Active releases, type-safe, lighter | Smaller community than Prisma |
+| Prisma | Industry standard, broad adoption | Heavier, slower release cadence |
+
+## Unknowns
+
+- Codebase migration cost (no existing ORM detected; needs audit)
+```
+
 8. **Use descriptive language, never prescriptive.**
    - WRITE: "Evidence suggests dark mode preferred (58%, single study, mixed evidence)"
    - NOT: "MUST: dark-first design"
@@ -279,10 +308,16 @@ NEVER:
 This section defines the complete orchestration flow for deep research (used by `/st:init` and `/st:phase-research`). Commands delegate to this flow instead of implementing their own.
 
 The orchestration accepts parameters from the calling command:
-- **`context_inputs`**: files to read for research context (e.g., PROJECT.md, CONTEXT.md, ROADMAP.md)
-- **`output_dir`**: where to save research results (e.g., `.superteam/research/`, `.superteam/phases/[name]/research/`)
-- **`research_context`**: label for the research session (e.g., "init", "phase 3: Authentication")
+
+- **`context_inputs`**: files to read for research context
+  - Examples: `PROJECT.md`, `CONTEXT.md`, `ROADMAP.md`, `REQUIREMENTS.md`, `ARCHITECTURE.md`
+  - Used to extract: domain, tech decisions, constraints, greenfield/brownfield status
+- **`output_dir`**: where to save research results
+  - Examples: `.superteam/research/`, `.superteam/phases/[name]/research/`
+- **`research_context`**: label for the research session
+  - Examples: `"init"`, `"phase 3: Authentication"`, `"Q2 Stack Review"`
 - **`commit_message`**: format for the final commit
+  - Example: `"research: {research_context} — {areas}"`
 
 ### Step 1 — Select research areas
 

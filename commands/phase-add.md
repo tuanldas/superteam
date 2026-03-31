@@ -143,4 +143,4 @@ Status values: `completed` | `in-progress` | `planned`
 - Phase names must be unique in the roadmap.
 - When inserting in middle, renumber only changes numbers -- never alter phase content.
 - Follow `superteam:project-awareness` for codebase and project context.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

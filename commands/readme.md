@@ -95,4 +95,4 @@ Generate or update README.md from the codebase. Supports README-Driven Developme
 - Accept image input for screenshots and diagrams.
 - Present draft to user before writing in generate mode.
 - Commit changes with appropriate message (`docs: generate README` or `docs: update README`).
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

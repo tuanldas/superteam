@@ -29,7 +29,7 @@ Full UI pipeline: generate UI-SPEC (design contract), preview mockup in Playwrig
    - User confirms or overrides detected library
 
 3. **Questioning** (light, adaptive)
-   - Ask each question individually, adaptive. Follow `superteam:core-principles` questioning rules.
+   - Ask each question individually, adaptive. Follow `core-principles/references/questioning.md`.
    - Topics to cover: what page/component, any reference/inspiration (accept images), additional context as needed.
    - Each question builds on the previous answer. Skip questions already answered.
 
@@ -127,4 +127,4 @@ Full UI pipeline: generate UI-SPEC (design contract), preview mockup in Playwrig
 - Production code must be mobile-first and use the project's actual design system library.
 - Image input accepted at any point: reference images, wireframes, screenshots for feedback.
 - All artifacts are saved to `.superteam/designs/` and committed.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: visual-first, questioning, decision-continuity.

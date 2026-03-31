@@ -89,4 +89,4 @@ Present findings and let user choose which to resume.
 - Universal scope: can resume ANY workflow type.
 - Use `superteam:project-awareness` for loading project context.
 - Use `superteam:handoff-protocol` for interpreting handoff data.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

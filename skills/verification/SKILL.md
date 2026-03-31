@@ -88,6 +88,8 @@ Skip any step = lying, not verifying.
   - Run the COMPLETE command (not partial or cached output)
 ```
 
+For artifacts that cannot be verified by command (visual appearance, real-time behavior, external services), evidence means flagging for human verification with specific check criteria — see "What Needs Human Verification" below.
+
 ## Verification Scope
 
 Not all actions need full verification. Match depth to action type:
@@ -312,7 +314,7 @@ RE-VERIFICATION:
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation |
-| `artifact-patterns.md` | On demand | Level 2+ check fails — need framework-specific grep patterns to diagnose. |
+| `artifact-patterns.md` | On demand | Level 2+ check finds suspicious artifacts (stubs, empty returns) — load for framework-specific grep patterns to diagnose. |
 | `wiring-patterns.md` | On demand | Level 3+ check needed — verifying imports, API calls, data flow. |
 
 **Rule:** Most commit-level verifications (Level 1-2) resolve with `SKILL.md` alone. Load reference files only when deeper analysis is needed. Typical loading: 60% SKILL.md only, 30% + wiring-patterns, 10% + both reference files.

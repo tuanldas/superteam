@@ -147,4 +147,4 @@ Finalize the current milestone: pre-flight check (AUDIT must be passed), gather 
 - Do NOT push the tag automatically. Only tell the user how to push.
 - One milestone at a time. This always operates on the current milestone from ROADMAP.md.
 - Each step that writes files gets its own atomic commit.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

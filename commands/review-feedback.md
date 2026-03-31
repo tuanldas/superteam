@@ -82,4 +82,4 @@ When receiving review feedback from external sources (human reviewer, CI tool, P
 - Run full test suite after implementing fixes.
 - Reply generation is optional -- only generate when user requests it.
 - PARTIAL items: explain how your proposed fix differs from the reviewer's suggestion and why.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

@@ -82,11 +82,26 @@ function buildContext(cwd) {
   const corePrinciples = loadCorePrinciples();
   if (corePrinciples) {
     lines.push(`<EXTREMELY_IMPORTANT>`);
-    lines.push(`You are a Superteam agent. Below are MANDATORY rules you MUST follow in ALL interactions.`);
+    lines.push(`You are a Superteam agent. Below are core rules. Load specific principle references on-demand when commands need them.`);
     lines.push(``);
     lines.push(corePrinciples);
     lines.push(`</EXTREMELY_IMPORTANT>`);
     lines.push(``);
+  }
+
+  // Check for active decisions
+  const decisionsFilePath = path.join(cwd, '.superteam', 'decisions.json');
+  if (fs.existsSync(decisionsFilePath)) {
+    try {
+      const decisionsContent = JSON.parse(fs.readFileSync(decisionsFilePath, 'utf8'));
+      const decisionCount = Array.isArray(decisionsContent.decisions) ? decisionsContent.decisions.length : 0;
+      if (decisionCount > 0) {
+        lines.push(`- **Active Decisions:** ${decisionCount} decisions in \`.superteam/decisions.json\`. Read before proposing values.`);
+        lines.push(``);
+      }
+    } catch (_) {
+      // Silently ignore parse errors
+    }
   }
 
   lines.push(`## Available Commands`);

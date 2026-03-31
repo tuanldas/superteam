@@ -40,7 +40,7 @@ describe('Plugin Structure', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 2. Commands (29 files, valid frontmatter)
+// 2. Commands (30 files, valid frontmatter)
 // ---------------------------------------------------------------------------
 
 describe('Commands', () => {
@@ -51,8 +51,8 @@ describe('Commands', () => {
     commandFiles = fs.readdirSync(commandsDir).filter(f => f.endsWith('.md'));
   });
 
-  it('has exactly 29 command files', () => {
-    assert.equal(commandFiles.length, 29);
+  it('has exactly 30 command files', () => {
+    assert.equal(commandFiles.length, 30);
   });
 
   it('every command has YAML frontmatter with description', () => {
@@ -73,7 +73,7 @@ describe('Commands', () => {
       'milestone-complete', 'milestone-new', 'pause', 'phase-add',
       'phase-discuss', 'phase-execute', 'phase-list', 'phase-plan',
       'phase-remove', 'phase-research', 'phase-validate', 'plan', 'quick',
-      'readme', 'resume', 'review-feedback', 'tdd', 'ui-design', 'worktree',
+      'readme', 'resume', 'review-feedback', 'tdd', 'team', 'ui-design', 'worktree',
     ];
     const actual = commandFiles.map(f => f.replace('.md', '')).sort();
     assert.deepEqual(actual, expected);
@@ -81,7 +81,7 @@ describe('Commands', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 3. Skills (11 SKILL.md + 7 reference files)
+// 3. Skills (14 SKILL.md + 10 reference files/dirs)
 // ---------------------------------------------------------------------------
 
 describe('Skills', () => {
@@ -94,8 +94,8 @@ describe('Skills', () => {
       .map(d => d.name);
   });
 
-  it('has exactly 11 skill directories', () => {
-    assert.equal(skillDirs.length, 11);
+  it('has exactly 14 skill directories', () => {
+    assert.equal(skillDirs.length, 14);
   });
 
   it('every skill has SKILL.md with valid frontmatter', () => {
@@ -111,15 +111,15 @@ describe('Skills', () => {
 
   it('skill names match expected set', () => {
     const expected = [
-      'atomic-commits', 'handoff-protocol', 'plan-quality',
-      'project-awareness', 'receiving-code-review', 'requesting-code-review',
-      'research-methodology', 'scientific-debugging', 'tdd-discipline',
-      'verification', 'wave-parallelism',
+      'atomic-commits', 'core-principles', 'frontend-design', 'handoff-protocol',
+      'plan-quality', 'project-awareness', 'receiving-code-review',
+      'requesting-code-review', 'research-methodology', 'scientific-debugging',
+      'tdd-discipline', 'team-coordination', 'verification', 'wave-parallelism',
     ];
     assert.deepEqual(skillDirs.sort(), expected);
   });
 
-  it('has 7 reference files across skills', () => {
+  it('has 10 reference files/dirs across skills', () => {
     const refFiles = [];
     for (const dir of skillDirs) {
       const files = fs.readdirSync(path.join(skillsDir, dir));
@@ -127,12 +127,12 @@ describe('Skills', () => {
         if (f !== 'SKILL.md') refFiles.push(`${dir}/${f}`);
       }
     }
-    assert.equal(refFiles.length, 8);
+    assert.equal(refFiles.length, 10);
   });
 });
 
 // ---------------------------------------------------------------------------
-// 4. Agents (13 files, valid frontmatter)
+// 4. Agents (20 files, valid frontmatter)
 // ---------------------------------------------------------------------------
 
 describe('Agents', () => {
@@ -143,8 +143,8 @@ describe('Agents', () => {
     agentFiles = fs.readdirSync(agentsDir).filter(f => f.endsWith('.md'));
   });
 
-  it('has exactly 13 agent files', () => {
-    assert.equal(agentFiles.length, 13);
+  it('has exactly 20 agent files', () => {
+    assert.equal(agentFiles.length, 20);
   });
 
   it('every agent has frontmatter with name, description, model', () => {
@@ -159,26 +159,33 @@ describe('Agents', () => {
 
   it('agent names match expected set', () => {
     const expected = [
-      'codebase-mapper', 'debugger', 'executor', 'integration-checker',
-      'phase-researcher', 'plan-checker', 'planner', 'research-synthesizer',
-      'reviewer', 'test-auditor', 'ui-auditor', 'ui-researcher', 'verifier',
+      'codebase-mapper', 'debugger', 'developer', 'devops-engineer',
+      'executor', 'integration-checker', 'phase-researcher', 'plan-checker',
+      'planner', 'qa-engineer', 'research-synthesizer', 'reviewer',
+      'scrum-master', 'senior-developer', 'tech-lead', 'test-auditor',
+      'ui-auditor', 'ui-researcher', 'ux-designer', 'verifier',
     ];
     const actual = agentFiles.map(f => f.replace('.md', '')).sort();
     assert.deepEqual(actual, expected);
   });
 
   it('core agents use opus model', () => {
-    const coreAgents = ['planner.md', 'executor.md', 'debugger.md', 'reviewer.md'];
-    for (const file of coreAgents) {
+    const opusAgents = [
+      'planner.md', 'executor.md', 'debugger.md', 'reviewer.md',
+      'scrum-master.md', 'senior-developer.md', 'tech-lead.md',
+    ];
+    for (const file of opusAgents) {
       const content = fs.readFileSync(path.join(agentsDir, file), 'utf8');
       assert.ok(content.includes('model: opus'), `${file} should use opus`);
     }
   });
 
   it('utility agents use sonnet model', () => {
-    const utilAgents = agentFiles.filter(
-      f => !['planner.md', 'executor.md', 'debugger.md', 'reviewer.md'].includes(f)
-    );
+    const opusAgents = [
+      'planner.md', 'executor.md', 'debugger.md', 'reviewer.md',
+      'scrum-master.md', 'senior-developer.md', 'tech-lead.md',
+    ];
+    const utilAgents = agentFiles.filter(f => !opusAgents.includes(f));
     for (const file of utilAgents) {
       const content = fs.readFileSync(path.join(agentsDir, file), 'utf8');
       assert.ok(content.includes('model: sonnet'), `${file} should use sonnet`);
@@ -187,21 +194,22 @@ describe('Agents', () => {
 });
 
 // ---------------------------------------------------------------------------
-// 5. Templates (7 files)
+// 5. Templates (8 files)
 // ---------------------------------------------------------------------------
 
 describe('Templates', () => {
   const templatesDir = path.join(PLUGIN_ROOT, 'templates');
 
-  it('has exactly 7 template files', () => {
+  it('has exactly 8 template files', () => {
     const files = fs.readdirSync(templatesDir);
-    assert.equal(files.length, 7);
+    assert.equal(files.length, 8);
   });
 
   it('template names match expected set', () => {
     const expected = [
       'api-docs.md', 'config.json', 'handoff.json',
       'project.md', 'readme.md', 'requirements.md', 'roadmap.md',
+      'team-config.json',
     ];
     const actual = fs.readdirSync(templatesDir).sort();
     assert.deepEqual(actual, expected);

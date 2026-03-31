@@ -103,4 +103,4 @@ Clean up files after a milestone is completed. Move phase directories and resear
 - ROADMAP.md is kept because it contains continuous history across milestones.
 - plans/ are kept because they may be referenced across milestones.
 - Commit all changes with a descriptive message.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

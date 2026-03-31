@@ -59,4 +59,4 @@ Display all phases from ROADMAP.md with status, requirements, and progress. Read
 - Always include summary header with totals by status.
 - Always suggest next action commands at the bottom.
 - If filter applied, still show the summary header with full totals, but only list matching phases.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

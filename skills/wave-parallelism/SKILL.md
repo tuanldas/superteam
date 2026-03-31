@@ -89,6 +89,8 @@ No exceptions. No "they only touch different parts of the file."
 
 This is the rule that prevents merge conflicts. Claude will rationalize "they edit different functions in the same file" — that is still a conflict risk. Different wave.
 
+**Clarification on READ access:** File-ownership applies to WRITE access only. Multiple agents in the same wave CAN read the same file owned by another agent — reading does not create conflicts. Ownership means "the only agent that may modify this file in this wave."
+
 ### Implicit Dependencies (Beyond Files)
 
 File-ownership catches most conflicts, but watch for shared runtime state:
@@ -220,7 +222,7 @@ FOR EACH WAVE:
   → User sees tree view with each agent's name and live status.
 ```
 
-This is the ONLY way to get parallel execution with visible progress. Do NOT spawn agents one at a time across separate messages (that is sequential). Do NOT use `run_in_background=true` (that hides progress from the tree view).
+This is the preferred way to get parallel execution with visible progress. Do NOT spawn agents one at a time across separate messages (that is sequential). Do NOT use `run_in_background=true` (that hides progress from the tree view).
 
 ### MANDATORY WAIT GATE
 

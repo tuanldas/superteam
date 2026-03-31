@@ -128,4 +128,4 @@ Layered code review: linting first, then 12 specialized agents in parallel, conf
 - Image input accepted for visual regression or UI bug screenshots.
 - Report includes Strengths section. Acknowledge what was done well.
 - Tests must run after fixes. If tests fail, fix the regression before committing.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: visual-first.

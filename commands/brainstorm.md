@@ -176,4 +176,4 @@ Explore a vague idea and turn it into a clear, actionable spec. Two rounds of re
 - Output is a spec document, NOT a plan. Suggest `/st:plan` as next step.
 - Image input accepted at any point in the flow.
 - Follow `superteam:research-methodology` for both research rounds.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: visual-first, questioning.

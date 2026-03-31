@@ -297,6 +297,8 @@ STRENGTHS:
 
 **Rule:** `review-domains.md` is loaded per-agent, not per-review. A single review spawns multiple agents — each gets only its 1-2 domain checklists. Never load all 13 domains into one agent's context.
 
+**Domain Selection Mechanism:** The `superteam:project-awareness` context block determines project type (framework, language, architecture), which maps to relevant review domains. Each review agent loads only the domains assigned to its specific domain specialty, not by reading all domains and selecting — the assignment is predetermined by project type and domain partition.
+
 ## Integration
 
 **Used by:**

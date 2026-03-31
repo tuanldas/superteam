@@ -235,4 +235,4 @@ When arguments don't match any sub-command:
 - Backward compatible: this command does not affect existing `/st:execute`, `/st:plan`, etc.
 - Follow `superteam:team-coordination` for all team interaction protocols.
 - Maximum team size: 8 agents (to prevent communication overhead).
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

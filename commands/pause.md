@@ -80,4 +80,4 @@ Pause any running workflow (execute, debug, quick, ui-design, plan...). Create h
 - If user provides a message, store it in `user_message` field and reference it in HANDOFF.md.
 - Use `superteam:project-awareness` for loading project context.
 - Use `superteam:handoff-protocol` for handoff file quality.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

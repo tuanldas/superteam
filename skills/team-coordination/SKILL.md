@@ -138,6 +138,8 @@ Developer completes task → SendMessage to Senior Dev: "ready for review"
 - Starting a new task
 - Making a decision that might conflict with prior decisions
 
+**Write/read asymmetry:** Only Scrum Master writes to CONTEXT.md. Other agents cannot modify it directly, but can suggest updates via `SendMessage` to the SM. This preserves single-source truth while allowing all voices to contribute — SM evaluates suggestions and incorporates valuable insights as formal updates.
+
 ### Cross-Session Persistence
 
 Team state persists in `.superteam/team/`. Platform state (TeamCreate) must be re-created each session. The team config and context survive across sessions; platform coordination infrastructure does not.

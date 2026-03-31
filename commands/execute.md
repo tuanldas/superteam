@@ -122,4 +122,4 @@ Execute an existing plan using wave-based parallelism. Includes node repair (4 s
 - Wave-based parallelism follows `superteam:wave-parallelism`: tasks in same wave run parallel, waves run sequentially.
 - Update plan file checkboxes as tasks complete (resumability).
 - If ALL retry budgets exhausted and task is critical: ESCALATE to user, do not silently skip.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

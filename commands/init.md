@@ -11,7 +11,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
 ## Workflow
 
 1. **Configure preferences**
-   - Ask each preference ONE AT A TIME, adaptive. Follow `superteam:core-principles` questioning rules.
+   - Ask each preference ONE AT A TIME, adaptive. Follow `core-principles/references/questioning.md` rules.
    - Preferences to cover (order and phrasing adapt based on answers):
      - Granularity preference (coarse / standard / fine)
      - Parallelization (parallel / sequential)
@@ -54,7 +54,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - Example: "You mentioned API but haven't discussed auth."
      - Example: "I see React but no test setup."
    - Questioning techniques:
-     - Follow `superteam:core-principles` questioning rules — ONE question per message, adaptive
+     - Follow `core-principles/references/questioning.md` — ONE question per message, adaptive
      - Follow the thread, do NOT follow a script
      - Challenge vagueness: what does "good" mean? who are "users"?
      - Make abstract concrete: "Walk me through using this"
@@ -130,7 +130,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - Mismatch → nudge once, explain why unusual, offer alternative
      - Always accept user decision, never block, never ask again
    - Adaptive: if user's answer on one dimension already implies another → skip or pre-fill with confirmation
-   - After each dimension approved → record in DECISIONS block (follow `superteam:core-principles` Decision Continuity)
+   - After each dimension approved → record in `.superteam/decisions.json` (follow `core-principles/references/decision-continuity.md`)
    - If init research has landscape data → use to inform each recommendation
    - If not → use built-in design knowledge
    - Apply full font rules (blacklist, overused warnings) and AI slop anti-patterns from `/st:design-system`
@@ -262,4 +262,4 @@ project/
 - Image input accepted at any point in the flow.
 - Config is step 1 because research agents need config to run properly.
 - Brownfield detection is integrated into init flow (no flow interruption).
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: visual-first, questioning, decision-continuity.

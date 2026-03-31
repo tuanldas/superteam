@@ -147,4 +147,4 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
 - Do NOT mark phase as completed here. That is the job of `/st:phase-validate`.
 - One commit per task. Follow `superteam:atomic-commits` strictly.
 - If a task fails node repair after RETRY + DECOMPOSE, ESCALATE to user.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.

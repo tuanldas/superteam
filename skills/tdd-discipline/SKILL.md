@@ -69,6 +69,8 @@ Use `superteam:project-awareness` context block to determine test framework:
 
 If no test framework detected: ask user before proceeding. Do not guess.
 
+**Monorepo note:** In monorepo projects, detect the test framework per workspace/package — different packages may use different frameworks. Use `superteam:project-awareness` monorepo scope to determine which workspace the current task belongs to, then detect framework for that workspace only. Do not assume all packages use the same framework.
+
 ## Red-Green-Refactor Cycle
 
 ```

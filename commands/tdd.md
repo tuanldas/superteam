@@ -110,7 +110,7 @@ Strict Red-Green-Refactor cycle. No production code without a failing test first
 - Mocks are a last resort. Prefer real code.
 - If invoked by `/st:debug`: start at RED with a failing test that reproduces the bug, then GREEN, REFACTOR.
 - If invoked by `/st:execute` (FINE granularity): run full Red-Green-Refactor per task.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.
 
 ## Rationalizations to reject
 

@@ -23,7 +23,7 @@ Execute a small task fast: auto-plan 1-3 tasks, execute immediately, atomic comm
 
 3. **Discussion phase** (only with `--discuss`)
    - Identify 2-4 gray areas or assumptions about the task
-   - Ask each question individually, adaptive. Follow `superteam:core-principles` questioning rules.
+   - Ask each question individually, adaptive. Follow `core-principles/references/questioning.md`.
    - Record decisions
 
 4. **Research phase** (only with `--research`)
@@ -82,7 +82,7 @@ Flags are composable: `/st:quick --discuss --full add dark mode toggle`
 - NO user approval for the plan. User already knows what they want.
 - Always create tracking directory and PLAN.md even for single-task execution.
 - Commit messages follow conventional commits format from config.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.
 
 ## When to suggest `/st:plan` instead
 

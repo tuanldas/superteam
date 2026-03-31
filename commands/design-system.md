@@ -187,4 +187,4 @@ Handling: Nudge once, offer alternative, always accept user decision, never bloc
 - Overused fonts trigger a warning but are allowed if user insists.
 - Brownfield projects: always offer to infer from existing code first.
 - Two-way interaction with `/st:ui-design`: this command defines the system, `/st:ui-design` may suggest updates back.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: visual-first, questioning, decision-continuity.

@@ -142,4 +142,4 @@ Confirm a phase is truly complete through 4 layers of verification: auto-check s
 - VERIFICATION.md is written regardless of pass/fail — it records the validation attempt.
 - Integration check must cover ALL previously completed phases, not just adjacent ones.
 - Do not skip layers. Even if Layer 1 fails, still run Layers 2-4 to get a complete picture.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: visual-first, questioning.

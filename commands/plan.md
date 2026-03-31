@@ -24,7 +24,7 @@ Create an implementation plan for a task or feature. Zero-infrastructure (works 
    - Use `superteam:project-awareness` for context loading
 
 3. **Understand + Confirm**
-   - Follow `superteam:core-principles` questioning rules — follow-up questions one at a time, adaptive.
+   - Follow `core-principles/references/questioning.md` — follow-up questions one at a time, adaptive.
    - Read the request + context (codebase, PROJECT.md if available)
    - Synthesize understanding and present:
      ```
@@ -174,4 +174,4 @@ Reason:       [explanation]
 - Goal-backward must_haves are derived BEFORE presenting the plan to ensure coverage.
 - Image input accepted at any point.
 - For `--replan`: load existing plan + blocker context, assess impact on remaining tasks, let user decide.
-- Follow `superteam:core-principles` for all work.
+- Follow `superteam:core-principles`. Load references: questioning.
