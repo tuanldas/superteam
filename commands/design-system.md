@@ -41,26 +41,38 @@ Define the design system for the entire project across 7 dimensions: Aesthetic, 
      - Playwright unavailable: WebSearch only
      - WebSearch unavailable: built-in design knowledge
 
-5. **Propose each dimension one at a time**
+5. **Propose each dimension one at a time (VISUAL-FIRST)**
    - **ONE dimension per message. Wait for user response before proposing the next.**
    - **NEVER batch multiple dimensions into one message. NEVER present a "full proposal" upfront.**
      This is the user's chance to choose fonts, colors, spacing etc. according to their taste.
      Skipping this interaction removes their agency over the design.
    - Order: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
+   - **VISUAL-FIRST (mandatory, no exceptions):**
+     - BEFORE proposing any dimension → create preview HTML at `.superteam/preview/<dimension>.html`
+     - Preview shows ALL options side-by-side with realistic mockups (not just swatches)
+     - Preview MUST default light background (`#fff`/`#fafafa`). Dark only if design system confirmed dark mode.
+     - Show preview to user (Playwright screenshot or fallback URL) THEN present options
+     - Text-only proposals are NEVER acceptable. "Refined Functional" means nothing until user SEES it.
+     - This applies to EVERY dimension — including typography, spacing, layout, motion. No exceptions.
+     - If user asks "thêm lựa chọn" → update preview HTML with new options, show again, then ask
    - Each dimension = 1 message:
      ```
-     [DIMENSION]: [recommendation]
-       -- [rationale grounded in project context]
+     Preview: .superteam/preview/<dimension>.html (+ screenshot or URL)
 
-     Recommend: [recommendation] — [why]. Confidence: High/Med/Low.
+     Options shown in preview:
+     - A. [option] — [rationale]
+     - B. [option] — [rationale]
+     ...
 
-     → Approve / Adjust
+     Recommend: [option] — [why]. Confidence: High/Med/Low.
+
+     → Approve / Adjust / More options
      ```
    - If user approves → next dimension
    - If user adjusts → drill-down inline:
      - Fonts: 3-5 candidates with rationale, explain what each evokes
      - Colors: 2-3 palette options with hex, explain color theory
-     - Each drill-down is 1 focused question
+     - Each drill-down updates the preview HTML and shows it again
    - Coherence check after each dimension vs previously approved dimensions:
      - Mismatch → nudge once, explain why unusual, offer alternative
      - Always accept user decision, never block, never ask again
@@ -90,7 +102,8 @@ Define the design system for the entire project across 7 dimensions: Aesthetic, 
    - Adjust [section] → revisit that dimension (1 question), then update summary
    - Start over → return to step 5 from AESTHETIC
 
-7. **Preview on Playwright** (if available)
+7. **Coherence Preview on Playwright** (if available)
+   - Each dimension already has its own preview from step 5. This step checks ALL dimensions together.
    - Generate self-contained HTML preview page:
      - Load proposed fonts from Google Fonts / Bunny Fonts
      - Apply proposed color palette throughout
