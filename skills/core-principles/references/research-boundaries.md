@@ -4,6 +4,13 @@
 
 **Research output is INPUT for decisions, not rules to follow.** Research informs WHAT options exist. Users decide WHAT to implement. Core Principles decide HOW to present.
 
+Key boundaries:
+- Research recommend "Turborepo monorepo" → đó là finding. Dự án CHƯA dùng monorepo cho đến khi user chọn.
+- Research recommend "PayOS" → đó là finding. Dự án CHƯA dùng PayOS cho đến khi user chọn.
+- Auto-save research files (STACK.md, LANDSCAPE.md, etc.) = OK. Auto-apply decisions = KHÔNG OK.
+- Mọi quyết định kiến trúc/tech stack từ research phải present riêng cho user với 2-3 options trước khi áp dụng vào REQUIREMENTS.md hoặc ROADMAP.md.
+- Roadmap và Requirements chỉ được reference tech/architecture mà user đã explicitly confirm.
+
 ## Why This Matters
 
 Research files (SUMMARY.md, LANDSCAPE.md, STACK.md, etc.) use confident, prescriptive-sounding language — "MUST", "SHOULD", "RECOMMENDED", percentage-backed claims. When agents read these files in a new session, the confident language creates an illusion of authority that can override actual project rules. This happens because:
