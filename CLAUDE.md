@@ -16,6 +16,20 @@ skills/core-principles/
 
 Khi cần thay đổi bất kỳ rule nào về visual-first, questioning, decision continuity, hoặc research boundaries → sửa reference file tương ứng. KHÔNG duplicate rules vào commands, agents, hay CLAUDE.md. Các nơi khác chỉ reference đến core-principles.
 
+### Khi nào thêm rule vào Core Principles?
+
+Rule thuộc core-principles khi thỏa **cả 2 điều kiện**:
+1. **Cross-cutting** — áp dụng cho 3+ commands/agents trở lên, không chỉ riêng một workflow
+2. **Behavioral** — quy định CÁCH làm việc (how to interact, how to present, how to decide), không phải domain knowledge
+
+Nếu rule chỉ áp dụng cho 1-2 commands → đặt trong command đó. Nếu rule là knowledge reference (design values, debug steps, test patterns) → đặt trong skill chuyên biệt (frontend-design, scientific-debugging, tdd-discipline).
+
+Khi thêm rule mới vào core-principles:
+- Tạo reference file `references/<tên>.md` chứa chi tiết
+- Thêm pointer ngắn trong `SKILL.md` (2-3 dòng overview + link đến reference)
+- Cập nhật Context Budget table trong `SKILL.md`
+- KHÔNG inline chi tiết vào `SKILL.md` — giữ SKILL.md dưới 120 dòng
+
 ## Rule Hierarchy
 
 Core Principles > Research findings > Agent preferences. Chi tiết: `skills/core-principles/SKILL.md`.
