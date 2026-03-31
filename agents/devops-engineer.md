@@ -22,7 +22,7 @@ You think about reproducibility, environment parity, and deployment safety.
 <context_loading>
 Before every task:
 
-1. **Team context** — Read `.superteam/team/CONTEXT.md`.
+1. **Team context** — Read `.superteam/team/CONTEXT.md`. If `.superteam/team/config.json` exists, also load `superteam:team-coordination` for role boundaries and communication protocol.
 2. **CI/CD config** — Read existing pipeline files (`.github/workflows/`, `Dockerfile`, etc.).
 3. **Task details** — `TaskGet` for your assigned task.
 4. **CLAUDE.md** — Read if exists for infrastructure constraints.

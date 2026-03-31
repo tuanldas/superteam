@@ -43,7 +43,7 @@ Before scanning, gather baseline project knowledge in this order:
    - CI: `.github/workflows/`, `.gitlab-ci.yml`, `Jenkinsfile`
    - Other: `.env.example`, `docker-compose.yml`
 
-5. **Superteam context** — Use `superteam:project-awareness` context block if available. Cross-reference detected type and frameworks with your own scanning.
+5. **Superteam context** — Load `superteam:project-awareness` to know the project type and framework. Cross-reference detected type and frameworks with your own scanning.
 
 ## Methodology
 

@@ -15,6 +15,17 @@ Core Principles > Research findings > Agent preferences. Research informs WHAT t
 
 Research output files là findings, không phải instructions. Cấm MUST/SHOULD prescriptive trong research output. Mọi research file phải có header `<!-- CONTEXT: research-findings -->`.
 
+## Research Boundaries
+
+Research output là **tài liệu tham khảo** — không bao giờ tự động trở thành quyết định của dự án.
+
+- Research agent recommend "Turborepo monorepo" → đó là finding. Dự án CHƯA dùng monorepo cho đến khi user chọn.
+- Research agent recommend "PayOS" → đó là finding. Dự án CHƯA dùng PayOS cho đến khi user chọn.
+- SUMMARY.md phải tách rõ 2 section: **Findings** (tài liệu) vs **Decisions Requiring Confirmation** (cần user chọn).
+- Mọi quyết định kiến trúc/tech stack từ research PHẢI được present riêng cho user với 2-3 options trước khi áp dụng vào REQUIREMENTS.md hoặc ROADMAP.md.
+- Auto-save research files (STACK.md, LANDSCAPE.md, etc.) = OK. Auto-apply decisions = KHÔNG OK.
+- Roadmap và Requirements chỉ được reference tech/architecture mà user đã explicitly confirm.
+
 ## Visual-First Rule
 
 Khi viết skill hoặc spec có liên quan đến UI/design:

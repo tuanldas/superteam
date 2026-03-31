@@ -218,3 +218,44 @@ This is your first time designing for accessibility. **Start with WCAG Level AA 
 ```
 
 All maintain confidence level and reasoning, but adapt tone to conversation.
+
+## Command Application Guide
+
+Different commands have different questioning needs. This section maps how the principles above apply to specific command groups.
+
+### Group A: Commands Requiring Restructured Questioning
+
+These commands previously batched multiple questions. Each needs explicit one-question-per-message flow:
+
+**`/st:init`**
+- Step 1 (Config): Ask config preferences one at a time. Each answer informs the next recommendation. Don't batch granularity + parallelization + git tracking into one message.
+- Step 3 (Deep questioning): Start with open exploration ("What are you building?"), then narrow based on answers. Don't jump to "Platform? Tech stack? V1 scope?" in one message.
+
+Before: "1) Granularity? 2) Parallelization? 3) Git tracking? 4) AI models? 5) Research confirmation?"
+After: Ask granularity first → use answer to recommend parallelization → continue one at a time.
+
+Before: "Platform: Web, mobile, desktop? Tech stack: React, Flutter? V1 scope?"
+After: "What are you building?" → adapt → "How many users?" → adapt → narrow to platform/stack based on facts.
+
+**`/st:quick`**
+- Clarification phase: one question per message, adapt. Don't ask "1-2 focused questions" in a batch.
+
+**`/st:debug`**
+- Symptom exploration: ask one symptom detail at a time. "When did this start?" → answer → "Does it happen consistently or intermittently?" → answer → next relevant question based on what was revealed.
+
+**`/st:ui-design`**
+- Design direction: one question per message. Combined with Visual-First — show preview first, then ask one design question. Don't batch "2-3 questions about design direction."
+
+**`/st:plan`**
+- Step 3 (follow-up): enforce adaptive questioning after initial scope. Each follow-up builds on previous answer.
+
+**`/st:team`**
+- Team setup steps: ask about team composition, roles, and constraints one at a time. Each answer shapes the next recommendation.
+
+### Group B: Commands Needing Minor Adjustments
+
+`phase-discuss`, `milestone-new`, `phase-validate`, `design-system`, `brainstorm`, `debug-quick` — these are already close to correct. Apply the core rules (one question per message, recommend with reasoning) and ensure no hidden batching.
+
+### Group C: Reference Only
+
+`code-review`, `review-feedback`, `phase-plan`, `phase-execute`, `phase-add`, `phase-remove`, `phase-research`, `milestone-complete`, `milestone-archive`, `resume`, `readme`, `execute`, `worktree`, `api-docs`, `tdd` — these primarily use PRESENT and CONFIRM interaction types. The core rules apply naturally without restructuring.

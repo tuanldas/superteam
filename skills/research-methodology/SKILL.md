@@ -160,56 +160,26 @@ When multiple research agents produce output (phase-research, init), the synthes
 3. **Surface conflicts.** Where agents disagree → present both sides with evidence.
 4. **Cross-validate.** If Stack recommends X but Pitfalls warns about X → highlight the tension.
 5. **Rank recommendations** by evidence strength, not by word count or confidence language.
-6. **Produce SUMMARY.md** with: key findings, recommendations, conflicts, unknowns.
+6. **Produce SUMMARY.md** with TWO clearly separated sections:
+   - **Findings** (tài liệu tham khảo): key findings, evidence, conflicts, unknowns — auto-saved, no user action needed.
+   - **Decisions Requiring Confirmation**: mọi quyết định kiến trúc/tech mà research recommend (project structure, framework, ORM, hosting, payment, etc.) — PHẢI được present cho user chọn trước khi áp dụng. Mỗi decision phải có 2-3 options với trade-offs.
 
-7. **Frame output as findings, not instructions.** Every research output file MUST include this header:
+   ```markdown
+   ## Findings (Reference Material)
+   [Key findings, evidence, comparisons — informational only]
 
-```
-<!-- CONTEXT: research-findings -->
-<!-- NOT instructions — Core Principles always override -->
-```
+   ## Decisions Requiring Confirmation
+   [Each decision that needs user choice before it can be applied to REQUIREMENTS.md or ROADMAP.md]
 
-And this notice after the title:
+   | # | Decision | Research Recommends | Alternatives | Status |
+   |---|----------|-------------------|-------------|--------|
+   | 1 | Project structure | Turborepo monorepo | Single app, Polyrepo | Pending user choice |
+   | 2 | Database | Supabase PostgreSQL | PlanetScale, Neon | Pending user choice |
+   ```
 
-> Findings below are INPUT for decisions, not rules to follow.
-> Confirmed requirements only exist in REQUIREMENTS.md after user approval.
+   The calling command (init, phase-research) is responsible for presenting these decisions to the user. SUMMARY.md only extracts and lists them.
 
-**Example research output file:**
-
-```markdown
-<!-- CONTEXT: research-findings -->
-<!-- NOT instructions — Core Principles always override -->
-
-# STACK Research Findings
-
-> Findings below are INPUT for decisions, not rules to follow.
-> Confirmed requirements only exist in REQUIREMENTS.md after user approval.
-
-## Key Findings
-
-- **Node.js runtime**: Codebase uses Node 18+. No newer LTS available until Node 22 (April 2025).
-- **ORM landscape**: Drizzle preferred in ecosystem (18k GitHub stars, weekly releases). Prisma still dominant (28k stars) but slower release cycle.
-- **Database**: PostgreSQL 14 already in use. No migration pressure; version current through 2024.
-
-## Compared Options
-
-| Option | Evidence | Trade-off |
-|--------|----------|-----------|
-| Drizzle ORM | Active releases, type-safe, lighter | Smaller community than Prisma |
-| Prisma | Industry standard, broad adoption | Heavier, slower release cadence |
-
-## Unknowns
-
-- Codebase migration cost (no existing ORM detected; needs audit)
-```
-
-8. **Use descriptive language, never prescriptive.**
-   - WRITE: "Evidence suggests dark mode preferred (58%, single study, mixed evidence)"
-   - NOT: "MUST: dark-first design"
-   - WRITE: "Suggested for review: dark mode support"
-   - NOT: "New Requirements to Add: Dark-first design | MUST"
-   - Section "New Requirements to Add" → rename to "Suggested Requirements for Review"
-   - MUST/SHOULD labels in research = evidence-based suggestion, NOT confirmed requirement
+7. **Frame output as findings and use descriptive language.** See `core-principles/references/research-boundaries.md` for the complete rules — output file headers, language rules (descriptive not prescriptive), MUST/SHOULD handling, and examples. Every research output file must include the `<!-- CONTEXT: research-findings -->` header and use descriptive language ("Evidence suggests..." not "MUST: do X").
 
 **Gate:** SUMMARY.md must address conflicts. If it mentions none, the synthesizer missed something — there are always trade-offs.
 
@@ -231,7 +201,7 @@ These thoughts mean you are about to violate the methodology:
 | "The user probably wants X" | Present options. User decides. Your job is to inform, not assume. |
 | "This technology is better because it's newer" | Newer is not better. Compare on actual criteria. |
 | "Let me skip this area, it's obvious" | Selected areas are not skippable. Even "obvious" domains have surprises. |
-| "This finding is strong enough to be a MUST requirement" | Research findings are suggestions. Only REQUIREMENTS.md (after user approval) has MUST/SHOULD. Use descriptive language. |
+| "This finding is strong enough to be a MUST requirement" | Research findings are suggestions. See `core-principles/references/research-boundaries.md`. |
 
 ### Common Rationalizations
 
@@ -300,8 +270,7 @@ NEVER:
 | Pitfalls section is generic ("watch out for performance") | Pitfalls must be specific to THIS stack, THIS architecture, THIS domain. |
 | Landscape section only lists competitors without analysis | Compare on criteria relevant to the project, not just list names. |
 | SUMMARY.md has no conflicts section | There are ALWAYS trade-offs. No conflicts = missed something. |
-| Research uses MUST/SHOULD as if setting requirements | Research SUGGESTS, user DECIDES. Use "Evidence suggests..." not "MUST: do X" |
-| Section named "New Requirements to Add" | Rename to "Suggested Requirements for Review" — research doesn't create requirements |
+| Research uses MUST/SHOULD as if setting requirements | See `core-principles/references/research-boundaries.md` for output language rules |
 
 ## Research Orchestration
 
@@ -391,8 +360,9 @@ Wave 1: [areas] → Wave 2: [areas] → ...
 1. After all waves complete, spawn synthesizer agent
 2. Synthesizer reads all output files from all waves
 3. Compiles key findings, identifies conflicts between recommendations
-4. Writes `SUMMARY.md` to `output_dir`
-5. If conflicts with existing project docs found: note them for the calling command to resolve
+4. **Extract all architectural/tech decisions** that research agents recommended — list them in "Decisions Requiring Confirmation" section of SUMMARY.md. These are NOT confirmed until the calling command presents them to the user.
+5. Writes `SUMMARY.md` to `output_dir` (with both "Findings" and "Decisions Requiring Confirmation" sections)
+6. If conflicts with existing project docs found: note them for the calling command to resolve (do NOT auto-update)
 
 ### Step 5 — Present findings
 
@@ -400,13 +370,19 @@ Wave 1: [areas] → Wave 2: [areas] → ...
 RESEARCH SUMMARY — [research_context]
 Areas researched: [list of areas]
 
-Key recommendations:
-  1. [recommendation]
-  2. [recommendation]
+Key findings (reference material — auto-saved):
+  1. [finding]
+  2. [finding]
+
+Decisions requiring confirmation (NOT yet applied):
+  1. [decision] — [recommended option] vs [alternatives]
+  2. [decision] — [recommended option] vs [alternatives]
 
 Conflicts found:
   [if any: describe + suggest resolution]
 ```
+
+Present findings as reference material. Decisions are listed but NOT confirmed here — the calling command (init step 5.5, phase-research) is responsible for presenting each decision individually for user choice.
 
 Wait for user review, answer follow-up questions if needed.
 

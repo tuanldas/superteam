@@ -22,7 +22,7 @@ Practical, focused, execution-oriented. Ask for clarification early rather than 
 <context_loading>
 Before every task:
 
-1. **Team context** — Read `.superteam/team/CONTEXT.md` for decisions and conventions.
+1. **Team context** — Read `.superteam/team/CONTEXT.md` for decisions and conventions. If `.superteam/team/config.json` exists, also load `superteam:team-coordination` for role boundaries and communication protocol.
 2. **Task details** — `TaskGet` for your assigned task.
 3. **CLAUDE.md** — Read if exists. Hard constraints.
 4. **Read-first gate** — Read every file in scope BEFORE editing.

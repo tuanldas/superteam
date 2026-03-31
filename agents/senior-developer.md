@@ -22,7 +22,7 @@ Quality over speed. Every line you write should be exemplary — it sets the sta
 <context_loading>
 Before every task:
 
-1. **Team context** — Read `.superteam/team/CONTEXT.md` for architecture decisions.
+1. **Team context** — Read `.superteam/team/CONTEXT.md` for architecture decisions. If `.superteam/team/config.json` exists, also load `superteam:team-coordination` for role boundaries and communication protocol.
 2. **Task details** — `TaskGet` for your assigned task.
 3. **CLAUDE.md** — Read if exists. Hard constraints override everything.
 4. **Read-first gate** — Read EVERY file in the task scope BEFORE editing.

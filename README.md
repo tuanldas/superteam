@@ -86,6 +86,12 @@ All commands use the `/st:` prefix.
 | `/st:milestone-complete` | Complete and archive milestone |
 | `/st:milestone-archive` | Clean up phase files |
 
+### Team
+
+| Command | Description |
+|---------|-------------|
+| `/st:team` | Create and manage Scrum team of specialized agents |
+
 ### Session
 
 | Command | Description |
@@ -99,6 +105,7 @@ Skills are cross-cutting methodologies shared across commands. They enforce disc
 
 | Skill | Used by |
 |-------|---------|
+| `core-principles` | All commands and agents (auto-injected) |
 | `project-awareness` | All commands (via session-start) |
 | `atomic-commits` | execute, quick, tdd, phase-execute |
 | `research-methodology` | init, phase-research, brainstorm |
@@ -110,12 +117,14 @@ Skills are cross-cutting methodologies shared across commands. They enforce disc
 | `handoff-protocol` | pause, resume |
 | `plan-quality` | plan, phase-plan |
 | `verification` | phase-validate, milestone-audit |
+| `frontend-design` | ui-design, design-system, ui-auditor, ux-designer |
+| `team-coordination` | team, developer, senior-developer (team context) |
 
 ## Agents
 
-13 specialized subagents for parallel and focused work:
+21 specialized subagents for parallel and focused work:
 
-`reviewer` `planner` `executor` `debugger` `verifier` `phase-researcher` `research-synthesizer` `codebase-mapper` `integration-checker` `plan-checker` `ui-researcher` `ui-auditor` `test-auditor`
+`reviewer` `planner` `executor` `debugger` `verifier` `phase-researcher` `research-orchestrator` `research-synthesizer` `codebase-mapper` `integration-checker` `plan-checker` `ui-researcher` `ui-auditor` `ux-designer` `test-auditor` `developer` `senior-developer` `tech-lead` `scrum-master` `qa-engineer` `devops-engineer`
 
 ## Project Detection
 
@@ -171,8 +180,8 @@ superteam/
 │   ├── context-monitor.cjs      # (v0.2.0)
 │   └── statusline.cjs           # (v0.2.0)
 ├── commands/st/                  # 27 commands (Markdown prompts)
-├── skills/                       # 10 skills (Markdown prompts)
-├── agents/                       # 13 agent definitions
+├── skills/                       # 14 skills (Markdown prompts)
+├── agents/                       # 21 agent definitions
 ├── templates/                    # 7 document templates
 └── tests/                        # node --test
 ```

@@ -93,7 +93,37 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - `output_dir`: `.superteam/research/`
      - `research_context`: `"init"`
      - `commit_message`: `"docs: complete research"`
-   - If conflicts with PROJECT.md found during research: update PROJECT.md
+   - Research output = tài liệu tham khảo. KHÔNG auto-apply bất kỳ quyết định nào.
+   - If conflicts with PROJECT.md found during research: flag cho step 5.5, KHÔNG tự update.
+
+5.5. **Architectural Decision Review**
+   - Mục đích: Tách rõ **findings** (auto-save) vs **decisions** (cần user confirm).
+   - Đọc SUMMARY.md + tất cả research output files.
+   - Trích xuất mọi **quyết định kiến trúc/tech** mà research agents recommend. Ví dụ:
+     - Project structure (monorepo vs single-repo vs polyrepo)
+     - Tech stack (framework, ORM, database, hosting, payment gateway)
+     - Architecture patterns (API style, state management, auth approach)
+   - Present TỪNG quyết định cho user dưới dạng choice (2-3 options), tương tự design system dimensions:
+     ```
+     ──────────────────────────────────────────────
+      ARCHITECTURAL DECISIONS (from research)
+     ──────────────────────────────────────────────
+      Decision 1/N: Project Structure
+      Research recommends: Turborepo monorepo — [lý do tóm tắt]
+
+      Options:
+        1. Turborepo monorepo (apps/web + packages/db + packages/api)
+        2. Single Next.js app (tất cả trong 1 project)
+        3. Other — describe
+
+      AI recommendation: [option] — [why]. Confidence: High/Med/Low.
+     ──────────────────────────────────────────────
+     ```
+   - User chọn từng decision → ghi vào `.superteam/decisions.json`
+   - Nếu research có conflict với PROJECT.md: present conflict + options cho user.
+   - Sau khi tất cả decisions confirmed → update PROJECT.md tech stack section.
+   - Commit: `docs: confirm architectural decisions`
+   - **Rule:** Roadmap (step 8) và Requirements (step 7) chỉ được reference tech/architecture đã confirmed ở step này.
 
 6. **Define design system**
    - Gate question: "Dự án này có cần design system không? (Kể cả backend cũng có thể cần trang 404, coming soon, redirect...)"
@@ -115,15 +145,20 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      This is the user's chance to choose fonts, colors, spacing etc. according to their taste.
      Skipping this interaction removes their agency over the design.
    - Order: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
-   - Each dimension = 1 message following `superteam:core-principles` ASK pattern:
-     ```
-     [DIMENSION]: [recommendation]
-       -- [rationale grounded in project context]
 
-     Recommend: [recommendation] — [why]. Confidence: High/Med/Low.
-
-     → Approve / Adjust
+   **VISUAL-FIRST REQUIRED for EVERY dimension proposal:**
+   Read `core-principles/references/visual-first.md` before proposing the first dimension.
+   For EACH dimension, follow this sequence (NOT text-only):
      ```
+     1. Create HTML at .superteam/preview/<dimension>.html showing 2-4 options as side-by-side visual cards
+     2. Serve: python3 -m http.server [port] -d .superteam/preview
+     3. browser_navigate → browser_take_screenshot
+     4. Present screenshot + text labels + recommendation:
+        [DIMENSION]: Recommend [option] — [why]. Confidence: High/Med/Low.
+     5. Ask: "Which do you prefer?" → user sees options visually BEFORE choosing
+     ```
+   Text-only proposals for design dimensions = VIOLATION. "Clean & Minimal" means nothing until the user SEES it rendered.
+   If Playwright unavailable: provide URL for manual viewing + flag reduced confidence.
    - If user approves → next dimension
    - If user adjusts → drill-down inline (1 focused question: fonts: 3-5 candidates, colors: 2-3 palette options)
    - Coherence check after each dimension vs previously approved dimensions:
@@ -174,7 +209,8 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Commit: `design: create design system for [project]`
 
 7. **Define requirements (scope refine + generate)**
-   - Load new context: research findings + DESIGN-SYSTEM.md (if exists) + PROJECT.md (with preliminary scope from step 3)
+   - Load new context: research findings + confirmed decisions (step 5.5) + DESIGN-SYSTEM.md (if exists) + PROJECT.md
+   - Tech/architecture references in requirements MUST match confirmed decisions from step 5.5. Do NOT introduce tech choices that user hasn't confirmed.
    - Present SCOPE DIFF — only changes vs step 3:
      - Features changed tier (e.g., "Comment: SHOULD → MUST because research showed...")
      - Assumptions updated status (e.g., "⚠️ → ✅ research confirmed")
@@ -194,7 +230,8 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
 
 8. **Create roadmap**
    - Spawn roadmapper agent
-   - Input: PROJECT.md + REQUIREMENTS.md + SUMMARY.md + DESIGN-SYSTEM.md (if exists) + config
+   - Input: PROJECT.md + REQUIREMENTS.md + SUMMARY.md + DESIGN-SYSTEM.md (if exists) + confirmed decisions (step 5.5) + config
+   - Phase names and descriptions MUST use confirmed tech/architecture from step 5.5 — not raw research recommendations.
    - Map requirements to phases
    - Derive 2-5 success criteria per phase
    - Validate 100% requirement coverage
@@ -242,6 +279,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
 project/
   .superteam/
     config.json
+    decisions.json                [architectural decisions confirmed by user in step 5.5]
     PROJECT.md
     DESIGN-SYSTEM.md              [optional — created if user chose "Có" in step 6]
     REQUIREMENTS.md

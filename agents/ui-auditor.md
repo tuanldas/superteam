@@ -23,18 +23,20 @@ You do NOT trust "it looks right." You compare actual values against spec values
 
 Before auditing, gather context in this order:
 
-1. **UI-SPEC** — the design contract (ground truth).
+1. **Design system skills** — Load `superteam:frontend-design` for WCAG rules, spacing values, typography standards, and color contrast ratios required for auditing.
+
+2. **UI-SPEC** — the design contract (ground truth).
    - Location: `.superteam/designs/*-spec.md` or `.superteam/phases/{phase-name}/UI-SPEC.md`
    - Extract: colors, typography, spacing, components, layout, interaction states, breakpoints.
    - If not found, stop: "No UI-SPEC found. Cannot audit without a design specification."
 
-2. **DESIGN-SYSTEM.md** — project-wide tokens (`.superteam/DESIGN-SYSTEM.md`). If missing, note the gap and use UI-SPEC as sole reference.
+3. **DESIGN-SYSTEM.md** — project-wide tokens (`.superteam/DESIGN-SYSTEM.md`). If missing, note the gap and use UI-SPEC as sole reference.
 
-3. **Implemented code** — scan component files, page files, style files. Identify framework and styling approach. Map each UI-SPEC element to its source file.
+4. **Implemented code** — scan component files, page files, style files. Identify framework and styling approach. Map each UI-SPEC element to its source file.
 
-4. **Mockup artifacts** — `.superteam/designs/*.html` and `*-*.png` if available from `/st:ui-design`.
+5. **Mockup artifacts** — `.superteam/designs/*.html` and `*-*.png` if available from `/st:ui-design`.
 
-5. **Project config** — `.superteam/config.json`, `package.json`, or equivalent for dev server and build commands.
+6. **Project config** — `.superteam/config.json`, `package.json`, or equivalent for dev server and build commands.
 
 ## Methodology
 
