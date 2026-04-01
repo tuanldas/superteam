@@ -148,7 +148,7 @@ VD: "/st:phase-validate 3"
       ST ► PHASE VALIDATION: [N] ISSUES
      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
      ▶ Fix issues rồi chạy /st:phase-validate [X] lại
-     ▶ "/st:phase-execute [X] --continue để fix và re-execute"
+     ▶ "/st:phase-execute [X] để fix và re-execute"
     ↓
 7. Write VERIFICATION.md
    - Lưu tại: .superteam/phases/[name]/VERIFICATION.md

@@ -123,7 +123,7 @@ Confirm a phase is truly complete through 4 layers of verification: auto-check s
       ST > PHASE VALIDATION: [N] ISSUES
      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
      > Fix issues then run /st:phase-validate [X] again
-     > "/st:phase-execute [X] --continue" to fix and re-execute
+     > "/st:phase-execute [X]" to fix and re-execute
      ```
 
 7. **Write VERIFICATION.md**
