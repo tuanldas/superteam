@@ -1,11 +1,11 @@
 ---
-description: "Code review: linting + 12 specialized agents in parallel, confidence-scored report, auto-fix"
+description: "Code review: linting + 1 reviewer agent (13 domains), confidence-scored report, auto-fix"
 argument-hint: "[#PR] [path] [--only agent1,agent2]"
 ---
 
 # Code Review
 
-Layered code review: linting first, then 12 specialized agents in parallel, confidence-scored report, auto-fix with verification. Supports local diff, PR, and specific files.
+Layered code review: linting first, then 1 reviewer agent covering 13 domains, confidence-scored report, auto-fix with verification. Supports local diff, PR, and specific files.
 
 **Arguments:** "$ARGUMENTS"
 
@@ -36,24 +36,26 @@ Layered code review: linting first, then 12 specialized agents in parallel, conf
      - User agrees: setup and run
      - User declines: skip, proceed to layer 2
 
-4. **Layer 2: 12 Specialized agents** (all parallel by default)
-   - Override with `--only agent1,agent2` to select specific agents
-   - Follow `superteam:requesting-code-review` for agent dispatch
+4. **Layer 2: Reviewer Agent — 13 Domains**
+   - Spawn 1 `superteam:reviewer` agent (Opus). Agent tự select relevant domains từ 13 available.
+   - Override with `--only domain1,domain2` to force specific domains
+   - Follow `superteam:requesting-code-review` for review methodology
 
-   | # | Agent | Focus |
-   |---|-------|-------|
-   | 1 | Code Quality | Error handling, naming, DRY, YAGNI, plan alignment |
-   | 2 | Clean Code | SRP, magic numbers, dead code, over-engineering, code smells |
-   | 3 | Security | OWASP top 10, secrets, SQL injection, XSS, CSRF, input validation |
-   | 4 | Silent Failure | Empty catch, catch-and-continue, missing logs, swallowed errors |
-   | 5 | Test Analyzer | Behavioral coverage, critical gaps, edge cases, test quality |
-   | 6 | Performance | N+1, memory leaks, re-renders, bundle size, blocking main thread |
-   | 7 | Comment/Docs | Outdated comments, misleading, "what" vs "why", missing docs |
-   | 8 | Architecture | Circular deps, god class, SOLID, module structure, patterns |
-   | 9 | Dependency | Package justified? maintained? secure? lightweight alternatives? |
-   | 10 | Compatibility | Breaking changes, API contract, backward compat, deprecation |
-   | 11 | Accessibility | ARIA, contrast ratio, keyboard nav, screen reader, semantic HTML |
-   | 12 | Business Logic | Requirements compliance, form validation, business edge cases |
+   | # | Domain | Focus |
+   |---|--------|-------|
+   | 1 | Silent Failure | Empty catch, swallowed errors, missing propagation |
+   | 2 | Business Logic | Requirements compliance, validation rules, edge cases |
+   | 3 | Security | OWASP top 10, secrets, injection, auth bypass |
+   | 4 | Error Handling | Missing handlers, wrong status codes, leaked internals |
+   | 5 | Performance | N+1 queries, unbounded queries, blocking, missing cache |
+   | 6 | API Contract | Breaking changes, inconsistent formats, wrong methods |
+   | 7 | Test Coverage | Missing tests, weak assertions, happy-path-only |
+   | 8 | Type Safety | any usage, missing null checks, type assertion abuse |
+   | 9 | Accessibility | ARIA, keyboard nav, semantic HTML, contrast |
+   | 10 | Design System | Token compliance, component reuse, responsive behavior |
+   | 11 | Database & Data | Migrations, constraints, indexes, orphaned records |
+   | 12 | Dependencies | Justified? Secure? Minimal import? Circular? |
+   | 13 | Concurrency & Async | Race conditions, missing await, TOCTOU, deadlocks |
 
    - Confidence scoring: only report issues with confidence >= 80%
    - Severity classification:
@@ -70,18 +72,19 @@ Layered code review: linting first, then 12 specialized agents in parallel, conf
    Suggestions: [N]
    ─────────────────────────────────────────
    By domain:
-     Code Quality:      [N]
-     Clean Code:        [N]
-     Security:          [N]
-     Silent Failures:   [N]
-     Testing:           [N]
-     Performance:       [N]
-     Comments/Docs:     [N]
-     Architecture:      [N]
-     Dependencies:      [N]
-     Compatibility:     [N]
-     Accessibility:     [N]
-     Business Logic:    [N]
+     Silent Failure:      [N]
+     Business Logic:      [N]
+     Security:            [N]
+     Error Handling:      [N]
+     Performance:         [N]
+     API Contract:        [N]
+     Test Coverage:       [N]
+     Type Safety:         [N]
+     Accessibility:       [N]
+     Design System:       [N]
+     Database & Data:     [N]
+     Dependencies:        [N]
+     Concurrency & Async: [N]
    ─────────────────────────────────────────
    [Detailed issues:
     file:line, agent, severity, confidence,
@@ -113,12 +116,12 @@ Layered code review: linting first, then 12 specialized agents in parallel, conf
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     ST > CODE REVIEW COMPLETE
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Agents: 12 | Fixed: [N] | Skipped: [M] | Tests: pass
+   Domains: 13 | Fixed: [N] | Skipped: [M] | Tests: pass
    ```
 
 ## Rules
 
-- All 12 agents run by default. Use `--only` to override, never let AI select agents automatically.
+- All 13 domains checked by default. Use `--only` to limit to specific domains.
 - Confidence threshold is 80%. Do NOT report issues below 80% confidence.
 - Critical = 90+ confidence. Important = 80-89 confidence. This is strict.
 - Linting runs FIRST (layer 1) before agents (layer 2). Always respect this order.

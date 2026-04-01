@@ -1,17 +1,17 @@
-# `/st:code-review` - Code Review (12 Specialized Agents)
+# `/st:code-review` - Code Review (1 Reviewer Agent, 13 Domains)
 
 > Trạng thái: ✅ Approved (sau research + brainstorming)
 
 ## Tổng quan
 
-Code review layered: linting → 12 specialized agents parallel → tổng hợp report → fix with receiving logic (verify trước khi implement). Support 3 scope types: local diff, PR, specific files.
+Code review layered: linting → 1 reviewer agent (13 domains) → tổng hợp report → fix with receiving logic (verify trước khi implement). Support 3 scope types: local diff, PR, specific files.
 
 ## Quyết định thiết kế
 
 | Quyết định | Kết quả | Lý do |
 |---|---|---|
-| Architecture | Layered: linting → 12 agents → report → fix | Linting bắt style, agents bắt logic/design |
-| Agents | 12 specialized, parallel, mặc định chạy TẤT CẢ | AI detect chọn agent không đáng tin cậy, chạy hết an toàn hơn |
+| Architecture | Layered: linting → 1 reviewer agent (13 domains) → report → fix | Linting bắt style, reviewer bắt logic/design |
+| Reviewer | 1 agent (Opus), 13 domains, mặc định check TẤT CẢ relevant domains | 1 agent có full context, select domains theo project type |
 | Scope | Local diff / PR / specific files / --only | Mỗi use case khác nhau |
 | Confidence | >= 80% mới report. Critical 90+ / Important 80+ | Giảm false positives |
 | Linter | Detect có sẵn, nếu không → recommend setup | Không bỏ qua linting layer |
@@ -48,24 +48,25 @@ Code review layered: linting → 12 specialized agents parallel → tổng hợp
      → User đồng ý: setup, chạy
      → User từ chối: skip, tiếp layer 2
     ↓
-4. Layer 2: 12 Specialized agents (parallel)
-   Mặc định chạy TẤT CẢ trên code changes.
-   Override: --only agent1,agent2
+4. Layer 2: Reviewer Agent — 13 Domains
+   Spawn 1 superteam:reviewer agent (Opus). Agent tự select relevant domains theo project type.
+   Override: --only domain1,domain2
 
-   1.  Code Quality       - Error handling, naming, DRY, YAGNI, plan alignment
-   2.  Clean Code         - SRP, magic numbers, dead code, over-engineering, code smells
-   3.  Security           - OWASP top 10, secrets, SQL injection, XSS, CSRF, input validation
-   4.  Silent Failure     - Empty catch, catch-and-continue, missing logs, swallowed errors
-   5.  Test Analyzer      - Behavioral coverage, critical gaps, edge cases, test quality
-   6.  Performance        - N+1, memory leaks, re-renders, bundle size, blocking main thread
-   7.  Comment/Docs       - Comments lỗi thời, misleading, "what" vs "why", thiếu docs
-   8.  Architecture       - Circular deps, god class, SOLID, module structure, patterns
-   9.  Dependency         - Package justified? maintained? secure? lightweight alternatives?
-   10. Compatibility      - Breaking changes, API contract, backward compat, deprecation
-   11. Accessibility      - ARIA, contrast ratio, keyboard nav, screen reader, semantic HTML
-   12. Business Logic     - Requirements compliance, form validation, edge cases nghiệp vụ
+   1.  Silent Failure      - Empty catch, swallowed errors, missing propagation
+   2.  Business Logic      - Requirements compliance, validation rules, edge cases
+   3.  Security            - OWASP top 10, secrets, injection, auth bypass
+   4.  Error Handling      - Missing handlers, wrong status codes, leaked internals
+   5.  Performance         - N+1 queries, unbounded queries, blocking, missing cache
+   6.  API Contract        - Breaking changes, inconsistent formats, wrong methods
+   7.  Test Coverage       - Missing tests, weak assertions, happy-path-only
+   8.  Type Safety         - any usage, missing null checks, type assertion abuse
+   9.  Accessibility       - ARIA, keyboard nav, semantic HTML, contrast
+   10. Design System       - Token compliance, component reuse, responsive behavior
+   11. Database & Data     - Migrations, constraints, indexes, orphaned records
+   12. Dependencies        - Justified? Secure? Minimal import? Circular?
+   13. Concurrency & Async - Race conditions, missing await, TOCTOU, deadlocks
 
-   Mỗi agent: confidence scoring >= 80% mới report
+   Confidence scoring >= 80% mới report
    Severity: Critical (90-100) / Important (80-89)
     ↓
 5. Layer 3: Tổng hợp report
@@ -78,18 +79,19 @@ Code review layered: linting → 12 specialized agents parallel → tổng hợp
    │ Suggestions: [N]                          │
    ├──────────────────────────────────────────┤
    │ By domain:                                │
-   │  Code Quality:      [N]                   │
-   │  Clean Code:        [N]                   │
-   │  Security:          [N]                   │
-   │  Silent Failures:   [N]                   │
-   │  Testing:           [N]                   │
-   │  Performance:       [N]                   │
-   │  Comments/Docs:     [N]                   │
-   │  Architecture:      [N]                   │
-   │  Dependencies:      [N]                   │
-   │  Compatibility:     [N]                   │
-   │  Accessibility:     [N]                   │
-   │  Business Logic:    [N]                   │
+   │  Silent Failure:      [N]                 │
+   │  Business Logic:      [N]                 │
+   │  Security:            [N]                 │
+   │  Error Handling:      [N]                 │
+   │  Performance:         [N]                 │
+   │  API Contract:        [N]                 │
+   │  Test Coverage:       [N]                 │
+   │  Type Safety:         [N]                 │
+   │  Accessibility:       [N]                 │
+   │  Design System:       [N]                 │
+   │  Database & Data:     [N]                 │
+   │  Dependencies:        [N]                 │
+   │  Concurrency & Async: [N]                 │
    ├──────────────────────────────────────────┤
    │ [Chi tiết từng issue:                     │
    │  file:line, agent, severity, confidence,  │
@@ -119,14 +121,14 @@ Code review layered: linting → 12 specialized agents parallel → tổng hợp
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     ST ► CODE REVIEW COMPLETE ✓
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Agents: 12 | Fixed: [N] | Skipped: [M] | Tests: ✓
+   Domains: 13 | Fixed: [N] | Skipped: [M] | Tests: ✓
 ```
 
 ## So sánh
 
 | | Superpowers | PR Review Toolkit | Industry (CodeRabbit) | Superteam |
 |---|---|---|---|---|
-| Review agents | 1 general | 6 specialized | 1 AI + rules | 12 specialized + linting |
+| Review agents | 1 general | 6 specialized | 1 AI + rules | 1 agent (13 domains) + linting |
 | Agents parallel | Không | Có | N/A | Có (mặc định tất cả) |
 | Confidence scoring | Không | >= 80% | Có | >= 80%, Critical 90+ / Important 80+ |
 | Scope | Git SHA range | Git diff / PR | PR only | Local / PR / files / --only |

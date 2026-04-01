@@ -293,16 +293,16 @@ STRENGTHS:
 | File | When to Load | Trigger |
 |------|-------------|---------|
 | `SKILL.md` | Always | Skill invocation |
-| `references/review-domains.md` | On demand | Review agent spawning. Each agent loads only its assigned domain(s), not all 13. |
+| `references/review-domains.md` | On demand | Reviewer agent loads this to get domain checklists. Agent selects relevant domains based on project type. |
 
-**Rule:** `references/review-domains.md` is loaded per-agent, not per-review. A single review spawns multiple agents — each gets only its 1-2 domain checklists. Never load all 13 domains into one agent's context.
+**Rule:** `references/review-domains.md` is loaded once by the single reviewer agent. The agent selects relevant domains from the 13 available based on project type — not all 13 are always checked.
 
-**Domain Selection Mechanism:** The `superteam:project-awareness` context block determines project type (framework, language, architecture), which maps to relevant review domains. Each review agent loads only the domains assigned to its specific domain specialty, not by reading all domains and selecting — the assignment is predetermined by project type and domain partition.
+**Domain Selection Mechanism:** The `superteam:project-awareness` context block determines project type (framework, language, architecture), which the reviewer agent uses to select relevant domains. See `reviewer.md` Step 2 for the domain-by-project-type matrix.
 
 ## Integration
 
 **Used by:**
-- `/st:code-review` — 12-agent parallel review with linting layer
+- `/st:code-review` — 1 reviewer agent (13 domains) with linting layer
 - `/st:execute` — review after completing task batches
 
 **Skills that pair with requesting-code-review:**
