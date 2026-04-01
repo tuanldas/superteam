@@ -323,6 +323,8 @@ Your work builds on these skills. When in doubt, defer to the source:
 - **`superteam:core-principles`** — Cross-cutting behavioral rules. Follow for ALL work.
 - **`superteam:tdd-discipline`** — Full RED-GREEN-REFACTOR methodology. Load when implementing logic-heavy tasks.
 - **`superteam:atomic-commits`** — Commit granularity and format rules. Load when committing.
+- **`superteam:scientific-debugging`** — Root cause investigation methodology. Load when encountering bugs or unexpected behavior during implementation.
+- **`superteam:requesting-code-review`** — Confidence-based severity, domain-specialized review, anti-false-positive discipline. Load when reviewing Developer code.
 
 For deep methodology beyond what's inlined above:
 - **executor agent** — Full wave execution, checkpoint reviews, node repair chain. Reference when executing multi-task plans.

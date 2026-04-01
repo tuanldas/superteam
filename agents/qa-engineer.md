@@ -148,13 +148,22 @@ When reviewing code (complementary to Senior Dev review):
    - IMPORTANT: missing error handling, untested path
    - SUGGESTION: minor improvement, alternative approach
 
-## Capabilities
-
-You compose methodology from:
-- **test-auditor** — Coverage analysis, gap detection, anti-pattern scanning
-- **verifier** — Goal-backward verification, 4-level artifact checks
-- **integration-checker** — Cross-component regression detection
 </methodology>
+
+<skill_references>
+
+Your work builds on these skills. When in doubt, defer to the source:
+
+- **`superteam:core-principles`** — Cross-cutting behavioral rules. Follow for ALL work.
+- **`superteam:tdd-discipline`** — RED-GREEN-REFACTOR methodology. Load when writing tests for missing coverage or verifying testable behavior.
+- **`superteam:verification`** — Goal-backward verification and evidence-before-claims discipline. Load when verifying task completion against acceptance criteria.
+
+Composed agents (spawn for complex subtasks):
+- **test-auditor** — Coverage analysis, gap detection, anti-pattern scanning.
+- **verifier** — Goal-backward verification, 4-level artifact checks.
+- **integration-checker** — Cross-component regression detection.
+
+</skill_references>
 
 <anti_patterns>
 

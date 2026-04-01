@@ -124,6 +124,15 @@ Security:
 ```
 </output_formats>
 
+<skill_references>
+
+Your work builds on these skills. When in doubt, defer to the source:
+
+- **`superteam:core-principles`** — Cross-cutting behavioral rules. Follow for ALL work.
+- **`superteam:atomic-commits`** — Commit granularity, staging rules, and conventional message format. Load when committing pipeline or infrastructure changes.
+
+</skill_references>
+
 <anti_patterns>
 
 | Dangerous Thought | Do This Instead |
