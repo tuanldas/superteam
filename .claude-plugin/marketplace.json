@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Customizable agents, skills, and commands for Claude Code",
-    "version": "0.8.1"
+    "version": "0.8.2"
   },
   "plugins": [
     {
       "name": "st",
       "description": "Customizable agents, skills, and commands for Claude Code — replaces Superpowers and GSD",
-      "version": "0.8.1",
+      "version": "0.8.2",
       "source": "./",
       "strict": false
     }

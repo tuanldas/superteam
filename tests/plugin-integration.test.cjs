@@ -119,7 +119,7 @@ describe('Skills', () => {
     assert.deepEqual(skillDirs.sort(), expected);
   });
 
-  it('has 8 references/ dirs across skills', () => {
+  it('has 9 references/ dirs across skills', () => {
     const refFiles = [];
     for (const dir of skillDirs) {
       const files = fs.readdirSync(path.join(skillsDir, dir));
@@ -127,7 +127,7 @@ describe('Skills', () => {
         if (f !== 'SKILL.md') refFiles.push(`${dir}/${f}`);
       }
     }
-    assert.equal(refFiles.length, 8);
+    assert.equal(refFiles.length, 9);
   });
 });
 
@@ -143,8 +143,8 @@ describe('Agents', () => {
     agentFiles = fs.readdirSync(agentsDir).filter(f => f.endsWith('.md'));
   });
 
-  it('has exactly 20 agent files', () => {
-    assert.equal(agentFiles.length, 20);
+  it('has exactly 21 agent files', () => {
+    assert.equal(agentFiles.length, 21);
   });
 
   it('every agent has frontmatter with name, description, model', () => {
@@ -161,7 +161,7 @@ describe('Agents', () => {
     const expected = [
       'codebase-mapper', 'debugger', 'developer', 'devops-engineer',
       'executor', 'integration-checker', 'phase-researcher', 'plan-checker',
-      'planner', 'qa-engineer', 'research-synthesizer', 'reviewer',
+      'planner', 'qa-engineer', 'research-orchestrator', 'research-synthesizer', 'reviewer',
       'scrum-master', 'senior-developer', 'tech-lead', 'test-auditor',
       'ui-auditor', 'ui-researcher', 'ux-designer', 'verifier',
     ];
@@ -173,6 +173,7 @@ describe('Agents', () => {
     const opusAgents = [
       'planner.md', 'executor.md', 'debugger.md', 'reviewer.md',
       'scrum-master.md', 'senior-developer.md', 'tech-lead.md',
+      'research-orchestrator.md',
     ];
     for (const file of opusAgents) {
       const content = fs.readFileSync(path.join(agentsDir, file), 'utf8');
@@ -184,6 +185,7 @@ describe('Agents', () => {
     const opusAgents = [
       'planner.md', 'executor.md', 'debugger.md', 'reviewer.md',
       'scrum-master.md', 'senior-developer.md', 'tech-lead.md',
+      'research-orchestrator.md',
     ];
     const utilAgents = agentFiles.filter(f => !opusAgents.includes(f));
     for (const file of utilAgents) {
