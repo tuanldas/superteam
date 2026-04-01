@@ -22,8 +22,8 @@ function loadCorePrinciples() {
     const content = fs.readFileSync(skillPath, 'utf8');
     // Strip YAML frontmatter
     const stripped = content.replace(/^---[\s\S]*?---\s*/, '');
-    // Strip meta sections (How Commands Reference, Extensibility, Context Budget, Integration)
-    const cleaned = stripped.replace(/## How Commands Reference[\s\S]*$/, '').trim();
+    // Strip meta sections after INJECT-END marker
+    const cleaned = stripped.replace(/<!--\s*INJECT-END\s*-->[\s\S]*$/, '').trim();
     return cleaned;
   } catch (_) {
     return null;

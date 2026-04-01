@@ -67,13 +67,15 @@ Text tells you what SHOULD look like. A preview tells you what ACTUALLY looks li
 
 ## Context Budget
 
-| Principle | When to Load | Trigger |
-|-----------|-------------|---------|
-| Hierarchy + Priority | Always | Auto-triggered |
-| Research Boundaries | When reading research files or making decisions from research | Commands with research input |
-| Visual-First | Design choices, previews, implementation verification | Present/CONFIRM interaction involving visuals |
-| Questioning | All user interactions | ASK/PRESENT/CONFIRM |
-| Decision Continuity | Before proposing values, after confirming | Read decisions.json, update decisions.json |
+| Principle | Reference | ~Lines | When to Load | Trigger |
+|-----------|-----------|--------|-------------|---------|
+| Hierarchy + Priority | _(inline above)_ | — | Always | Auto-triggered |
+| Research Boundaries | `references/research-boundaries.md` | ~45 | When reading research files or making decisions from research | Commands with research input |
+| Visual-First | `references/visual-first.md` | ~165 | Design choices, previews, implementation verification | Present/CONFIRM interaction involving visuals |
+| Questioning | `references/questioning.md` | ~261 | All user interactions | ASK/PRESENT/CONFIRM |
+| Decision Continuity | `references/decision-continuity.md` | ~258 | Before proposing values, after confirming | Read decisions.json, update decisions.json |
+
+<!-- INJECT-END -->
 
 ## How Commands Reference This Skill
 

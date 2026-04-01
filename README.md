@@ -176,9 +176,7 @@ superteam/
 │   └── template.cjs             # Template engine
 ├── hooks/
 │   ├── hooks.json               # Hook registration
-│   ├── session-start.cjs        # Inject project context
-│   ├── context-monitor.cjs      # (v0.2.0)
-│   └── statusline.cjs           # (v0.2.0)
+│   └── session-start.cjs        # Inject project context
 ├── commands/st/                  # 27 commands (Markdown prompts)
 ├── skills/                       # 14 skills (Markdown prompts)
 ├── agents/                       # 21 agent definitions
