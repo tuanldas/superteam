@@ -67,13 +67,15 @@ Text tells you what SHOULD look like. A preview tells you what ACTUALLY looks li
 
 ## Context Budget
 
-| Principle | Reference | ~Lines | When to Load | Trigger |
-|-----------|-----------|--------|-------------|---------|
-| Hierarchy + Priority | _(inline above)_ | — | Always | Auto-triggered |
-| Research Boundaries | `references/research-boundaries.md` | ~45 | When reading research files or making decisions from research | Commands with research input |
-| Visual-First | `references/visual-first.md` | ~165 | Design choices, previews, implementation verification | Present/CONFIRM interaction involving visuals |
-| Questioning | `references/questioning.md` | ~261 | All user interactions | ASK/PRESENT/CONFIRM |
-| Decision Continuity | `references/decision-continuity.md` | ~258 | Before proposing values, after confirming | Read decisions.json, update decisions.json |
+| File | ~Lines | When to Load | Trigger |
+|------|--------|-------------|---------|
+| `SKILL.md` | ~97 | Always | Auto: all commands and agents |
+| `references/research-boundaries.md` | ~45 | When reading research files or making decisions from research | Commands with research input |
+| `references/visual-first.md` | ~165 | Design choices, previews, implementation verification | Present/CONFIRM interaction involving visuals |
+| `references/questioning.md` | ~261 | All user interactions | ASK/PRESENT/CONFIRM |
+| `references/decision-continuity.md` | ~258 | Before proposing values, after confirming | Read decisions.json, update decisions.json |
+
+**Progressive loading:** SKILL.md gives principle summaries + cross-principle priority. Load reference files only when working on specific principles. Most tasks need SKILL.md + 1-2 reference files.
 
 <!-- INJECT-END -->
 
