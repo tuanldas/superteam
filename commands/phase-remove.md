@@ -75,7 +75,7 @@ Remove a phase from ROADMAP.md. Requires reassigning all REQ-IDs to other phases
    - Remove phase section from ROADMAP.md
    - Renumber all subsequent phases: [X+1] -> [X], [X+2] -> [X+1], etc.
    - Update REQ-ID assignments in ROADMAP.md
-   - Delete related plan files if any: `.superteam/plans/[phase-name].md`
+   - Delete related phase directory if any: `.superteam/phases/[phase-name]/`
    - Commit: `docs: remove phase [X] - [name], renumber [X+1]->[N]`
 
 7. **Done**
@@ -95,6 +95,6 @@ Remove a phase from ROADMAP.md. Requires reassigning all REQ-IDs to other phases
 - Warn strongly for completed and in-progress phases but allow removal if user confirms.
 - Detect and display inter-phase dependencies before proceeding.
 - Auto-renumber phases after removal to maintain sequential ordering.
-- Clean up related plan files in `.superteam/plans/`.
+- Clean up related phase directory in `.superteam/phases/[phase-name]/`.
 - Commit all changes with a descriptive message.
 - Follow `superteam:core-principles`. Load references: questioning.

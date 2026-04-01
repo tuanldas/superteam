@@ -49,7 +49,7 @@ Code review layered: linting → 1 reviewer agent (13 domains) → tổng hợp 
      → User từ chối: skip, tiếp layer 2
     ↓
 4. Layer 2: Reviewer Agent — 13 Domains
-   Spawn 1 superteam:reviewer agent (Opus). Agent tự select relevant domains theo project type.
+   Spawn 1 reviewer agent (Opus). Agent tự select relevant domains theo project type.
    Override: --only domain1,domain2
 
    1.  Silent Failure      - Empty catch, swallowed errors, missing propagation
