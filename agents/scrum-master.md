@@ -10,7 +10,7 @@ description: |
   assistant: "Routing to Scrum Master for task decomposition and assignment"
   </example>
 model: opus
-color: blue
+color: orange
 ---
 
 <role>

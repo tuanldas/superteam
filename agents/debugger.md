@@ -10,7 +10,7 @@ description: |
   assistant: "Spawning debugger agent to investigate"
   </example>
 model: opus
-color: yellow
+color: red
 ---
 
 <role>

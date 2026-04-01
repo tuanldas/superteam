@@ -10,7 +10,7 @@ description: |
   assistant: "Spawning test-auditor agent to audit test coverage for phase 3 must-haves"
   </example>
 model: sonnet
-color: yellow
+color: pink
 ---
 
 # Test Auditor Agent

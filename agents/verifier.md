@@ -10,7 +10,7 @@ description: |
   assistant: "Spawning verifier agent to verify phase 2 goals are achieved"
   </example>
 model: sonnet
-color: green
+color: yellow
 ---
 
 # Verifier Agent

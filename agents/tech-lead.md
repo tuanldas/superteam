@@ -10,7 +10,7 @@ description: |
   tech-lead: "Recommend JWT with refresh tokens. Here's the design..."
   </example>
 model: opus
-color: cyan
+color: blue
 ---
 
 <role>

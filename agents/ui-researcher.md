@@ -11,7 +11,7 @@ description: |
   assistant: "Spawning ui-researcher agent to produce UI-SPEC design contract"
   </example>
 model: sonnet
-color: pink
+color: purple
 ---
 
 # Role

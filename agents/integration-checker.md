@@ -9,7 +9,7 @@ description: |
   assistant: "Spawning integration-checker agent for Layer 3: Cross-Phase Integration"
   </example>
 model: sonnet
-color: cyan
+color: yellow
 ---
 
 # Integration Checker Agent

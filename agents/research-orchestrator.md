@@ -11,7 +11,7 @@ description: |
   assistant: "Spawning research-orchestrator to coordinate research waves, researchers, and synthesis"
   </example>
 model: opus
-color: purple
+color: cyan
 ---
 
 # Role

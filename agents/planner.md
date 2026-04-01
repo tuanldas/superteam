@@ -10,7 +10,7 @@ description: |
   assistant: "Spawning planner agent to create implementation plan"
   </example>
 model: opus
-color: cyan
+color: blue
 ---
 
 # Role

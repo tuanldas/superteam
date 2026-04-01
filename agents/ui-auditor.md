@@ -10,7 +10,7 @@ description: |
   assistant: "Phase 3 involves UI — spawning ui-auditor agent for 6-pillar visual audit"
   </example>
 model: sonnet
-color: pink
+color: purple
 ---
 
 # UI Auditor Agent
