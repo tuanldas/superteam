@@ -131,6 +131,7 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
     Tasks: [N] completed | Waves: [M]
     Criteria: [X]/[Y] met
     Integration: [pass/issues]
+    > "/st:code-review" to review implementation quality
     > "/st:phase-validate [X]" to confirm completion
     > "/st:phase-execute [X+1]" to start next phase
     ```

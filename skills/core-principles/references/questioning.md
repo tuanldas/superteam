@@ -258,4 +258,4 @@ After: "What are you building?" → adapt → "How many users?" → adapt → na
 
 ### Group C: Reference Only
 
-`code-review`, `review-feedback`, `phase-plan`, `phase-execute`, `phase-add`, `phase-remove`, `phase-research`, `milestone-complete`, `milestone-archive`, `resume`, `readme`, `execute`, `worktree`, `api-docs`, `tdd` — these primarily use PRESENT and CONFIRM interaction types. The core rules apply naturally without restructuring.
+`code-review`, `review-feedback`, `phase-plan`, `phase-execute`, `phase-add`, `phase-remove`, `phase-research`, `milestone-complete`, `milestone-archive`, `milestone-audit`, `phase-list`, `pause`, `resume`, `readme`, `execute`, `worktree`, `api-docs`, `tdd` — these primarily use PRESENT and CONFIRM interaction types. The core rules apply naturally without restructuring.
