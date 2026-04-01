@@ -50,6 +50,8 @@ Preview HTML tạo tại `.superteam/preview/<name>.html`, default light backgro
 
 `core-principles` không cần sections Quick Reference và Common Mistakes. Đây là meta-skill (cross-cutting principles), không phải workflow skill. Mỗi principle đã có quick summary inline và chi tiết trong `references/`.
 
+`frontend-design` dùng Priority System thay vì Core Principle, Pre-Delivery Checklist thay vì Common Mistakes. Đây là skill loại Reference (design knowledge), cấu trúc sections riêng phù hợp hơn pattern chuẩn.
+
 ## Skill Frontmatter Convention
 
 SKILL.md frontmatter chỉ dùng 2 fields: `name` và `description`. Trigger info embedded trong `description` text — đây là convention có chủ đích vì Claude Code route skills bằng LLM đọc prose, không parse structured fields. KHÔNG thêm `trigger`, `keywords`, hay `tags` field.
