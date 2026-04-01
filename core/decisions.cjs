@@ -230,5 +230,6 @@ module.exports = {
   validateDecisions,
   ensureConfigDir,
   DECISIONS_DEFAULTS,
+  DECISIONS_SCHEMA,
   VALID_SOURCES,
 };

@@ -133,7 +133,7 @@ function countSourceFiles(dir, maxDepth = 5) {
 /**
  * Read `.superteam/team/config.json`. Returns null if not found.
  */
-function getTeamConfig(rootDir) {
+function loadTeamConfig(rootDir) {
   return readJsonSafe(teamConfigPath(rootDir));
 }
 
@@ -154,7 +154,7 @@ function saveTeamConfig(rootDir, config) {
  * Check if a team is currently active.
  */
 function isTeamActive(rootDir) {
-  const config = getTeamConfig(rootDir);
+  const config = loadTeamConfig(rootDir);
   return config !== null && config.status === 'active';
 }
 
@@ -394,7 +394,7 @@ function assembleTeam(rootDir, detectionResult, config, overrideSize) {
  * Build context string for team agents on session start.
  */
 function buildTeamContext(rootDir) {
-  const config = getTeamConfig(rootDir);
+  const config = loadTeamConfig(rootDir);
   if (!config || config.status !== 'active') {
     return null;
   }
@@ -412,7 +412,7 @@ function buildTeamContext(rootDir) {
 // ---------------------------------------------------------------------------
 
 module.exports = {
-  getTeamConfig,
+  loadTeamConfig,
   saveTeamConfig,
   isTeamActive,
   getTeamName,

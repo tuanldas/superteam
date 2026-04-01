@@ -7,7 +7,7 @@ const os = require('node:os');
 const path = require('node:path');
 
 const {
-  getTeamConfig,
+  loadTeamConfig,
   saveTeamConfig,
   isTeamActive,
   getTeamName,
@@ -37,16 +37,16 @@ function rmTmpDir(dir) {
 }
 
 // ---------------------------------------------------------------------------
-// getTeamConfig / saveTeamConfig
+// loadTeamConfig / saveTeamConfig
 // ---------------------------------------------------------------------------
 
-describe('getTeamConfig', () => {
+describe('loadTeamConfig', () => {
   let tmpDir;
   before(() => { tmpDir = makeTmpDir(); });
   after(() => { rmTmpDir(tmpDir); });
 
   it('returns null when no team config exists', () => {
-    assert.strictEqual(getTeamConfig(tmpDir), null);
+    assert.strictEqual(loadTeamConfig(tmpDir), null);
   });
 
   it('returns parsed config when file exists', () => {
@@ -58,7 +58,7 @@ describe('getTeamConfig', () => {
         path.join(teamDirPath, 'config.json'),
         JSON.stringify({ team_name: 'test-team', status: 'active' }),
       );
-      const config = getTeamConfig(dir);
+      const config = loadTeamConfig(dir);
       assert.strictEqual(config.team_name, 'test-team');
       assert.strictEqual(config.status, 'active');
     } finally {
@@ -67,7 +67,7 @@ describe('getTeamConfig', () => {
   });
 });
 
-describe('saveTeamConfig + getTeamConfig round-trip', () => {
+describe('saveTeamConfig + loadTeamConfig round-trip', () => {
   let tmpDir;
   before(() => { tmpDir = makeTmpDir(); });
   after(() => { rmTmpDir(tmpDir); });
@@ -80,7 +80,7 @@ describe('saveTeamConfig + getTeamConfig round-trip', () => {
       members: [{ role: 'scrum-master', name: 'scrum-master', model: 'opus' }],
     };
     saveTeamConfig(tmpDir, original);
-    const loaded = getTeamConfig(tmpDir);
+    const loaded = loadTeamConfig(tmpDir);
     assert.deepStrictEqual(loaded, original);
   });
 

@@ -58,6 +58,9 @@ function renderTemplate(templateContent, variables) {
     if (value === undefined || value === null) {
       return _match; // leave placeholder as-is
     }
+    if (typeof value === 'object') {
+      return JSON.stringify(value);
+    }
     return String(value);
   });
 }

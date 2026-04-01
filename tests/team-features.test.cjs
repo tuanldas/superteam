@@ -7,7 +7,7 @@ const os = require('node:os');
 const path = require('node:path');
 
 const {
-  getTeamConfig,
+  loadTeamConfig,
   saveTeamConfig,
   isTeamActive,
   getTeamName,
@@ -388,7 +388,7 @@ describe('Tính năng: Vòng đời team', () => {
 
   it('ban đầu chưa có team', () => {
     assert.strictEqual(isTeamActive(thuMuc), false);
-    assert.strictEqual(getTeamConfig(thuMuc), null);
+    assert.strictEqual(loadTeamConfig(thuMuc), null);
   });
 
   it('tạo team → trạng thái active', () => {
@@ -409,7 +409,7 @@ describe('Tính năng: Vòng đời team', () => {
   });
 
   it('config team lưu đầy đủ các trường', () => {
-    const config = getTeamConfig(thuMuc);
+    const config = loadTeamConfig(thuMuc);
     assert.ok(config.team_name);
     assert.strictEqual(config.project_type, 'fullstack');
     assert.strictEqual(config.size, 'medium');
@@ -427,7 +427,7 @@ describe('Tính năng: Vòng đời team', () => {
   });
 
   it('giải tán team → không còn active', () => {
-    const config = getTeamConfig(thuMuc);
+    const config = loadTeamConfig(thuMuc);
     config.status = 'disbanded';
     saveTeamConfig(thuMuc, config);
     assert.strictEqual(isTeamActive(thuMuc), false);
@@ -438,7 +438,7 @@ describe('Tính năng: Vòng đời team', () => {
   });
 
   it('config team được giữ lại sau khi giải tán (để lưu kiến thức)', () => {
-    const config = getTeamConfig(thuMuc);
+    const config = loadTeamConfig(thuMuc);
     assert.ok(config !== null);
     assert.strictEqual(config.status, 'disbanded');
     assert.ok(config.members.length >= 5);
@@ -451,7 +451,7 @@ describe('Tính năng: Vòng đời team', () => {
       members: [{ role: 'scrum-master', name: 'scrum-master', model: 'opus' }],
     });
     assert.strictEqual(isTeamActive(thuMuc), true);
-    assert.strictEqual(getTeamConfig(thuMuc).team_name, 'team-moi');
+    assert.strictEqual(loadTeamConfig(thuMuc).team_name, 'team-moi');
   });
 });
 
