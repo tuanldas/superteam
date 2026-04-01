@@ -1,9 +1,10 @@
 ---
 name: requesting-code-review
 description: >
-  Use when reviewing code changes (local diff, PR, specific files).
-  Enforces confidence-based severity, domain-specialized review,
-  anti-false-positive discipline, and verify-before-fix logic.
+  Review methodology and discipline for performing code reviews (local diff, PR, specific files).
+  Named from the workflow phase ("requesting a review") but contains the full review execution methodology:
+  confidence-based severity, domain-specialized review, anti-false-positive discipline, and verify-before-fix logic.
+  Used by reviewer agent and any agent that performs code review.
 ---
 
 # Requesting Code Review
