@@ -14,7 +14,7 @@ Clarify the HOW for a phase already defined in the roadmap. The phase already ha
 ## Workflow
 
 1. **Check context**
-   - ROADMAP.md must exist. If not, stop: "No ROADMAP.md found. Run /st:plan-roadmap first."
+   - ROADMAP.md must exist. If not, stop: "No ROADMAP.md found. Run /st:init first."
    - Parse phase from argument: match by number or name
    - If no argument: list all phases with status, ask user to pick one
    - Parse phase details: number, name, REQ-IDs, success criteria
