@@ -193,12 +193,5 @@ Patterns that signal zero creative direction. Flag all, fix each.
 
 ## Integration
 
-**Referenced by:**
-- `agents/ui-auditor.md` — scoring criteria for 6-pillar audits
-- `agents/ux-designer.md` — rules when creating design specs
-- `agents/ui-researcher.md` — rules when producing UI-SPEC
-- `commands/ui-design.md` — design judgment during pipeline
-- `commands/design-system.md` — font/color/spacing rules
-
 **Pairs with:**
 - `superteam:core-principles` — visual-first verification, questioning, decision continuity

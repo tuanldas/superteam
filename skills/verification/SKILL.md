@@ -321,10 +321,7 @@ RE-VERIFICATION:
 
 ## Integration
 
-**Used by:**
-- `/st:phase-validate` — 4-layer verification (criteria, tests, integration, UAT)
-- `/st:milestone-audit` — milestone completion verification
-- Auto-triggered: before any completion claim, commit, or PR
+**Auto-triggered:** before any completion claim, commit, or PR.
 
 **Skills that pair with verification:**
 - `superteam:project-awareness` — framework detection for test runner commands and verification patterns
