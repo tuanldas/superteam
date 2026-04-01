@@ -46,7 +46,7 @@ Tất cả features nằm trong phase đầu tiên. Tổng: **36 features**.
 | 3 | Scope detection | Trong monorepo, tự nhận biết command apply cho phần nào |
 | 4 | Config system | Project-level config (.superteam/config.json) |
 | 5 | Template engine | Load templates, inject variables từ detection + config |
-| 6 | Session hooks | session-start, context-monitor, statusline |
+| 6 | Session hooks | session-start, context-monitor, status-line |
 
 ### Skills / Commands (28)
 
@@ -101,7 +101,7 @@ superteam/
 │   ├── hooks.json               ← hook registration
 │   ├── session-start            ← inject context khi bắt đầu session
 │   ├── context-monitor.cjs      ← theo dõi context usage
-│   └── statusline.cjs           ← hiển thị trạng thái
+│   └── status-line.cjs          ← hiển thị trạng thái
 ├── core/
 │   ├── detector.cjs             ← auto-detect project type + scope
 │   ├── config.cjs               ← đọc/ghi .superteam/config.json
@@ -397,7 +397,7 @@ Templates với placeholders, được template engine render với variables t�
 |---|---|---|---|---|
 | 9.1 | session-start | `hooks/session-start` | Inject context khi bắt đầu session | ⬜ TODO |
 | 9.2 | context-monitor | `hooks/context-monitor.cjs` | Theo dõi context usage | ⬜ TODO |
-| 9.3 | statusline | `hooks/statusline.cjs` | Hiển thị trạng thái project | ⬜ TODO |
+| 9.3 | status-line | `hooks/status-line.cjs` | Hiển thị trạng thái project | ⬜ TODO |
 
 > TODO: Chi tiết implementation
 
