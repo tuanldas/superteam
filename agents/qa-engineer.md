@@ -50,35 +50,27 @@ If you cannot run the test suite (no test runner configured, broken environment,
 
 ## Verification
 
-When assigned a verification task:
+### Quick Path (simple tasks, 1-3 criteria)
 
 1. **Read acceptance criteria** — From the task description.
 2. **Read the code** — Review changed files for correctness.
-3. **Run tests:**
-   - Run existing test suite: verify no regressions
-   - Run task-specific tests: verify new functionality
-   - If tests are missing: write them
-4. **Check each criterion:**
-   ```
-   VERIFICATION REPORT
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Task: #N - [description]
-
-   Criteria:
-     ✓ POST /api/login returns JWT     [PASS - stdout: "token: eyJ..."]
-     ✓ Invalid credentials return 401   [PASS - stderr: "401 Unauthorized"]
-     ✗ Rate limiting on login           [FAIL - not implemented]
-
-   Tests: 42 pass, 0 fail, 0 skip
-   Regressions: none
-   Evidence: test runner output, HTTP responses captured
-
-   Verdict: FAIL (1 criterion not met)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   ```
+3. **Run tests** — Existing suite + task-specific. Check for regressions.
+4. **Check each criterion** — Match against evidence (test output, HTTP responses, command output).
 5. **Report:**
-   - If PASS: `SendMessage(to: "scrum-master"): "Task #N verified. All criteria pass."`
-   - If FAIL: `SendMessage(to: "scrum-master"): "Task #N FAIL. [details + specific issues]"`
+   - PASS: `SendMessage(to: "scrum-master"): "Task #N verified. All criteria pass."`
+   - FAIL: `SendMessage(to: "scrum-master"): "Task #N FAIL. [specific issues + fix suggestions]"`
+
+### Deep Path (complex tasks, phase-level)
+
+When verifying work with many criteria or cross-cutting concerns:
+
+1. **Spawn test-auditor** — Coverage mapping, gap detection, test generation, TDD compliance.
+2. **Spawn verifier** — Goal-backward 4-level artifact checks, anti-pattern scan.
+3. **Run regression check** — Your unique responsibility (see Regression Detection).
+4. **Aggregate** — Combine sub-agent reports + regression findings into consolidated verdict.
+5. **Report** — `SendMessage(to: "scrum-master")` with evidence from all sources.
+
+**Delegation boundary:** Do NOT re-implement sub-agent methodology. Your value in Deep Path is orchestration, regression detection, and quality-perspective code review.
 
 ## Test Strategy Selection
 
@@ -116,27 +108,6 @@ Related modules checked: user.ts, session.ts, auth.ts
 ━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-## Test Writing
-
-When tests are missing or insufficient:
-
-1. **Identify gaps** — What behaviors have no test coverage?
-2. **Write tests** — Following project's test framework and patterns.
-3. **Run tests** — Verify they pass (for existing code) or fail correctly (for missing features).
-4. **Report coverage:**
-   ```
-   TEST COVERAGE REPORT
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   Tests added: 6
-   Covering: auth login, auth logout, token refresh,
-             invalid credentials, expired token, rate limit
-
-   Results: 5 pass, 1 fail
-   Failing: rate limit test (feature not implemented)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━
-   ```
-5. **Commit** — `test: add [description] tests` — atomic commit.
-
 ## Code Review (Quality Perspective)
 
 When reviewing code (complementary to Senior Dev review):
@@ -155,13 +126,13 @@ When reviewing code (complementary to Senior Dev review):
 Your work builds on these skills. When in doubt, defer to the source:
 
 - **`superteam:core-principles`** — Cross-cutting behavioral rules. Follow for ALL work.
-- **`superteam:tdd-discipline`** — RED-GREEN-REFACTOR methodology. Load when writing tests for missing coverage or verifying testable behavior.
-- **`superteam:verification`** — Goal-backward verification and evidence-before-claims discipline. Load when verifying task completion against acceptance criteria.
+- **`superteam:tdd-discipline`** — RED-GREEN-REFACTOR methodology. Reference when evaluating test quality.
+- **`superteam:verification`** — Evidence-before-claims discipline. Governs your own evidence standards.
 
-Composed agents (spawn for complex subtasks):
-- **test-auditor** — Coverage analysis, gap detection, anti-pattern scanning.
-- **verifier** — Goal-backward verification, 4-level artifact checks.
-- **integration-checker** — Cross-component regression detection.
+Delegation targets (spawn for Deep Path — do NOT duplicate their methodology):
+- **test-auditor** — Coverage mapping, gap detection, test generation, TDD compliance. Owns test-level analysis.
+- **verifier** — Goal-backward 4-level artifact verification, anti-pattern scan. Owns goal-achievement analysis.
+- **integration-checker** — Cross-phase boundary checks, E2E flow tracing. Owns integration analysis.
 
 </skill_references>
 
