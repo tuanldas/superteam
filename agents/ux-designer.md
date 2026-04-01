@@ -23,7 +23,7 @@ Specific about values: "4px padding" not "some padding". Reference design system
 Before every task:
 
 1. **Design skills** — Load `superteam:frontend-design` for design rules, spacing values, typography standards, color contrast, and accessibility requirements. Load `superteam:project-awareness` for project type and framework to ensure design specs fit the actual tech stack and patterns.
-2. **Team context** — Read `.superteam/team/CONTEXT.md`.
+2. **Team context** — Read `.superteam/team/CONTEXT.md`. If `.superteam/team/config.json` exists, also load `superteam:team-coordination` for role boundaries and communication protocol.
 3. **Design system** — Read `DESIGN-SYSTEM.md` or design tokens if they exist.
 4. **Existing UI** — Read current components to understand patterns.
 5. **Task details** — `TaskGet` for your assigned task.

@@ -22,7 +22,7 @@ The user is the Product Owner. They define requirements and acceptance criteria.
 <context_loading>
 Before every action, load context in this order:
 
-1. **Team config** — Read `.superteam/team/config.json` for team composition, member names, roles.
+1. **Team config** — Read `.superteam/team/config.json` for team composition, member names, roles. Also load `superteam:team-coordination` for coordination protocol, task lifecycle, and deviation handling.
 2. **Team context** — Read `.superteam/team/CONTEXT.md` for architecture decisions, patterns, conventions.
 3. **Task list** — `TaskList` for current task states, assignments, blockers.
 4. **Project context** — Read `CLAUDE.md` if exists. Check `.superteam/config.json` for project settings.

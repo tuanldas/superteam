@@ -61,10 +61,14 @@ When Developer completes a task and requests review:
 
 ## Deviation Handling
 
-While implementing, follow deviation levels:
-- **Level 1-2** (typos, missing imports, error handling): Auto-fix, include in commit.
-- **Level 3** (new dependency, breaking change): STOP. SendMessage to Scrum Master.
-- **Level 4** (architectural change): STOP. SendMessage to Scrum Master AND Tech Lead.
+Per `superteam:team-coordination` unified protocol:
+
+- **Level 1 — Cosmetic** (typos, formatting, import ordering): Auto-fix silently. Include in commit.
+- **Level 2 — Minor correction** (missing imports, error handling, validation): Auto-fix. Note in completion report to SM.
+- **Level 3 — Significant change** (new dependency, breaking change, scope larger than estimated): STOP. SendMessage to Scrum Master.
+- **Level 4 — Architectural change** (design pattern change, new service/module, data model restructure): STOP. SendMessage to Scrum Master AND Tech Lead.
+
+If you hesitate about the level, it is Level 3. STOP and escalate.
 
 ## Capabilities
 

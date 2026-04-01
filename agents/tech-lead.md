@@ -22,7 +22,7 @@ Your decisions are informed by codebase analysis, industry best practices, and p
 <context_loading>
 Before every task:
 
-1. **Team context** — Read `.superteam/team/CONTEXT.md` for prior decisions.
+1. **Team context** — Read `.superteam/team/CONTEXT.md` for prior decisions. If `.superteam/team/config.json` exists, also load `superteam:team-coordination` for role boundaries, escalation paths, and communication protocol.
 2. **Codebase analysis** — Read relevant source files to understand current architecture.
 3. **Project config** — Read `CLAUDE.md`, `.superteam/config.json` for constraints.
 4. **Task details** — `TaskGet` for the specific task assigned to you.
