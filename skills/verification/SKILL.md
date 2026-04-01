@@ -323,15 +323,6 @@ RE-VERIFICATION:
 
 **Auto-triggered:** before any completion claim, commit, or PR.
 
-**Skills that pair with verification:**
-- `superteam:project-awareness` — framework detection for test runner commands and verification patterns
+**Pairs with:**
 - `superteam:tdd-discipline` — TDD provides the tests that verification runs
 - `superteam:scientific-debugging` — when verification reveals bugs, use debugging methodology
-- `superteam:requesting-code-review` — review includes verification of findings before fixing
-- `superteam:receiving-code-review` — verify fixes from code review feedback before marking resolved
-- `superteam:wave-parallelism` — post-wave verification: orchestrator runs verification after all agents complete (not per-agent). Each agent self-checks; orchestrator spot-checks and runs test suite.
-- `superteam:handoff-protocol` — verification state captured on pause
-
-**Reference files:**
-- `references/artifact-patterns.md` — framework-specific grep patterns for 4-level verification
-- `references/wiring-patterns.md` — the 4 wiring patterns with red flags and grep commands
