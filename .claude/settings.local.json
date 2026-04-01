@@ -6,5 +6,8 @@
       "Bash(npm test:*)",
       "Bash(git:*)"
     ]
+  },
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true
   }
 }
