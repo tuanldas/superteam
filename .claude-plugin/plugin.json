@@ -1,7 +1,7 @@
 {
   "name": "st",
   "description": "Customizable agents, skills, and commands for Claude Code — replaces Superpowers and GSD",
-  "version": "0.8.3",
+  "version": "1.0.0",
   "author": {
     "name": "tuanldas"
   },
