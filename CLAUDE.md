@@ -46,6 +46,10 @@ Preview trước khi quyết định. Chi tiết: `skills/core-principles/refere
 
 Preview HTML tạo tại `.superteam/preview/<name>.html`, default light background (`#fff`/`#fafafa`).
 
+## Skill Structure Exceptions
+
+`core-principles` không cần sections Quick Reference và Common Mistakes. Đây là meta-skill (cross-cutting principles), không phải workflow skill. Mỗi principle đã có quick summary inline và chi tiết trong `references/`.
+
 ## Skill Frontmatter Convention
 
 SKILL.md frontmatter chỉ dùng 2 fields: `name` và `description`. Trigger info embedded trong `description` text — đây là convention có chủ đích vì Claude Code route skills bằng LLM đọc prose, không parse structured fields. KHÔNG thêm `trigger`, `keywords`, hay `tags` field.
