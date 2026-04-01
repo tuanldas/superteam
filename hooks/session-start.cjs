@@ -30,6 +30,27 @@ function loadCorePrinciples() {
   }
 }
 
+function loadCommands() {
+  const fs = require('node:fs');
+  const commandsDir = path.resolve(__dirname, '..', 'commands');
+  try {
+    const files = fs.readdirSync(commandsDir).filter(f => f.endsWith('.md')).sort();
+    return files.map(f => {
+      const content = fs.readFileSync(path.join(commandsDir, f), 'utf8');
+      const match = content.match(/^---\s*\n([\s\S]*?)\n---/);
+      let description = '';
+      if (match) {
+        const descMatch = match[1].match(/description:\s*"([^"]*)"/);
+        if (descMatch) description = descMatch[1];
+      }
+      const name = f.replace(/\.md$/, '');
+      return { name, description };
+    });
+  } catch (_) {
+    return [];
+  }
+}
+
 function buildContext(cwd) {
   const detection = detectProject(cwd);
   const config = loadConfig(cwd);
@@ -106,13 +127,15 @@ function buildContext(cwd) {
 
   lines.push(`## Available Commands`);
   lines.push(``);
-  lines.push(`- \`/st:init\` — Initialize project`);
-  lines.push(`- \`/st:plan\` — Create implementation plan`);
-  lines.push(`- \`/st:execute\` — Execute plan`);
-  lines.push(`- \`/st:debug\` — Debug with scientific method`);
-  lines.push(`- \`/st:brainstorm\` — Brainstorm ideas`);
-  lines.push(`- \`/st:code-review\` — Code review`);
-  lines.push(`- \`/st:tdd\` — Test-driven development`);
+  const commands = loadCommands();
+  if (commands.length > 0) {
+    for (const cmd of commands) {
+      const desc = cmd.description ? ` — ${cmd.description}` : '';
+      lines.push(`- \`/st:${cmd.name}\`${desc}`);
+    }
+  } else {
+    lines.push(`- \`/st:init\` — Initialize project`);
+  }
 
   return lines.join('\n');
 }
