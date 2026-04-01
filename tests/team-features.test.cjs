@@ -102,7 +102,7 @@ describe('Tính năng: Thành phần team theo loại dự án', () => {
     } finally { xoaThuMucTam(dir); }
   });
 
-  it('backend nhỏ → gộp Tech Lead + Senior Dev', () => {
+  it('backend nhỏ → gộp Tech Lead + Senior Dev, developer upgrade opus', () => {
     const dir = taoThuMucTam();
     try {
       const result = assembleTeam(dir, { type: 'backend', frameworks: ['express'], workspaces: [] }, {}, 'small');
@@ -113,6 +113,8 @@ describe('Tính năng: Thành phần team theo loại dự án', () => {
       assert.ok(danhSachVai.includes('developer'));
       assert.ok(danhSachVai.includes('qa-engineer'));
       assert.ok(result.roles.collapsed !== null);
+      const dev = result.members.find(m => m.role === 'developer');
+      assert.strictEqual(dev.model, 'opus', 'Developer phải được upgrade lên opus khi gộp');
     } finally { xoaThuMucTam(dir); }
   });
 

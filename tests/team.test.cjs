@@ -305,6 +305,8 @@ describe('getRecommendedRoles', () => {
     assert.ok(!result.core.includes('senior-developer'));
     assert.ok(result.collapsed !== null);
     assert.deepStrictEqual(result.collapsed.from, ['tech-lead', 'senior-developer']);
+    assert.strictEqual(result.collapsed.to, 'developer');
+    assert.strictEqual(result.collapsed.modelOverride, 'opus');
   });
 
   it('returns minimal core for small frontend project', () => {

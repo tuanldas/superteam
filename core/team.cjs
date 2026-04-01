@@ -295,15 +295,14 @@ function getRecommendedRoles(projectType, size, signals) {
   const extended = [];
   let collapsed = null;
 
-  // Size-based adaptation: small projects collapse Tech Lead + Senior Dev → single role
+  // Size-based adaptation: small projects collapse Tech Lead + Senior Dev → Developer (opus)
   if (size === 'small') {
     const hasTL = core.includes('tech-lead');
     const hasSrDev = core.includes('senior-developer');
     if (hasTL && hasSrDev) {
       core = core.filter(r => r !== 'tech-lead' && r !== 'senior-developer');
-      // Replace with developer using opus (acts as lead developer)
-      // The existing developer in core stays; we upgrade its model conceptually
-      collapsed = { from: ['tech-lead', 'senior-developer'], to: 'lead-developer' };
+      // Existing developer stays in core; assembleTeam upgrades its model to opus
+      collapsed = { from: ['tech-lead', 'senior-developer'], to: 'developer', modelOverride: 'opus' };
     } else if (hasTL) {
       core = core.filter(r => r !== 'tech-lead');
       collapsed = { from: ['tech-lead'], to: 'developer' };
@@ -351,6 +350,7 @@ function assembleTeam(rootDir, detectionResult, config, overrideSize) {
   // Build member list
   const members = [];
   let devCount = 0;
+  const devModelOverride = roles.collapsed && roles.collapsed.modelOverride || null;
 
   for (const role of roles.core) {
     const def = ROLE_DEFINITIONS[role];
@@ -358,10 +358,11 @@ function assembleTeam(rootDir, detectionResult, config, overrideSize) {
 
     if (role === 'developer') {
       devCount++;
+      const isFirstDev = devCount === 1;
       members.push({
         role,
-        name: devCount > 1 ? `dev-${devCount}` : 'dev',
-        model: def.model,
+        name: isFirstDev ? 'dev' : `dev-${devCount}`,
+        model: isFirstDev && devModelOverride ? devModelOverride : def.model,
         description: def.description,
       });
     } else {
