@@ -2,6 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const { deepClone, ensureConfigDir } = require('./utils.cjs');
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -88,17 +89,6 @@ function deepMerge(target, source) {
   return result;
 }
 
-function deepClone(value) {
-  if (value === null || value === undefined) return value;
-  if (typeof value !== 'object') return value;
-  if (Array.isArray(value)) return value.map(deepClone);
-  const out = {};
-  for (const k of Object.keys(value)) {
-    out[k] = deepClone(value[k]);
-  }
-  return out;
-}
-
 function configPath(rootDir) {
   return path.join(rootDir, '.superteam', 'config.json');
 }
@@ -106,14 +96,6 @@ function configPath(rootDir) {
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
-
-/**
- * Ensure the `.superteam/` directory exists under `rootDir`.
- */
-function ensureConfigDir(rootDir) {
-  const dir = path.join(rootDir, '.superteam');
-  fs.mkdirSync(dir, { recursive: true });
-}
 
 /**
  * Load `.superteam/config.json` and deep-merge with defaults.

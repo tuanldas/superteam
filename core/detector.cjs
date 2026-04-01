@@ -2,6 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const { readJsonSafe, fileExists } = require('./utils.cjs');
 
 /**
  * Map of dependency names to framework categories.
@@ -23,30 +24,6 @@ const DEPENDENCY_SIGNALS = {
   koa: 'backend',
   hono: 'backend',
 };
-
-/**
- * Read and parse a JSON file, returning null on any error.
- */
-function readJsonSafe(filePath) {
-  try {
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Check if a file exists at the given path.
- */
-function fileExists(filePath) {
-  try {
-    fs.accessSync(filePath, fs.constants.R_OK);
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 /**
  * Array of framework marker objects. Each has:

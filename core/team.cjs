@@ -2,6 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const { readJsonSafe, fileExists } = require('./utils.cjs');
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -80,24 +81,6 @@ function teamDir(rootDir) {
 
 function teamConfigPath(rootDir) {
   return path.join(teamDir(rootDir), 'config.json');
-}
-
-function readJsonSafe(filePath) {
-  try {
-    const raw = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
-
-function fileExists(filePath) {
-  try {
-    fs.accessSync(filePath, fs.constants.R_OK);
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 /**
