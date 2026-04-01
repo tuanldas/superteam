@@ -3,7 +3,6 @@
 const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const os = require('node:os');
 const path = require('node:path');
 
 const {
@@ -16,18 +15,7 @@ const {
   validateConfig,
   CONFIG_DEFAULTS,
 } = require('../core/config.cjs');
-
-// ---------------------------------------------------------------------------
-// Helper: temp directory management
-// ---------------------------------------------------------------------------
-
-function makeTmpDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'superteam-test-'));
-}
-
-function rmTmpDir(dir) {
-  fs.rmSync(dir, { recursive: true, force: true });
-}
+const { makeTmpDir, rmTmpDir } = require('./helpers.cjs');
 
 // ---------------------------------------------------------------------------
 // Tests

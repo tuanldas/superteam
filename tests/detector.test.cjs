@@ -4,31 +4,9 @@ const { describe, it, after } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const os = require('node:os');
 
 const { detectProject, detectScope, FRAMEWORK_MARKERS, DEPENDENCY_SIGNALS } = require('../core/detector.cjs');
-
-/**
- * Create a temp directory and return its path.
- * The caller is responsible for cleanup.
- */
-function makeTmpDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'superteam-test-'));
-}
-
-/**
- * Write a JSON file inside the given directory.
- */
-function writeJson(dir, filename, data) {
-  fs.writeFileSync(path.join(dir, filename), JSON.stringify(data, null, 2));
-}
-
-/**
- * Write a plain text file inside the given directory.
- */
-function writeFile(dir, filename, content = '') {
-  fs.writeFileSync(path.join(dir, filename), content);
-}
+const { makeTmpDir, writeJson, writeFile } = require('./helpers.cjs');
 
 // ------------------------------------------------------------------
 // Tests

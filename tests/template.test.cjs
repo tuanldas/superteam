@@ -38,6 +38,84 @@ describe('renderTemplate', () => {
   });
 });
 
+describe('renderTemplate — conditionals', () => {
+  it('{{#if}} includes block when value is truthy', () => {
+    const result = renderTemplate('{{#if show}}visible{{/if}}', { show: true });
+    assert.equal(result, 'visible');
+  });
+
+  it('{{#if}} excludes block when value is falsy', () => {
+    const result = renderTemplate('{{#if show}}visible{{/if}}', { show: false });
+    assert.equal(result, '');
+  });
+
+  it('{{#if}} excludes block when key is missing', () => {
+    const result = renderTemplate('{{#if missing}}visible{{/if}}', {});
+    assert.equal(result, '');
+  });
+
+  it('{{#if}} treats empty array as falsy', () => {
+    const result = renderTemplate('{{#if items}}has items{{/if}}', { items: [] });
+    assert.equal(result, '');
+  });
+
+  it('{{#if}} treats non-empty array as truthy', () => {
+    const result = renderTemplate('{{#if items}}has items{{/if}}', { items: [1] });
+    assert.equal(result, 'has items');
+  });
+
+  it('{{#if}}...{{else}}...{{/if}} renders else branch when falsy', () => {
+    const result = renderTemplate('{{#if ok}}yes{{else}}no{{/if}}', { ok: false });
+    assert.equal(result, 'no');
+  });
+
+  it('{{#if}}...{{else}}...{{/if}} renders if branch when truthy', () => {
+    const result = renderTemplate('{{#if ok}}yes{{else}}no{{/if}}', { ok: true });
+    assert.equal(result, 'yes');
+  });
+
+  it('conditionals work with surrounding text', () => {
+    const result = renderTemplate('Start {{#if x}}mid{{/if}} end', { x: true });
+    assert.equal(result, 'Start mid end');
+  });
+});
+
+describe('renderTemplate — loops', () => {
+  it('{{#each}} iterates over array of primitives with {{.}}', () => {
+    const result = renderTemplate('{{#each items}}[{{.}}]{{/each}}', { items: ['a', 'b', 'c'] });
+    assert.equal(result, '[a][b][c]');
+  });
+
+  it('{{#each}} renders empty string for empty array', () => {
+    const result = renderTemplate('{{#each items}}[{{.}}]{{/each}}', { items: [] });
+    assert.equal(result, '');
+  });
+
+  it('{{#each}} renders empty string for non-array', () => {
+    const result = renderTemplate('{{#each items}}[{{.}}]{{/each}}', { items: 'not-array' });
+    assert.equal(result, '');
+  });
+
+  it('{{#each}} supports {{@index}}', () => {
+    const result = renderTemplate('{{#each items}}{{@index}}:{{.}} {{/each}}', { items: ['x', 'y'] });
+    assert.equal(result, '0:x 1:y ');
+  });
+
+  it('{{#each}} supports object items with {{.prop}}', () => {
+    const tpl = '{{#each users}}{{.name}}({{.role}}) {{/each}}';
+    const result = renderTemplate(tpl, {
+      users: [{ name: 'Alice', role: 'dev' }, { name: 'Bob', role: 'qa' }],
+    });
+    assert.equal(result, 'Alice(dev) Bob(qa) ');
+  });
+
+  it('loops work with surrounding text and replacements', () => {
+    const tpl = 'Team: {{name}} — {{#each members}}{{.}} {{/each}}done';
+    const result = renderTemplate(tpl, { name: 'Alpha', members: ['A', 'B'] });
+    assert.equal(result, 'Team: Alpha — A B done');
+  });
+});
+
 describe('loadTemplate', () => {
   it('existing template — returns content string', () => {
     const content = loadTemplate('config.json');

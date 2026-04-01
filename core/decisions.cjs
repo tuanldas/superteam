@@ -30,6 +30,7 @@ const DECISIONS_SCHEMA = Object.freeze({
   'decisions[].decided_at': { type: 'string', required: true },
   'decisions[].source': { type: 'string', enum: VALID_SOURCES },
   'decisions[].rationale': { type: 'string', required: false },
+  'decisions[].domain': { type: 'string', required: false },
 });
 
 // ---------------------------------------------------------------------------
@@ -90,7 +91,7 @@ function saveDecisions(rootDir, data) {
  * Auto-generates `decided_at` timestamp if not provided.
  * Returns the updated data (does not mutate the input).
  */
-function addDecision(rootDir, { key, value, rationale, source }) {
+function addDecision(rootDir, { key, value, rationale, source, domain }) {
   if (!key || typeof key !== 'string') {
     throw new Error('Decision key must be a non-empty string');
   }
@@ -106,6 +107,7 @@ function addDecision(rootDir, { key, value, rationale, source }) {
     decided_at: now,
     ...(rationale && { rationale }),
     ...(source && { source }),
+    ...(domain && { domain }),
   };
 
   // Check if decision with this key already exists.
@@ -134,6 +136,15 @@ function getDecision(rootDir, key) {
   const data = loadDecisions(rootDir);
   const decision = data.decisions.find((d) => d.key === key);
   return decision || null;
+}
+
+/**
+ * Get all decisions matching a domain.
+ * Returns an empty array if none found.
+ */
+function getDecisionsByDomain(rootDir, domain) {
+  const data = loadDecisions(rootDir);
+  return data.decisions.filter((d) => d.domain === domain);
 }
 
 /**
@@ -208,6 +219,11 @@ function validateDecisions(data) {
       errors.push(`decisions[${i}].rationale must be a string if provided`);
     }
 
+    // Optional: domain.
+    if (decision.domain !== undefined && typeof decision.domain !== 'string') {
+      errors.push(`decisions[${i}].domain must be a string if provided`);
+    }
+
     // value is required but can be any type.
     if (decision.value === undefined) {
       errors.push(`decisions[${i}].value is required`);
@@ -226,6 +242,7 @@ module.exports = {
   saveDecisions,
   addDecision,
   getDecision,
+  getDecisionsByDomain,
   removeDecision,
   validateDecisions,
   ensureConfigDir,

@@ -3,7 +3,6 @@
 const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const os = require('node:os');
 const path = require('node:path');
 
 const {
@@ -11,24 +10,14 @@ const {
   saveDecisions,
   addDecision,
   getDecision,
+  getDecisionsByDomain,
   removeDecision,
   validateDecisions,
   ensureConfigDir,
   DECISIONS_DEFAULTS,
   VALID_SOURCES,
 } = require('../core/decisions.cjs');
-
-// ---------------------------------------------------------------------------
-// Helper: temp directory management
-// ---------------------------------------------------------------------------
-
-function makeTmpDir() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'superteam-decisions-test-'));
-}
-
-function rmTmpDir(dir) {
-  fs.rmSync(dir, { recursive: true, force: true });
-}
+const { makeTmpDir, rmTmpDir } = require('./helpers.cjs');
 
 function writeDecisionsFile(rootDir, data) {
   const dir = path.join(rootDir, '.superteam');
@@ -477,5 +466,85 @@ describe('removeDecision', () => {
     } finally {
       rmTmpDir(dir);
     }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// domain field
+// ---------------------------------------------------------------------------
+
+describe('domain field', () => {
+  it('addDecision persists domain when provided', () => {
+    const dir = makeTmpDir();
+    try {
+      const data = addDecision(dir, { key: 'db', value: 'postgres', domain: 'infra' });
+      assert.strictEqual(data.decisions[0].domain, 'infra');
+    } finally {
+      rmTmpDir(dir);
+    }
+  });
+
+  it('addDecision omits domain when not provided', () => {
+    const dir = makeTmpDir();
+    try {
+      const data = addDecision(dir, { key: 'lang', value: 'ts' });
+      assert.strictEqual(data.decisions[0].domain, undefined);
+    } finally {
+      rmTmpDir(dir);
+    }
+  });
+
+  it('validateDecisions accepts valid domain string', () => {
+    const decision = makeDecision({ domain: 'frontend' });
+    const result = validateDecisions({ version: 1, decisions: [decision] });
+    assert.strictEqual(result.valid, true);
+  });
+
+  it('validateDecisions rejects non-string domain', () => {
+    const decision = makeDecision({ domain: 123 });
+    const result = validateDecisions({ version: 1, decisions: [decision] });
+    assert.strictEqual(result.valid, false);
+    assert.ok(result.errors.some((e) => e.includes('domain')));
+  });
+
+  it('validateDecisions accepts decision without domain (backward compat)', () => {
+    const decision = makeDecision();
+    delete decision.domain;
+    const result = validateDecisions({ version: 1, decisions: [decision] });
+    assert.strictEqual(result.valid, true);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// getDecisionsByDomain
+// ---------------------------------------------------------------------------
+
+describe('getDecisionsByDomain', () => {
+  let tmpDir;
+  before(() => {
+    tmpDir = makeTmpDir();
+    addDecision(tmpDir, { key: 'db', value: 'postgres', domain: 'infra' });
+    addDecision(tmpDir, { key: 'cache', value: 'redis', domain: 'infra' });
+    addDecision(tmpDir, { key: 'ui-lib', value: 'react', domain: 'frontend' });
+    addDecision(tmpDir, { key: 'lang', value: 'typescript' }); // no domain
+  });
+  after(() => { rmTmpDir(tmpDir); });
+
+  it('returns all decisions matching a domain', () => {
+    const infra = getDecisionsByDomain(tmpDir, 'infra');
+    assert.strictEqual(infra.length, 2);
+    assert.ok(infra.some((d) => d.key === 'db'));
+    assert.ok(infra.some((d) => d.key === 'cache'));
+  });
+
+  it('returns empty array for unknown domain', () => {
+    const result = getDecisionsByDomain(tmpDir, 'devops');
+    assert.deepStrictEqual(result, []);
+  });
+
+  it('does not return decisions without domain', () => {
+    const result = getDecisionsByDomain(tmpDir, undefined);
+    // Only the 'lang' decision has no domain, but filtering by undefined matches it
+    assert.ok(result.some((d) => d.key === 'lang'));
   });
 });

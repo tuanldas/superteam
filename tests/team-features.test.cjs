@@ -3,7 +3,6 @@
 const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const os = require('node:os');
 const path = require('node:path');
 
 const {
@@ -22,18 +21,7 @@ const {
   ROLE_DEFINITIONS,
   TEAM_PRESETS,
 } = require('../core/team.cjs');
-
-// ---------------------------------------------------------------------------
-// Hàm hỗ trợ
-// ---------------------------------------------------------------------------
-
-function taoThuMucTam() {
-  return fs.mkdtempSync(path.join(os.tmpdir(), 'st-team-feat-'));
-}
-
-function xoaThuMucTam(dir) {
-  fs.rmSync(dir, { recursive: true, force: true });
-}
+const { makeTmpDir: taoThuMucTam, rmTmpDir: xoaThuMucTam } = require('./helpers.cjs');
 
 /** Tạo N file source trong dir/src/ */
 function gieoFileSource(dir, soLuong, ext = '.js') {
