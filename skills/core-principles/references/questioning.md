@@ -35,6 +35,7 @@ Why? Options and examples constrain thinking. Users often take the first option 
 
 When you have concrete facts from previous answers:
 - Multiple choice OK when options come from KNOWN FACTS
+- Use `AskUserQuestion` tool with `options` parameter — users see selectable choices instead of plain text they have to type into
 - Each option must be traceable to user answers or codebase evidence
 - Include a recommendation with reasoning and confidence level
 - Format:
@@ -107,6 +108,51 @@ Not A because Python requires installation (friction for K8s teams). Not C becau
 - Reasoning must reference known facts
 - Be natural, not formulaic. Don't force "Recommend: X" template — adapt to context.
 
+## Tool Usage: AskUserQuestion
+
+Narrowing-phase questions with known options must use the `AskUserQuestion` tool. This renders selectable choices in the UI — users click to choose instead of typing. Plain text numbered lists (1, 2, 3) force users to type their answer, which is a worse experience.
+
+### When to use `AskUserQuestion` with `options`
+
+- Narrowing Phase choices with 2-4 known options (config preferences, architecture decisions, tool choices)
+- Any question where the answer is one of a predefined set
+
+### When NOT to use `options`
+
+- Exploration Phase — open-ended questions must be plain text output, no options
+- PRESENT — full proposals are text output ending with a decision prompt
+- CONFIRM — simple confirmations are text output
+
+### Field mapping
+
+| What | Field | Guideline |
+|---|---|---|
+| The question | `question` | Clear, specific, ends with `?` |
+| Short label | `header` | Max 12 chars. E.g. "Granularity", "Git tracking" |
+| Each choice | `options[].label` | 1-5 words. Concise name of the choice |
+| Trade-off | `options[].description` | Why pick this. Include trade-offs or context |
+| AI recommendation | First option + "(Recommended)" in label | E.g. `"Standard (Recommended)"` |
+| Single vs multi | `multiSelect` | `false` for most questions. `true` only when choices aren't mutually exclusive |
+
+### Example
+
+Config preference question using AskUserQuestion:
+
+```
+question: "Which granularity level do you prefer for planning?"
+header: "Granularity"
+options:
+  - label: "Standard (Recommended)"
+    description: "Balance between detail and speed. Good default for most projects."
+  - label: "Coarse"
+    description: "Fewer, larger phases. For experienced devs who prefer autonomy."
+  - label: "Fine"
+    description: "Many small phases with clear steps. For complex projects or tight control."
+multiSelect: false
+```
+
+The user always has an "Other" option automatically — no need to add one.
+
 ## Adaptive Flow
 
 Answer N determines Question N+1. After each answer:
@@ -156,6 +202,7 @@ This predetermined script ignores A1-A3. Real flow is adaptive.
 | Accepting vague answers ("it's important", "it's good") | Challenge: "What does X mean specifically?" or "How do you measure good?" |
 | Hidden batch (sub-questions inside one question) | Split: "How do X and Y differ?" → two separate messages |
 | Assuming domain knowledge ("You probably use Webpack") | Ask, don't assume. Confirm facts before proposing options. |
+| Plain text options ("1) X 2) Y 3) Z") | Use `AskUserQuestion` tool with `options` for selectable choices |
 
 ## Integration with Principle 1 (Visual-First)
 

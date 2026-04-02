@@ -46,7 +46,50 @@ Compare broken state against working state. Two forms:
 Strip away everything until you have the smallest code that reproduces the bug. Remove features, simplify data, eliminate dependencies. The minimal repro often reveals the cause directly.
 
 ### 6. Observability First
-Add logging/instrumentation BEFORE making any code changes. Understand what the code IS doing at runtime, not what you THINK it's doing. Log at entry/exit of suspect functions with input/output values.
+Add targeted instrumentation BEFORE making any code changes. Understand what the code IS doing at runtime, not what you THINK it's doing. Do NOT rely on old logs — they may be from previous debug sessions or unrelated events.
+
+**Protocol:**
+1. **Place targeted logs** at suspected points. Each log must test a specific hypothesis — no scatter-shot.
+2. **Reproduce the bug** to generate fresh output from YOUR instrumentation.
+3. **Read YOUR logs only** — correlate output with hypotheses.
+4. **Clean up** all instrumentation after collecting evidence (see Cleanup below).
+
+**Where to instrument** (in priority order):
+- Function entry/exit of suspect functions (input/output values)
+- Boundary crossings (API calls, DB queries, service calls)
+- State mutations (before/after values)
+- Conditional branches (which path was taken)
+- Error/catch blocks (exception details, silently swallowed errors)
+
+**What to log:** `[DBG-NNN] File.function ENTRY|EXIT|STATE|BRANCH key=value`
+- `[DBG-NNN]` — sequential ID per session, identifies output
+- Location + event type — where and what happened
+- Key data — only relevant values, NEVER sensitive data (passwords, tokens, PII)
+
+**Marker convention:**
+- End every instrumented line with a language-appropriate comment: `// DBG-AGENT` (JS/TS/Go/Java), `# DBG-AGENT` (Python/Ruby), `// DBG-AGENT` (PHP)
+- Multi-line blocks: `// DBG-AGENT-START` ... `// DBG-AGENT-END`
+- This marker enables reliable grep-based cleanup
+
+**Framework patterns:**
+- Node/Express: `console.log('[DBG-001] ...', { key: value }); // DBG-AGENT`
+- Laravel: `Log::debug('[DBG-001] ...', ['key' => $value]); // DBG-AGENT`
+- Django: `logger.debug('[DBG-001] ...', key, value)  # DBG-AGENT`
+- React/Vue: `useEffect` or lifecycle hooks with `// DBG-AGENT` marker
+- Unknown: ask user for preferred logging approach
+
+**Anti-patterns:**
+- Logging inside tight loops (log count/sample instead)
+- Logging sensitive data (explicitly exclude password, token, PII fields)
+- No context in log message (`console.log('here')` — useless)
+- Instrumenting without a hypothesis (flooding without signal)
+- Modifying application logic while instrumenting (observation only)
+
+**Cleanup:**
+1. After fix verified, remove ALL lines matching `DBG-AGENT` marker
+2. Verify: `grep -rn "DBG-AGENT"` returns zero results
+3. Run tests to confirm cleanup did not break anything
+4. Cleanup is MANDATORY — debug session is not complete until instrumentation is removed
 
 ### 7. Comment-Out-Everything
 Comment out all suspect code. Uncomment one piece at a time. When the bug returns, you found the piece that causes it. Brute-force but effective when other techniques fail.

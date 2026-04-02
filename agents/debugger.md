@@ -74,6 +74,8 @@ next_action: {what to do next}
 {IMMUTABLE after gathering. Verbatim errors, observed behavior, repro steps.}
 ## Files Involved
 {Updated as investigation progresses}
+## Instrumented Files
+{Files with active DBG-AGENT markers. OVERWRITE as instrumentation changes. Empty when cleanup complete.}
 ```
 
 **HYPOTHESES.md:**
@@ -104,7 +106,7 @@ Finding: {what was observed}
 Strength: strong | moderate | weak
 ```
 
-**Update rules:** Status/Focus = OVERWRITE on change. Symptoms = IMMUTABLE. Eliminated/Evidence = APPEND only.
+**Update rules:** Status/Focus = OVERWRITE on change. Symptoms = IMMUTABLE. Eliminated/Evidence = APPEND only. Instrumented Files = OVERWRITE when instrumentation changes. Must be empty before session resolves.
 
 **GOLDEN RULE: Update session files BEFORE every action.** If context resets, these files are your memory.
 
@@ -127,14 +129,15 @@ Strength: strong | moderate | weak
 3. **Check recent changes.** `git diff`, `git log --oneline -20`. Regressions hide in recent commits.
 4. **Gather evidence at boundaries.** Instrument each boundary (API calls, DB queries, IPC) to find where data diverges from expectations.
 5. **Trace data flow.** Follow data from origin to symptom using backward tracing. Find where actual diverges from expected.
-6. **Check logs.** Auto-detect by framework:
-   - Laravel: `storage/logs/laravel.log` | Rails: `log/development.log`
-   - Node/Express: stdout/stderr, `debug.log` | Django: `settings.py` LOGGING, `django.log`
-   - Spring: `logs/spring.log` | Go: stdout/stderr or configured logger
-   - Docker: `docker logs` | PM2: `~/.pm2/logs/` | nginx: `/var/log/nginx/error.log`
-   - General: `*.log` in project root, `/tmp/`, `logs/`
-   - Unknown framework: ask user for log location.
-   Filter: discard routine info/health checks. Keep errors, warnings, stack traces related to the bug.
+6. **Instrument & Observe.** Place targeted logs at suspected points to test your current understanding. Do not rely on existing log files — they may be noise from previous debug sessions.
+   - Each log MUST test a specific hypothesis (no scatter-shot)
+   - Format: `[DBG-NNN] File.function ENTRY|EXIT|STATE key=value`
+   - Mark every instrumented line: `// DBG-AGENT` (JS/TS/Go/Java/PHP) or `# DBG-AGENT` (Python/Ruby)
+   - Multi-line blocks: `// DBG-AGENT-START` ... `// DBG-AGENT-END`
+   - Placement priority: function entry/exit → boundary crossings → state mutations → conditional branches
+   - NEVER log sensitive data (passwords, tokens, PII)
+   - Reproduce the bug, read ONLY output from YOUR instrumentation
+   - Record all instrumented files in SESSION.md → Instrumented Files
 7. **Update session files** after EACH finding.
 
 ---
@@ -183,6 +186,20 @@ Strength: strong | moderate | weak
 4. **3+ failed fixes = question architecture.** Is the pattern sound? Fighting the framework? Secondary cause? STOP and discuss with user before attempt 4.
 
 **Hypothesis vs fix failure:** Prediction wrong = cause is elsewhere (Phase 1). Fix wrong but hypothesis right = review implementation. 3 fixes fail same hypothesis = re-examine scope for secondary cause.
+
+---
+
+## Instrumentation Cleanup
+
+After fix is verified and BEFORE session resolves:
+
+1. Remove ALL lines matching `DBG-AGENT` marker pattern from instrumented files
+2. Verify: `grep -rn "DBG-AGENT"` in project returns zero results
+3. Run tests to confirm cleanup did not break anything
+4. Update SESSION.md → Instrumented Files to empty
+5. Cleanup is MANDATORY — session is not complete until instrumentation is removed
+
+If cleanup accidentally removes functional code, revert and re-do cleanup line by line.
 
 ---
 

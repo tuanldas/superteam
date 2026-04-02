@@ -84,6 +84,7 @@ Debug complex bugs systematically. Persistent debug session files survive contex
    - Check recent changes: `git diff`, `git log`
    - Gather evidence at each component boundary
    - Trace data flow (backward tracing)
+   - Instrument & observe: place targeted logs (`// DBG-AGENT` marker), reproduce, read YOUR logs (not old log files)
    - APPEND Evidence after each finding
 
    ```
@@ -155,14 +156,19 @@ Debug complex bugs systematically. Persistent debug session files survive contex
    - User confirms "fixed" or "still broken"
    - Still broken -> status -> `investigating`, return to investigation
 
-9. **Archive + Knowledge base**
+9. **Instrumentation cleanup**
+   - Remove all `DBG-AGENT` marked lines from instrumented files
+   - Verify: `grep -rn "DBG-AGENT"` returns zero
+   - Run tests to confirm cleanup is clean
+
+10. **Archive + Knowledge base**
    - Move session file to `.superteam/debug/resolved/`
    - Append to `.superteam/debug/knowledge-base.md`:
      - slug, date, error patterns, root cause, fix, files changed
    - Commit code fix
    - Commit planning docs
 
-10. **Done** (4 possible outcomes)
+11. **Done** (4 possible outcomes)
 
     **Root cause found (no fix yet):**
     ```
@@ -218,6 +224,7 @@ Debug complex bugs systematically. Persistent debug session files survive contex
 | Eliminated | APPEND only | When hypothesis eliminated |
 | Evidence | APPEND only | After each finding |
 | Resolution | OVERWRITE | When understanding deepens |
+| Instrumented Files | OVERWRITE | When instrumentation changes. Empty before resolve |
 
 ## Resume After Context Reset
 

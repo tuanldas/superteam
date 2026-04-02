@@ -62,15 +62,9 @@ Phase 1 produces observations. Phase 2 refines them into a hypothesis. Phase 3 t
 3. **Check recent changes.** `git diff`, dependency updates, config changes, environment changes.
 4. **Gather evidence at boundaries.** In multi-component systems, instrument each boundary (API calls, DB queries, IPC) to find where data diverges from expectations.
 5. **Trace data flow.** Follow data from origin to symptom point. For detailed methodology, see `references/techniques.md → Root-Cause Tracing`.
-6. **Check logs.** Use framework from `superteam:project-awareness` context block to auto-detect log locations.
-   When project-awareness type = `unknown`: ask user for log location instead of guessing.
-   Fallback locations when project-awareness unavailable:
-   - Laravel: `storage/logs/laravel.log`
-   - Rails: `log/development.log`
-   - Express/Node: stdout/stderr
-   - Django: configured in `settings.py → LOGGING`
-   - Go: stdout/stderr or configured logger
-   - General: `*.log` files in project root, `/tmp/`, `logs/`
+6. **Instrument & Observe.** Place targeted logs at suspected points, reproduce the bug, read output from YOUR logs. Do not rely on existing log files — they may contain noise from previous sessions. For protocol details (marker convention, placement priorities, cleanup), see `references/techniques.md → Observability First`.
+   Use framework from `superteam:project-awareness` to pick the appropriate logging pattern.
+   When project-awareness type = `unknown`: ask user for preferred logging approach.
 
 **Phase 1 output:** Specific observations and a suspected area (component, module, data path) to investigate further in Phase 2.
 
