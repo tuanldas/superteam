@@ -27,7 +27,7 @@ Execute a small task fast: auto-plan 1-3 tasks, execute immediately, atomic comm
    - Record decisions
 
 4. **Research phase** (only with `--research`)
-   - Spawn focused researcher agent (1-2 pages output)
+   - Spawn phase-researcher agent (focused, 1-2 pages output)
    - Follow `superteam:research-methodology` at Light depth
 
 5. **Create tracking directory**
@@ -71,7 +71,7 @@ Execute a small task fast: auto-plan 1-3 tasks, execute immediately, atomic comm
 | Flag | Enables | Default |
 |------|---------|---------|
 | `--discuss` | Discussion phase (gray areas, assumptions) | Skip |
-| `--research` | Research agent before planning | Skip |
+| `--research` | phase-researcher agent before planning | Skip |
 | `--full` | Plan-checker (max 2 iterations) + verifier | Skip |
 
 Flags are composable: `/st:quick --discuss --full add dark mode toggle`

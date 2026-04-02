@@ -34,6 +34,7 @@ Full UI pipeline: generate UI-SPEC (design contract), preview mockup in Playwrig
    - Each question builds on the previous answer. Skip questions already answered.
 
 4. **Generate UI-SPEC** (design contract)
+   - Spawn ui-researcher agent with context from steps 1-3
    - Color: from DESIGN-SYSTEM.md (or temporary values)
    - Typography: font, sizes, weights per role
    - Spacing: token-based scale (4px multiples)

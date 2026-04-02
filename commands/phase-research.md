@@ -23,8 +23,8 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
    - Scan codebase: related files, tech stack, patterns
    - Use `superteam:project-awareness` for codebase context
 
-2. **Research (delegate to skill)**
-   - Delegate to `superteam:research-methodology` Research Orchestration flow with:
+2. **Research (spawn research-orchestrator agent)**
+   - Spawn research-orchestrator agent with:
      - `context_inputs`: `.superteam/ROADMAP.md` + `.superteam/PROJECT.md` + `.superteam/phases/[phase-name]/CONTEXT.md` (if exists) + codebase scan
      - `output_dir`: `.superteam/phases/[phase-name]/research/`
      - `research_context`: `"phase [X]: [name]"`
@@ -44,7 +44,7 @@ Deep research for a roadmap phase using parallel agents + web search + codebase 
 
 ## Rules
 
-- Research orchestration is owned by `superteam:research-methodology`. This command provides context and delegates.
+- Research orchestration is owned by research-orchestrator agent (which follows `superteam:research-methodology`). This command provides context and spawns the agent.
 - If CONTEXT.md exists (from phase-discuss), pass it as part of `context_inputs` for all agents.
 - If CONTEXT.md does not exist, warn user and recommend running `/st:phase-discuss` first, but proceed if user wants.
 - Follow `superteam:core-principles`. Load references: questioning.

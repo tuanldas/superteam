@@ -56,7 +56,7 @@ Create an implementation plan for a task or feature. Zero-infrastructure (works 
      - Medium (new component, API endpoint): suggest light research
      - Complex (auth, payment, migration): recommend research
    - If recommending: "This task involves [domain]. Recommend research before planning. Agree?"
-   - User agrees: spawn researcher agent (focused, 1-2 pages output)
+   - User agrees: spawn phase-researcher agent (focused, 1-2 pages output)
    - User declines: continue planning directly
    - Follow `superteam:research-methodology` at appropriate depth
 

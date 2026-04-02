@@ -88,7 +88,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - PROJECT.md is a living doc: later steps auto-update when conflicts found
 
 5. **Research (dynamic waves)**
-   - Delegate to `superteam:research-methodology` Research Orchestration flow with:
+   - Spawn research-orchestrator agent with:
      - `context_inputs`: `.superteam/PROJECT.md` + codebase mapping (if brownfield)
      - `output_dir`: `.superteam/research/`
      - `research_context`: `"init"`
@@ -295,7 +295,7 @@ project/
 - This is an INTERACTIVE command. Never run in auto mode.
 - Each step commits separately. Follow `superteam:atomic-commits`.
 - PROJECT.md is a living document. Update it whenever conflicts are discovered in later steps.
-- Research orchestration is owned by `superteam:research-methodology`. Step 5 provides context and delegates.
+- Research orchestration is owned by research-orchestrator agent (which follows `superteam:research-methodology`). Step 5 provides context and spawns the agent.
 - Questioning uses 15 exchanges per round with checkpoint summaries. User decides whether to continue.
 - Image input accepted at any point in the flow.
 - Config is step 1 because research agents need config to run properly.

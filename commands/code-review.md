@@ -101,7 +101,7 @@ Layered code review: linting first, then 1 reviewer agent covering 13 domains, c
 
 7. **Fix with receiving logic**
    - Follow `superteam:receiving-code-review`
-   - Spawn fix agents in parallel
+   - Spawn executor agents in parallel to fix
    - Each fix goes through receiving logic:
      1. Verify the issue actually exists in current code
      2. Check fix does not break anything else

@@ -304,7 +304,7 @@ FOR EACH TASK in Wave N+1:
 
 **If validation fails:**
 - Surface the gap: "Task 4 depends on `user.model.ts` from Task 1, but the file doesn't export `UserModel`."
-- Options: fix now (spawn repair agent) / continue anyway / ask user
+- Options: fix now (spawn executor agent to repair) / continue anyway / ask user
 
 ## Node Repair (Error Recovery)
 

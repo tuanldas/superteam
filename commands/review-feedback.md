@@ -51,7 +51,7 @@ When receiving review feedback from external sources (human reviewer, CI tool, P
    - User may override AI assessment on any item
 
 6. **Fix approved items**
-   - Implement fixes (spawn agents if multiple independent fixes)
+   - Implement fixes (spawn executor agents if multiple independent fixes)
    - Run tests after fixes
    - Follow `superteam:atomic-commits`
    - Commit: `fix: address review feedback`

@@ -56,11 +56,14 @@ Confirm a phase is truly complete through 4 layers of verification: auto-check s
      Result: [PASS/FAIL]
      ```
 
-4. **Layer 3: Cross-phase integration**
+4. **Layer 3: Cross-phase integration + UI audit**
    - Spawn integration-checker agent:
      - Run full test suite (not just this phase's tests)
      - Check regression: are previously completed phases broken?
      - Check interfaces: API contracts, shared types, DB schema consistency
+   - If phase involves UI (has UI-SPEC or frontend success criteria): spawn ui-auditor agent in parallel with integration-checker
+     - 6-pillar visual audit against UI-SPEC
+     - Produces UI-REVIEW.md in phase directory
    - Present results:
      ```
      LAYER 3: CROSS-PHASE INTEGRATION
