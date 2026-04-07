@@ -160,13 +160,20 @@ When multiple research agents produce output (phase-research, init), the synthes
 3. **Surface conflicts.** Where agents disagree → present both sides with evidence.
 4. **Cross-validate.** If Stack recommends X but Pitfalls warns about X → highlight the tension.
 5. **Rank recommendations** by evidence strength, not by word count or confidence language.
-6. **Produce SUMMARY.md** with TWO clearly separated sections:
+6. **Build Impact Analysis.** Compare research findings against the original approach (from context inputs: PROJECT.md, ROADMAP.md, REQUIREMENTS.md). For each key aspect, categorize as KEEP (compatible), REPLACE (incompatible — state alternative), ADD (needed but not in original), REMOVE (in original but no longer needed). This gives users immediate visibility into what changed, what stayed, and why — not just what went wrong.
+7. **Produce SUMMARY.md** with THREE clearly separated sections:
    - **Findings** (tài liệu tham khảo): key findings, evidence, conflicts, unknowns — auto-saved, no user action needed.
+   - **Impact Analysis**: delta giữa original approach và research recommendations. Mỗi aspect được categorize KEEP/REPLACE/ADD/REMOVE với lý do evidence-based. Giúp user thấy ngay toàn cảnh thay đổi.
    - **Decisions Requiring Confirmation**: mọi quyết định kiến trúc/tech mà research recommend (project structure, framework, ORM, hosting, payment, etc.) — PHẢI được present cho user chọn trước khi áp dụng. Mỗi decision phải có 2-3 options với trade-offs.
 
    ```markdown
    ## Findings (Reference Material)
    [Key findings, evidence, comparisons — informational only]
+
+   ## Impact Analysis
+   | # | Aspect | Original Approach | Research Recommends | Change | Reason |
+   |---|--------|-------------------|---------------------|--------|--------|
+   | 1 | [aspect] | [from PROJECT/ROADMAP] | [finding] | KEEP/REPLACE/ADD/REMOVE | [why] |
 
    ## Decisions Requiring Confirmation
    [Each decision that needs user choice before it can be applied to REQUIREMENTS.md or ROADMAP.md]
@@ -179,7 +186,7 @@ When multiple research agents produce output (phase-research, init), the synthes
 
    The calling command (init, phase-research) is responsible for presenting these decisions to the user. SUMMARY.md only extracts and lists them.
 
-7. **Frame output as findings, not instructions.** Follow research-boundaries rules for output framing, language choice (descriptive not prescriptive), and header templates. See `core-principles/references/research-boundaries.md` for full rules and examples.
+8. **Frame output as findings, not instructions.** Follow research-boundaries rules for output framing, language choice (descriptive not prescriptive), and header templates. See `core-principles/references/research-boundaries.md` for full rules and examples.
 
 **Gate:** SUMMARY.md must address conflicts. If it mentions none, the synthesizer missed something — there are always trade-offs.
 

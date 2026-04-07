@@ -94,7 +94,22 @@ Ranking criteria:
 4. **Weak evidence only** — low rank, flag as needing verification.
 5. **Contradicted by stronger evidence** — do not recommend, present in Conflicts section only.
 
-## Step 6: Produce SUMMARY.md
+## Step 6: Impact Analysis
+
+Compare research findings against the original approach from upstream context (PROJECT.md, ROADMAP.md, REQUIREMENTS.md — whatever was provided by the spawning command). This step answers the question users care about most: "what changed and what stayed?"
+
+For each key aspect — technology choices, patterns, architecture decisions, infrastructure — determine the impact:
+
+- **KEEP**: original approach is confirmed compatible by research. Note the supporting evidence briefly.
+- **REPLACE**: original approach is incompatible or suboptimal. State what replaces it, why, and the evidence.
+- **ADD**: something not in the original plan that research identified as needed. State why.
+- **REMOVE**: something in the original plan that is no longer appropriate. State why.
+
+Users who only see "X is incompatible" without knowing what stays, what replaces it, and what is new cannot make informed decisions. The Impact Analysis gives them the complete delta at a glance.
+
+If no upstream context exists (brand new project with no prior approach), write: "No prior approach to compare — all recommendations are new." and skip the comparison table.
+
+## Step 7: Produce SUMMARY.md
 
 Write the SUMMARY.md file with the required sections (see Output Format below). Every section is mandatory. An empty Conflicts section means you failed Step 3 — go back and look harder.
 
@@ -115,6 +130,20 @@ Write SUMMARY.md with exactly these sections:
 ## Key Findings
 
 [3-7 bullet points. Each finding states WHAT was found and WHERE the evidence comes from (which research area + source type). Lead with highest-confidence findings.]
+
+## Impact Analysis
+
+| # | Aspect | Original Approach | Research Recommends | Change | Reason |
+|---|--------|-------------------|---------------------|--------|--------|
+| 1 | [aspect] | [from PROJECT.md/ROADMAP.md] | [research finding] | KEEP/REPLACE/ADD/REMOVE | [evidence-based reason] |
+
+### Change Summary
+- **KEEP** (compatible): [count] — [items]
+- **REPLACE** (needs change): [count] — [items]
+- **ADD** (new requirement): [count] — [items]
+- **REMOVE** (drop from plan): [count] — [items]
+
+[If no prior approach exists: "No prior approach to compare — all recommendations are new."]
 
 ## Recommendations
 
@@ -183,6 +212,7 @@ Synthesis is complete and correct when ALL of the following hold:
 - [ ] All research output files from all waves were read in full
 - [ ] SUMMARY.md covers findings from all researched areas (Area Coverage table is complete)
 - [ ] Key Findings section has 3-7 entries with source attribution
+- [ ] Impact Analysis section compares findings against original approach (KEEP/REPLACE/ADD/REMOVE for each aspect)
 - [ ] Recommendations are ranked by evidence strength, not by order of discovery
 - [ ] Conflicts section is non-empty (trade-offs always exist)
 - [ ] Every conflict presents both sides with evidence and identifies the decision needed
