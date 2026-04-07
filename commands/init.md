@@ -29,6 +29,13 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - Exists: ask "Project already initialized. Re-init?"
      - Not exists: continue
    - Check git, init if needed
+   - **Setup .gitignore** — append superteam patterns to root `.gitignore` (create if not exists). Only add patterns not already present:
+     ```
+     # Superteam generated files
+     .superteam/preview/
+     .superteam/.plugin-version
+     .playwright-mcp/
+     ```
    - Auto-detect by scanning file markers:
      - package.json, composer.json, go.mod, Dockerfile, tsconfig.json,
        vite.config.*, next.config.*, Cargo.toml, pyproject.toml, etc.
