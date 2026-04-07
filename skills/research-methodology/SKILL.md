@@ -437,3 +437,218 @@ This makes research resilient to session interruptions — the plan on disk is t
 **Agents:**
 - `phase-researcher` — spawned by phase-research and init. Each instance covers one research area. Follows this skill's methodology.
 - `research-synthesizer` — spawned after all researchers complete. Follows synthesis protocol from this skill.
+
+## Quick Reference
+
+```
+IRON LAW:
+  RESEARCH BEFORE DECISIONS. EVIDENCE BEFORE ASSUMPTIONS.
+  Training data is not evidence. Cite sources or flag as assumption.
+
+AREAS (dynamic from catalog):
+  Select areas based on trigger + brownfield conditions.
+  Core: STACK, LANDSCAPE, ARCHITECTURE, PITFALLS
+  Domain: SECURITY, PERFORMANCE, ACCESSIBILITY, DATA, INTEGRATION
+  Custom: max 2, requires user confirmation, max 8 total
+
+WAVE ORDER (dynamic from dependencies):
+  wave = max(wave[deps]) + 1
+  Areas with no deps → Wave 1. Spawn all per wave in one message.
+
+PROTOCOL:
+  1. Scope (bound the question)
+     → gate: specific research question
+  2. Investigate (3+ sources, 2+ categories)
+     → gate: 3+ independent data points per key claim
+  3. Evaluate (rank evidence, surface conflicts)
+     → gate: every recommendation cites strong evidence
+  4. Synthesize (options, trade-offs, unknowns)
+
+DEPTH:
+  Deep (phase-research, init): dynamic areas from catalog, parallel agents, full output
+  Medium (brainstorm): 2 rounds, inline
+  Light (plan): 1 area, focused, 1-2 pages
+
+SOURCES (min 2 of 3 categories):
+  Web (docs, benchmarks, issues) | Codebase (patterns, deps) | Ecosystem (stats, releases)
+
+NEVER:
+  Single option without alternatives | Claims without sources |
+  Skip areas at Deep depth | Trust training data alone |
+  Resolve conflicts silently | Skip codebase scan
+```
+
+## Common Mistakes
+
+| Mistake | Fix |
+|---------|-----|
+| Recommending a technology without checking alternatives | Always present 2-3 options with trade-offs. Even if one is clearly better, show why. |
+| Citing training data as fact ("React 18 introduced...") | Verify via web search or docs. Training data may be wrong or outdated. |
+| Skipping codebase scan | Existing patterns are the strongest evidence. The project already uses tools — check them first. |
+| Research output is a knowledge dump, not actionable | Every finding must answer: "So what? What should the user DO with this?" |
+| Resolving conflicts between sources silently | Surface conflicts explicitly. User decides. Research informs, doesn't decide. |
+| All recommendations are the same technology/approach | Check for familiarity bias. Force yourself to evaluate at least one unfamiliar option. |
+| Research is broad but shallow (mentions many things, investigates none) | Better to deeply investigate 3 options than shallowly mention 10. |
+| Pitfalls section is generic ("watch out for performance") | Pitfalls must be specific to THIS stack, THIS architecture, THIS domain. |
+| Landscape section only lists competitors without analysis | Compare on criteria relevant to the project, not just list names. |
+| SUMMARY.md has no conflicts section | There are ALWAYS trade-offs. No conflicts = missed something. |
+| Research uses MUST/SHOULD as if setting requirements | See `core-principles/references/research-boundaries.md` for output language rules |
+
+## Research Orchestration
+
+This section defines the complete orchestration flow for deep research (used by `/st:init` and `/st:phase-research`). Commands delegate to this flow instead of implementing their own.
+
+The orchestration accepts parameters from the calling command:
+
+- **`context_inputs`**: files to read for research context
+  - Examples: `PROJECT.md`, `CONTEXT.md`, `ROADMAP.md`, `REQUIREMENTS.md`, `ARCHITECTURE.md`
+  - Used to extract: domain, tech decisions, constraints, greenfield/brownfield status
+- **`output_dir`**: where to save research results
+  - Examples: `.superteam/research/`, `.superteam/phases/[name]/research/`
+- **`research_context`**: label for the research session
+  - Examples: `"init"`, `"phase 3: Authentication"`, `"Q2 Stack Review"`
+- **`commit_message`**: format for the final commit
+  - Example: `"research: {research_context} — {areas}"`
+
+### Step 1 — Select research areas
+
+1. Read `context_inputs` files: extract domain, tech decisions, constraints, greenfield/brownfield status
+2. Load research area catalog (`references/research-catalog.md`)
+3. For each catalog area: evaluate trigger AND brownfield conditions:
+   - Greenfield: include area if trigger matches
+   - Brownfield: check brownfield condition — SKIP, ADJUST focus, or KEEP as-is
+4. If custom areas seem needed: propose separately with justification,
+   ask user to confirm (custom areas are never auto-included)
+
+### Step 2 — Build research plan and persist
+
+1. Build dependency graph from selected areas' `needs` fields
+2. Group into waves: `wave = max(wave[deps]) + 1`
+3. **Save `RESEARCH-PLAN.md` to `output_dir`** before presenting to user:
+
+```markdown
+# Research Plan
+
+Created: [date]
+Context: [research_context]
+Status: planning
+
+## Selected Areas
+
+| Area | Focus | Wave | Status |
+|------|-------|------|--------|
+| STACK | [focus] | 1 | pending |
+| ARCHITECTURE | [focus] | 2 | pending |
+...
+
+## Wave Structure
+
+Wave 1: [areas] → Wave 2: [areas] → ...
+
+## Decisions
+- [area] included because: [reason]
+- [area] skipped because: [reason]
+```
+
+4. Present research plan to user:
+   ```
+   RESEARCH PLAN — [research_context]
+
+   Wave [N] (parallel, [M] agents):
+     ├─ [AREA]: [focus description]
+     └─ [AREA]: [focus description]
+   ...
+   Total: [X] agents, [Y] waves
+   Saved: [output_dir]/RESEARCH-PLAN.md
+   Adjust areas or proceed?
+   ```
+5. If `config.research_auto_approve` is true: display plan and proceed immediately
+   (EXCEPT: if custom areas proposed, always pause for confirmation)
+6. If false (default): wait for user to approve, adjust areas, or skip research
+7. On approval: update `RESEARCH-PLAN.md` status to `in-progress`
+
+### Step 3 — Execute waves
+
+1. For each wave: make ALL Agent() calls in a SINGLE message (foreground parallel with tree view).
+   **NEVER use `run_in_background: true`.** All agents MUST run in foreground so the orchestrator can read outputs immediately.
+2. Each agent receives: context from `context_inputs`, relevant prior wave outputs, specific focus area
+3. Each agent follows this skill's methodology at Deep depth
+4. **MANDATORY WAIT GATE** per wave: do NOT proceed until ALL agents
+   have completed AND you have READ their output files
+5. After each wave completes: update `RESEARCH-PLAN.md` — set completed areas' status to `done`
+
+### Step 4 — Synthesize
+
+1. After all waves complete, spawn synthesizer agent
+2. Synthesizer reads all output files from all waves
+3. Compiles key findings, identifies conflicts between recommendations
+4. **Extract all architectural/tech decisions** that research agents recommended — list them in "Decisions Requiring Confirmation" section of SUMMARY.md. These are NOT confirmed until the calling command presents them to the user.
+5. Writes `SUMMARY.md` to `output_dir` (with both "Findings" and "Decisions Requiring Confirmation" sections)
+6. If conflicts with existing project docs found: note them for the calling command to resolve (do NOT auto-update)
+
+### Step 5 — Present findings
+
+```
+RESEARCH SUMMARY — [research_context]
+Areas researched: [list of areas]
+
+Key findings (reference material — auto-saved):
+  1. [finding]
+  2. [finding]
+
+Decisions requiring confirmation (NOT yet applied):
+  1. [decision] — [recommended option] vs [alternatives]
+  2. [decision] — [recommended option] vs [alternatives]
+
+Conflicts found:
+  [if any: describe + suggest resolution]
+```
+
+Present findings as reference material. Decisions are listed but NOT confirmed here — the calling command (init step 5.5, phase-research) is responsible for presenting each decision individually for user choice.
+
+Wait for user review, answer follow-up questions if needed.
+
+### Step 6 — Save and commit
+
+1. All research files already saved to `output_dir` during execution
+2. Update `RESEARCH-PLAN.md` status to `completed`
+3. Follow `superteam:atomic-commits`
+4. Commit using `commit_message` format provided by the calling command
+
+### Resuming interrupted research
+
+If `RESEARCH-PLAN.md` exists with status `in-progress`:
+1. Read the plan: identify which areas are `done` vs `pending`
+2. Skip completed waves
+3. Resume from the first wave with pending areas
+4. Continue the normal flow from Step 3
+
+This makes research resilient to session interruptions — the plan on disk is the source of truth.
+
+## Context Budget
+
+| File | When to Load | Trigger |
+|------|-------------|---------|
+| `SKILL.md` | Always | Skill invocation (via init, phase-research, brainstorm, or plan) |
+| `references/research-catalog.md` | When planning research | Area selection: triggers, dependencies, brownfield, guardrails |
+| `references/research-areas.md` | On demand | Deep research execution guidance: search strategies, templates, scope |
+
+**Rule:** Light research (`/st:plan`) resolves with `SKILL.md` alone. Deep research (`/st:phase-research`, `/st:init`) loads `references/research-catalog.md` for area selection and `references/research-areas.md` for execution guidance.
+
+## Integration
+
+**Used by:**
+- `/st:init` — dynamic-wave research (areas selected from catalog, grouped by dependencies)
+- `/st:phase-research` — dynamic research agents from catalog + synthesizer
+- `/st:brainstorm` — 2-round inline research (broad → focused)
+- `/st:plan` — optional focused research when AI recommends it
+
+**Skills that pair with research-methodology:**
+- `superteam:project-awareness` — provides framework detection for codebase-aware research
+- `superteam:wave-parallelism` — parallel research agents follow wave protocol (dynamic waves from catalog dependencies)
+- `superteam:verification` — research findings verified before feeding into plans
+- `superteam:handoff-protocol` — research state (sources, findings, conflicts) captured on pause
+
+**Agents:**
+- `phase-researcher` — spawned by phase-research and init. Each instance covers one research area. Follows this skill's methodology.
+- `research-synthesizer` — spawned after all researchers complete. Follows synthesis protocol from this skill.
