@@ -254,12 +254,64 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - REQUIREMENTS.md: REQ-IDs consistent, coverage sufficient
      - ROADMAP.md: maps 100% requirements, success criteria clear
      - DESIGN-SYSTEM.md (if exists): coherent, no conflicts with requirements
-     - Cross-check: requirements <-> roadmap <-> project have no conflicts
+     - Cross-check: requirements <→ roadmap <→ project have no conflicts
    - If issues found: fix and re-dispatch (max 3 iterations)
    - If still issues after 3 iterations: surface to user for decision
    - Commit fixes if any
 
-10. **Done**
+10. **Generate CLAUDE.md**
+   - Check if `CLAUDE.md` already exists at project root
+     - **Not exists:** generate and save automatically
+     - **Exists:** ask "CLAUDE.md đã tồn tại. Bạn muốn tái cấu trúc không?"
+       - No → skip, keep existing CLAUDE.md
+       - Yes → ask "Ghi đè hoàn toàn hay merge (giữ rules/gotchas cũ, cập nhật sections auto-generate)?"
+         - **Overwrite:** generate new CLAUDE.md, replace old entirely
+         - **Merge:** read existing CLAUDE.md, preserve custom sections (Gotchas, custom rules user wrote manually), regenerate auto-detectable sections (Commands, Architecture, Key Files, Code Style, Testing)
+   - **Data sources for generation:**
+     - Detection results (type, frameworks, workspaces) from step 2
+     - PROJECT.md (project name, description) from step 4
+     - `decisions.json` (tech stack, architecture decisions) from step 5.5
+     - DESIGN-SYSTEM.md (if exists) from step 6
+     - Manifest files (scripts → commands, test runner) from step 2
+     - Directory scan (architecture tree, key files)
+   - **Template — Comprehensive format:**
+     ```markdown
+     # {Project Name}
+
+     {1-line description from PROJECT.md}
+
+     ## Commands
+
+     | Command | Description |
+     |---------|-------------|
+     | `{from manifest scripts}` | {description} |
+
+     ## Architecture
+
+     ```
+     {project tree with purpose annotations, from directory scan}
+     ```
+
+     ## Key Files
+
+     - `{entry points, configs}` — {purpose}
+
+     ## Code Style
+
+     - {language/framework conventions from detection + decisions}
+
+     ## Testing
+
+     - `{test command}` — {test runner from manifest}
+
+     ## Gotchas
+
+     - {framework-specific known gotchas from detection}
+     - {key decisions from decisions.json that affect daily work}
+     ```
+   - Commit: `docs: generate CLAUDE.md`
+
+11. **Done**
    ```
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     ST > PROJECT INITIALIZED
@@ -273,17 +325,20 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    | Design System  | .superteam/DESIGN-SYSTEM.md   |
    | Requirements   | .superteam/REQUIREMENTS.md    |
    | Roadmap        | .superteam/ROADMAP.md         |
+   | CLAUDE.md      | ./CLAUDE.md                   |
 
    [N] phases | [X] requirements | Ready to build
 
    Next: /st:phase-discuss 1
    ```
    - Design System row: only show if DESIGN-SYSTEM.md was created (user chose "Có" in step 6)
+   - CLAUDE.md row: only show if CLAUDE.md was generated or updated in step 10
 
 ## Output Artifacts
 
 ```
 project/
+  CLAUDE.md                       [auto-generated from all gathered data in step 10]
   .superteam/
     config.json
     decisions.json                [architectural decisions confirmed by user in step 5.5]
