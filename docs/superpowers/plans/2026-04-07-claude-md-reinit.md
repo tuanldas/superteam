@@ -1,3 +1,23 @@
+# CLAUDE.md Reinit Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Rewrite CLAUDE.md from scratch following Comprehensive Template best practices — balancing project briefing with behavior guide.
+
+**Architecture:** Single file rewrite. Replace current 77-line rules-only CLAUDE.md with ~65-line comprehensive version covering Commands, Architecture, Key Files, Code Style, Testing, Gotchas, and Versioning.
+
+**Tech Stack:** Markdown
+
+---
+
+### Task 1: Write new CLAUDE.md
+
+**Files:**
+- Modify: `CLAUDE.md`
+
+- [ ] **Step 1: Replace CLAUDE.md with new content**
+
+```markdown
 # Superteam Plugin
 
 Claude Code plugin: customizable agents, skills, and commands.
@@ -58,3 +78,21 @@ superteam/
 
 Bump tất cả 4 files trước commit cuối: `package.json`, `package-lock.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`
 - Patch (x.x.Y): bugfix. Minor (x.Y.0): feature mới, thay đổi kiến trúc
+```
+
+- [ ] **Step 2: Verify file content**
+
+Run: `wc -l CLAUDE.md`
+Expected: ~60-70 lines
+
+- [ ] **Step 3: Run tests to ensure nothing is broken**
+
+Run: `npm test`
+Expected: All tests pass (CLAUDE.md change should not affect tests)
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add CLAUDE.md
+git commit -m "refactor: rewrite CLAUDE.md with comprehensive template"
+```
