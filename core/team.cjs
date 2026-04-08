@@ -159,6 +159,38 @@ function isTeamActive(rootDir) {
 }
 
 /**
+ * Check if a team is currently paused.
+ */
+function isTeamPaused(rootDir) {
+  const config = loadTeamConfig(rootDir);
+  return config !== null && config.status === 'paused';
+}
+
+/**
+ * Check if a team pause has been requested (waiting for current step to finish).
+ */
+function isTeamPausing(rootDir) {
+  const config = loadTeamConfig(rootDir);
+  return config !== null && config.status === 'pausing';
+}
+
+/**
+ * Update team status in config.json. Preserves all other fields.
+ * Returns true if updated, false if no config found.
+ *
+ * @param {string} rootDir
+ * @param {'active'|'pausing'|'paused'|'disbanded'} newStatus
+ * @returns {boolean}
+ */
+function setTeamStatus(rootDir, newStatus) {
+  const config = loadTeamConfig(rootDir);
+  if (!config) return false;
+  config.status = newStatus;
+  saveTeamConfig(rootDir, config);
+  return true;
+}
+
+/**
  * Derive team name from project root directory.
  */
 function getTeamName(rootDir) {
@@ -415,6 +447,9 @@ module.exports = {
   loadTeamConfig,
   saveTeamConfig,
   isTeamActive,
+  isTeamPaused,
+  isTeamPausing,
+  setTeamStatus,
   getTeamName,
   detectCICD,
   detectUIFramework,

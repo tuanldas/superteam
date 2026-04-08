@@ -9,6 +9,9 @@ const {
   loadTeamConfig,
   saveTeamConfig,
   isTeamActive,
+  isTeamPaused,
+  isTeamPausing,
+  setTeamStatus,
   getTeamName,
   detectCICD,
   detectUIFramework,
@@ -106,6 +109,95 @@ describe('isTeamActive', () => {
   it('returns false when status is disbanded', () => {
     saveTeamConfig(tmpDir, { status: 'disbanded' });
     assert.strictEqual(isTeamActive(tmpDir), false);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// isTeamPaused
+// ---------------------------------------------------------------------------
+
+describe('isTeamPaused', () => {
+  let tmpDir;
+  before(() => { tmpDir = makeTmpDir(); });
+  after(() => { rmTmpDir(tmpDir); });
+
+  it('returns false when no config exists', () => {
+    assert.strictEqual(isTeamPaused(tmpDir), false);
+  });
+
+  it('returns true when status is paused', () => {
+    saveTeamConfig(tmpDir, { status: 'paused' });
+    assert.strictEqual(isTeamPaused(tmpDir), true);
+  });
+
+  it('returns false when status is active', () => {
+    saveTeamConfig(tmpDir, { status: 'active' });
+    assert.strictEqual(isTeamPaused(tmpDir), false);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// isTeamPausing
+// ---------------------------------------------------------------------------
+
+describe('isTeamPausing', () => {
+  let tmpDir;
+  before(() => { tmpDir = makeTmpDir(); });
+  after(() => { rmTmpDir(tmpDir); });
+
+  it('returns false when no config exists', () => {
+    assert.strictEqual(isTeamPausing(tmpDir), false);
+  });
+
+  it('returns true when status is pausing', () => {
+    saveTeamConfig(tmpDir, { status: 'pausing' });
+    assert.strictEqual(isTeamPausing(tmpDir), true);
+  });
+
+  it('returns false when status is paused', () => {
+    saveTeamConfig(tmpDir, { status: 'paused' });
+    assert.strictEqual(isTeamPausing(tmpDir), false);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// setTeamStatus
+// ---------------------------------------------------------------------------
+
+describe('setTeamStatus', () => {
+  let tmpDir;
+  before(() => { tmpDir = makeTmpDir(); });
+  after(() => { rmTmpDir(tmpDir); });
+
+  it('updates status from active to pausing', () => {
+    saveTeamConfig(tmpDir, { team_name: 'test', status: 'active', members: [] });
+    setTeamStatus(tmpDir, 'pausing');
+    const config = loadTeamConfig(tmpDir);
+    assert.strictEqual(config.status, 'pausing');
+    assert.strictEqual(config.team_name, 'test');
+  });
+
+  it('updates status from pausing to paused', () => {
+    saveTeamConfig(tmpDir, { team_name: 'test', status: 'pausing', members: [] });
+    setTeamStatus(tmpDir, 'paused');
+    const config = loadTeamConfig(tmpDir);
+    assert.strictEqual(config.status, 'paused');
+  });
+
+  it('updates status from paused to active', () => {
+    saveTeamConfig(tmpDir, { team_name: 'test', status: 'paused', members: [] });
+    setTeamStatus(tmpDir, 'active');
+    const config = loadTeamConfig(tmpDir);
+    assert.strictEqual(config.status, 'active');
+  });
+
+  it('returns false when no config exists', () => {
+    const dir = makeTmpDir();
+    try {
+      assert.strictEqual(setTeamStatus(dir, 'paused'), false);
+    } finally {
+      rmTmpDir(dir);
+    }
   });
 });
 
