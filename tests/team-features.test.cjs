@@ -9,6 +9,12 @@ const {
   loadTeamConfig,
   saveTeamConfig,
   isTeamActive,
+  isTeamPaused,
+  isTeamPausing,
+  setTeamStatus,
+  saveTeamHandoff,
+  loadTeamHandoff,
+  clearTeamHandoff,
   getTeamName,
   detectCICD,
   detectUIFramework,
@@ -882,5 +888,68 @@ describe('Tính năng: Kiểm tra file command team', () => {
     const noiDung = fs.readFileSync(duongDanCmd, 'utf8');
     assert.ok(noiDung.includes('TeamCreate'));
     assert.ok(noiDung.includes('TeamDelete'));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Pause/Resume cycle
+// ---------------------------------------------------------------------------
+
+describe('team pause/resume cycle', () => {
+  let tmpDir;
+  before(() => { tmpDir = taoThuMucTam(); });
+  after(() => { xoaThuMucTam(tmpDir); });
+
+  it('full cycle: active → pausing → paused → active', () => {
+    // Start with active team
+    saveTeamConfig(tmpDir, {
+      team_name: 'cycle-test',
+      status: 'active',
+      members: [{ role: 'scrum-master', name: 'scrum-master', model: 'opus' }],
+    });
+    assert.strictEqual(isTeamActive(tmpDir), true);
+    assert.strictEqual(isTeamPaused(tmpDir), false);
+
+    // User requests pause → pausing
+    setTeamStatus(tmpDir, 'pausing');
+    assert.strictEqual(isTeamPausing(tmpDir), true);
+    assert.strictEqual(isTeamActive(tmpDir), false);
+
+    // Graceful stop complete → save handoff → paused
+    const handoff = {
+      pausedAt: new Date().toISOString(),
+      workflow: 'run',
+      currentPhase: 2,
+      currentStep: 'execute',
+      completedSteps: ['research', 'plan'],
+      pendingSteps: ['execute', 'verify'],
+      agentAssignments: {},
+      reason: 'user requested pause',
+    };
+    saveTeamHandoff(tmpDir, handoff);
+    setTeamStatus(tmpDir, 'paused');
+    assert.strictEqual(isTeamPaused(tmpDir), true);
+
+    // Verify handoff persisted
+    const loaded = loadTeamHandoff(tmpDir);
+    assert.strictEqual(loaded.currentPhase, 2);
+    assert.strictEqual(loaded.currentStep, 'execute');
+
+    // Resume → active
+    setTeamStatus(tmpDir, 'active');
+    clearTeamHandoff(tmpDir);
+    assert.strictEqual(isTeamActive(tmpDir), true);
+    assert.strictEqual(loadTeamHandoff(tmpDir), null);
+  });
+
+  it('buildTeamContext reflects paused state', () => {
+    saveTeamConfig(tmpDir, {
+      team_name: 'ctx-test',
+      status: 'paused',
+      members: [{ role: 'developer', name: 'dev', model: 'sonnet' }],
+    });
+    const ctx = buildTeamContext(tmpDir);
+    assert.ok(ctx.includes('paused'));
+    assert.ok(ctx.includes('ctx-test'));
   });
 });
