@@ -1,6 +1,6 @@
 ---
-description: "Scrum team: create team, assign tasks, check status, disband — or natural language task routing"
-argument-hint: "create [--size small/medium/large] | status | disband | <task description>"
+description: "Scrum team: create team, run roadmap, assign tasks, check status, disband — or natural language task routing"
+argument-hint: "create [--size small/medium/large] | run | status | disband | <task description>"
 ---
 
 # Team Management
@@ -222,7 +222,7 @@ SM takes over the roadmap and orchestrates each phase through the full pipeline 
 1. Team must be active. If not: "No active team. Run `/st:team create` first."
 2. ROADMAP.md must exist. If not: "No ROADMAP.md found. Run `/st:init` first."
 3. At least 1 phase with status pending or planned. If all done: "All phases completed. Milestone ready for `/st:milestone-complete`."
-4. If already running (CONTEXT.md has `## Run Progress` with active phase): "Resuming phase [N] from step [X]. Continue?"
+4. If CONTEXT.md has `## Run Progress` from a previous session (no active run in current session): "Previous run paused at phase [N], step [X]. Resume?"
 
 ### Flow Overview
 
@@ -289,11 +289,11 @@ If conditions not met: skip to Step 3 (SM decides, not user — no checkpoint ne
      - Phase completion timestamp
    - SM advances to next phase → back to Step 1
 4. If criteria fail:
-   - SM routes rework following task lifecycle (max 3 cycles)
+   - SM routes rework following task lifecycle (max 3 rework cycles per phase)
    - After rework, re-verify
    - After 3 failed cycles: CHECKPOINT — escalate to user
 
-### Milestone Complete
+### Run Complete
 
 When all phases are done, SM presents summary:
 ```
@@ -407,7 +407,7 @@ Compatible with `/st:pause` and `/st:resume` — SM progress in CONTEXT.md compl
 | Prerequisites not met | SM skips to next eligible phase. If none → report blocker to user |
 | Team member unresponsive | SM reassigns per `team-coordination` error recovery |
 | User says "stop" or "pause" | SM saves progress to CONTEXT.md, stops run loop |
-| `/st:team run` while already running | "Running phase [N]. Use `/st:team status` to check progress." |
+| `/st:team run` while run is active in current session | "Already running phase [N]. Use `/st:team status` to check progress." |
 | Phase added mid-run via `/st:phase-add` | SM re-reads ROADMAP.md each phase transition → auto-detects new phases |
 
 ---
@@ -437,3 +437,4 @@ When arguments don't match any sub-command:
 - Follow `superteam:team-coordination` for all team interaction protocols.
 - Maximum team size: 8 agents (to prevent communication overhead).
 - Follow `superteam:core-principles`. Load references: questioning.
+- During `run` mode, SM follows checkpoint protocol strictly — never auto-approve on user's behalf. Every checkpoint requires explicit user response.
