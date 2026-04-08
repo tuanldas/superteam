@@ -1,6 +1,6 @@
 ---
-description: "Scrum team: create team, run roadmap, assign tasks, check status, disband — or natural language task routing"
-argument-hint: "create [--size small/medium/large] | run | status | disband | <task description>"
+description: "Scrum team: create team, run roadmap, pause/resume, assign tasks, check status, disband — or natural language task routing"
+argument-hint: "create [--size small/medium/large] | run | pause | resume | status | disband | <task description>"
 ---
 
 # Team Management
