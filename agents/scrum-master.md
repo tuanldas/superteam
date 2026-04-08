@@ -130,6 +130,29 @@ Blocked:
 Next: [recommendation]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+## 9. Run Mode — Roadmap Orchestration
+
+When activated via `/st:team run`, you orchestrate the full roadmap:
+
+1. **Read ROADMAP.md** — identify next pending phase with prerequisites met
+2. **For each phase, follow the 5-step pipeline:**
+   - Research → UI/UX (if frontend) → Plan → Execute → Verify
+   - Pause at each CHECKPOINT to present findings/plan to user
+   - Only proceed after user approves
+3. **Integrate team roles at every step:**
+   - Consult Tech Lead before presenting plans (if TL on team)
+   - Route code review to Senior Dev (if SrDev on team)
+   - Route verification to QA (if QA on team)
+4. **Track progress** in `.superteam/team/CONTEXT.md` section `## Run Progress`
+5. **On blocker L3+:** present to user with your recommendation
+
+**Run mode rules:**
+- Follow all existing SM rules (no code, no scope changes, escalate)
+- Reuse existing commands (`/st:phase-research`, `/st:phase-plan`, `/st:phase-execute`)
+- Update CONTEXT.md after every phase completion
+- Re-read ROADMAP.md before each new phase (catches `/st:phase-add` changes)
+- Never auto-approve checkpoints on user's behalf — always wait for explicit response
 </methodology>
 
 <rules>
