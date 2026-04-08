@@ -12,6 +12,9 @@ const {
   isTeamPaused,
   isTeamPausing,
   setTeamStatus,
+  saveTeamHandoff,
+  loadTeamHandoff,
+  clearTeamHandoff,
   getTeamName,
   detectCICD,
   detectUIFramework,
@@ -523,6 +526,93 @@ describe('countSourceFiles', () => {
     } finally {
       rmTmpDir(dir);
     }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// saveTeamHandoff / loadTeamHandoff
+// ---------------------------------------------------------------------------
+
+describe('saveTeamHandoff + loadTeamHandoff', () => {
+  let tmpDir;
+  before(() => { tmpDir = makeTmpDir(); });
+  after(() => { rmTmpDir(tmpDir); });
+
+  it('returns null when no handoff exists', () => {
+    assert.strictEqual(loadTeamHandoff(tmpDir), null);
+  });
+
+  it('round-trips handoff data', () => {
+    const handoff = {
+      pausedAt: '2026-04-08T10:30:00Z',
+      workflow: 'run',
+      currentPhase: 3,
+      currentStep: 'execute',
+      completedSteps: ['research', 'plan'],
+      pendingSteps: ['execute', 'verify'],
+      agentAssignments: {
+        developer: { task: 'implement auth', progress: 'in_progress' },
+      },
+      reason: 'user requested pause',
+    };
+    saveTeamHandoff(tmpDir, handoff);
+    const loaded = loadTeamHandoff(tmpDir);
+    assert.deepStrictEqual(loaded, handoff);
+  });
+
+  it('creates TEAM-HANDOFF.md alongside JSON', () => {
+    const handoff = {
+      pausedAt: '2026-04-08T10:30:00Z',
+      workflow: 'run',
+      currentPhase: 2,
+      currentStep: 'plan',
+      completedSteps: ['research'],
+      pendingSteps: ['plan', 'execute', 'verify'],
+      agentAssignments: {},
+      reason: 'user requested pause',
+    };
+    saveTeamHandoff(tmpDir, handoff);
+    const mdPath = path.join(tmpDir, '.superteam', 'team', 'TEAM-HANDOFF.md');
+    assert.ok(fs.existsSync(mdPath));
+    const content = fs.readFileSync(mdPath, 'utf-8');
+    assert.ok(content.includes('Phase 2'));
+    assert.ok(content.includes('plan'));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// clearTeamHandoff
+// ---------------------------------------------------------------------------
+
+describe('clearTeamHandoff', () => {
+  let tmpDir;
+  before(() => { tmpDir = makeTmpDir(); });
+  after(() => { rmTmpDir(tmpDir); });
+
+  it('removes both handoff files', () => {
+    saveTeamHandoff(tmpDir, {
+      pausedAt: '2026-04-08T10:30:00Z',
+      workflow: 'run',
+      currentPhase: 1,
+      currentStep: 'research',
+      completedSteps: [],
+      pendingSteps: ['research'],
+      agentAssignments: {},
+      reason: 'test',
+    });
+    const jsonPath = path.join(tmpDir, '.superteam', 'team', 'TEAM-HANDOFF.json');
+    const mdPath = path.join(tmpDir, '.superteam', 'team', 'TEAM-HANDOFF.md');
+    assert.ok(fs.existsSync(jsonPath));
+    assert.ok(fs.existsSync(mdPath));
+
+    clearTeamHandoff(tmpDir);
+
+    assert.ok(!fs.existsSync(jsonPath));
+    assert.ok(!fs.existsSync(mdPath));
+  });
+
+  it('does not throw when files do not exist', () => {
+    assert.doesNotThrow(() => clearTeamHandoff(tmpDir));
   });
 });
 

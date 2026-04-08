@@ -191,6 +191,90 @@ function setTeamStatus(rootDir, newStatus) {
 }
 
 /**
+ * Path to TEAM-HANDOFF.json.
+ */
+function teamHandoffPath(rootDir) {
+  return path.join(teamDir(rootDir), 'TEAM-HANDOFF.json');
+}
+
+/**
+ * Path to TEAM-HANDOFF.md.
+ */
+function teamHandoffMdPath(rootDir) {
+  return path.join(teamDir(rootDir), 'TEAM-HANDOFF.md');
+}
+
+/**
+ * Save team handoff state (JSON + human-readable Markdown).
+ *
+ * @param {string} rootDir
+ * @param {Object} handoff - Handoff data object
+ */
+function saveTeamHandoff(rootDir, handoff) {
+  const dir = teamDir(rootDir);
+  fs.mkdirSync(dir, { recursive: true });
+
+  // JSON
+  fs.writeFileSync(
+    teamHandoffPath(rootDir),
+    JSON.stringify(handoff, null, 2) + '\n',
+    'utf-8',
+  );
+
+  // Markdown
+  const assignments = handoff.agentAssignments || {};
+  const agentLines = Object.entries(assignments)
+    .map(([name, info]) => `- **${name}**: ${info.task || 'idle'} (${info.progress})`)
+    .join('\n');
+
+  const md = [
+    '# Team Handoff',
+    '',
+    `**Paused at:** ${handoff.pausedAt}`,
+    `**Workflow:** ${handoff.workflow}`,
+    `**Reason:** ${handoff.reason}`,
+    '',
+    '## Progress',
+    '',
+    `**Phase ${handoff.currentPhase}** — step: ${handoff.currentStep}`,
+    '',
+    `- Completed: ${handoff.completedSteps.join(', ') || 'none'}`,
+    `- Pending: ${handoff.pendingSteps.join(', ') || 'none'}`,
+    '',
+    '## Agent Assignments',
+    '',
+    agentLines || '(no agents assigned)',
+    '',
+    '## Resume',
+    '',
+    'Run `/st:team resume` to continue.',
+    '',
+  ].join('\n');
+
+  fs.writeFileSync(teamHandoffMdPath(rootDir), md, 'utf-8');
+}
+
+/**
+ * Load team handoff state. Returns null if not found.
+ */
+function loadTeamHandoff(rootDir) {
+  return readJsonSafe(teamHandoffPath(rootDir));
+}
+
+/**
+ * Remove TEAM-HANDOFF.json and TEAM-HANDOFF.md.
+ */
+function clearTeamHandoff(rootDir) {
+  for (const filePath of [teamHandoffPath(rootDir), teamHandoffMdPath(rootDir)]) {
+    try {
+      fs.unlinkSync(filePath);
+    } catch {
+      // File doesn't exist, fine
+    }
+  }
+}
+
+/**
  * Derive team name from project root directory.
  */
 function getTeamName(rootDir) {
@@ -450,6 +534,9 @@ module.exports = {
   isTeamPaused,
   isTeamPausing,
   setTeamStatus,
+  saveTeamHandoff,
+  loadTeamHandoff,
+  clearTeamHandoff,
   getTeamName,
   detectCICD,
   detectUIFramework,
