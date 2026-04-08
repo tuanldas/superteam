@@ -357,6 +357,59 @@ Every checkpoint uses this format:
 └─────────────────────────────────────────┘
 ```
 
+### Team Role Integration in Execute
+
+When team is active, the execute pipeline uses team roles instead of generic executors:
+
+| Wave Engine Step | Solo Mode | Team Mode |
+|---|---|---|
+| Task implementation | executor agent (opus) | Developer or Senior Dev (by complexity) |
+| Checkpoint review | reviewer agent (generic) | Senior Dev review + QA verify |
+| Blocker handling | orchestrator auto-fix L1-L2 | SM routes via deviation protocol |
+
+**Role adaptation for small teams:**
+Apply the task-level role skipping table from `superteam:team-coordination`. If a role is missing:
+- No Tech Lead → SM skips TL review, presents plan directly to user
+- No Senior Dev → Developer self-reviews, QA is primary quality gate
+- No QA → Developer self-verifies (build + tests pass)
+
+### State Management
+
+SM tracks run progress in `.superteam/team/CONTEXT.md` (existing file, SM is sole writer):
+
+```markdown
+## Run Progress
+Phase: [N] — [name]
+Step: [research/ui-design/plan/execute/verify]
+Started: [ISO timestamp]
+
+## Phase History
+- Phase 1 — [name]: done ([date])
+- Phase 2 — [name]: done ([date])
+```
+
+**Pause & Resume:**
+
+| Scenario | Behavior |
+|---|---|
+| Session closes mid-run | SM writes progress to CONTEXT.md before shutdown |
+| Next `/st:team run` | SM reads CONTEXT.md → detects in-progress phase → asks "Resume phase [N] from step [X]?" |
+| `/st:team disband` | Run progress archived with backlog per existing disband flow |
+
+Compatible with `/st:pause` and `/st:resume` — SM progress in CONTEXT.md complements handoff files, no conflict.
+
+### Edge Cases
+
+| Scenario | Behavior |
+|---|---|
+| ROADMAP.md not found | Error: "No ROADMAP.md. Run `/st:init` first." |
+| All phases done | "All phases completed. Milestone ready for `/st:milestone-complete`." |
+| Prerequisites not met | SM skips to next eligible phase. If none → report blocker to user |
+| Team member unresponsive | SM reassigns per `team-coordination` error recovery |
+| User says "stop" or "pause" | SM saves progress to CONTEXT.md, stops run loop |
+| `/st:team run` while already running | "Running phase [N]. Use `/st:team status` to check progress." |
+| Phase added mid-run via `/st:phase-add` | SM re-reads ROADMAP.md each phase transition → auto-detects new phases |
+
 ---
 
 ## Natural Language Routing
