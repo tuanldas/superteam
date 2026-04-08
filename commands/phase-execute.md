@@ -58,6 +58,7 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
 
 7. **Wave execution**
    - **You are the ORCHESTRATOR. Dispatch agents — do NOT write implementation code yourself.**
+   - **Zero-exception rule:** Even for single-line changes, config edits, or "trivial" tasks — dispatch an agent. The ONLY action you perform directly is updating plan checkboxes after agents complete.
    - For each wave: make one `Agent()` call per task — ALL calls in the SAME message (foreground parallel)
    - Agent type: `executor` (model: opus)
    - Each Agent() prompt includes:
@@ -80,6 +81,9 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
    | "These are just file writes" | Agents handle full read→verify→commit cycle with fresh context |
    | "Agent overhead isn't worth it" | Your context gets cluttered. Agents get clean 200k each. |
    | "Let me just do this one task" | One becomes all. Dispatch EVERY task. |
+   | "It's just a config/env change" | Config mistakes cascade. Agent verifies in isolation. |
+   | "The agent will just copy what I'd write" | Then it costs nothing to dispatch. But if you're wrong, it costs everything. |
+   | "I already know the solution" | Knowing ≠ implementing correctly. Agent reads fresh, catches what you miss. |
 
 8. **Checkpoint review**
    - Between waves: run tests + quick review
@@ -87,8 +91,15 @@ Execute the plan for a phase in the roadmap. Reuses the execution engine from `/
    - Follow `superteam:verification` for checkpoint validation
 
 9. **Deviation handling**
-   - Level 1-3 (auto-fix): bugs, missing imports, minor gaps
-   - Level 4 (stop and ask): architectural changes, scope changes
+   - Level 1 (Bug found): auto-fix, no need to ask
+     - Examples: typo in variable name, off-by-one error, null check missing
+   - Level 2 (Missing critical): auto-fix (error handling, validation, auth guards)
+     - Examples: try/catch around API call, input sanitization, auth middleware on route
+   - Level 3 (Blocking issue): auto-fix (missing deps, wrong types, broken imports)
+     - Examples: `npm install` missing package, fix TypeScript type error, fix circular import
+   - Level 4 (Architectural change): STOP and ask user
+     - Examples: new DB table/column, new API endpoint, new package/dependency, change file structure, change auth strategy, add new service
+     - **When in doubt between L3 and L4, choose L4.** False stops are cheap; wrong auto-fixes are expensive.
    - Blocker: suggest `/st:phase-plan --replan`
 
 ### Post-Execution (phase-specific)

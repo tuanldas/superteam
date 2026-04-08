@@ -174,4 +174,4 @@ Reason:       [explanation]
 - Goal-backward must_haves are derived BEFORE presenting the plan to ensure coverage.
 - Image input accepted at any point.
 - For `--replan`: load existing plan + blocker context, assess impact on remaining tasks, let user decide.
-- Follow `superteam:core-principles`. Load references: questioning.
+- Follow `superteam:core-principles`. Load references: questioning, decision-continuity.

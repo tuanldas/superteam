@@ -111,4 +111,4 @@ Debug a simple bug fast. Runs in main context (no separate agent), no session fi
 - Always write to knowledge base on completion, even for simple bugs.
 - Always add a failing test before implementing the fix.
 - Follow `superteam:atomic-commits` for the fix commit.
-- Follow `superteam:core-principles`. Load references: questioning.
+- Follow `superteam:core-principles`. Load references: questioning, decision-continuity.

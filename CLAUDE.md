@@ -14,7 +14,7 @@ Claude Code plugin: customizable agents, skills, and commands.
 ```
 superteam/
 ├── agents/          # 22 agent definitions (.md) — specialized roles (developer, reviewer, planner...)
-├── commands/        # 28 command definitions (.md) — user-facing workflows (/debug, /plan, /execute...)
+├── commands/        # 30 command definitions (.md) — user-facing workflows (/debug, /plan, /execute...)
 ├── skills/          # 14 skill directories — reusable knowledge & behavior (SKILL.md + references/)
 ├── core/            # JS modules (.cjs) — runtime logic (config, decisions, detector, team, template, utils)
 ├── hooks/           # Session hooks (session-start.cjs, hooks.json)

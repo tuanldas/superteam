@@ -37,7 +37,7 @@ Layered code review: linting first, then 1 reviewer agent covering 13 domains, c
      - User declines: skip, proceed to layer 2
 
 4. **Layer 2: Reviewer Agent — 13 Domains**
-   - Spawn 1 reviewer agent (Opus). Agent tự select relevant domains từ 13 available.
+   - Spawn 1 reviewer agent (Opus). Agent selects relevant domains from the 13 available.
    - Override with `--only domain1,domain2` to force specific domains
    - Follow `superteam:requesting-code-review` for review methodology
 

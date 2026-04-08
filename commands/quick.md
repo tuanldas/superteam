@@ -79,10 +79,10 @@ Flags are composable: `/st:quick --discuss --full add dark mode toggle`
 ## Rules
 
 - Target 1-3 tasks MAXIMUM. If task needs more, suggest `/st:plan` instead.
-- NO user approval for the plan. User already knows what they want.
+- NO user approval for the plan — but scope MUST stay within 1-3 tasks. If analysis reveals 4+ tasks, STOP and suggest `/st:plan` instead of silently expanding scope.
 - Always create tracking directory and PLAN.md even for single-task execution.
 - Commit messages follow conventional commits format from config.
-- Follow `superteam:core-principles`. Load references: questioning.
+- Follow `superteam:core-principles`. Load references: questioning, decision-continuity.
 
 ## When to suggest `/st:plan` instead
 

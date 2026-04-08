@@ -247,4 +247,4 @@ Debug complex bugs systematically. Persistent debug session files survive contex
 - Knowledge base matches are candidates only, never confirmed diagnoses.
 - Auto-checkpoint when context is nearly full. Never lose progress.
 - Follow `superteam:scientific-debugging` for investigation discipline.
-- Follow `superteam:core-principles`. Load references: visual-first, questioning.
+- Follow `superteam:core-principles`. Load references: visual-first, questioning, decision-continuity.

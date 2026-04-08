@@ -127,4 +127,4 @@ When docs already exist:
 - Markdown docs MUST include AI-drafted guides (getting started, auth, errors), not just raw reference.
 - In update mode, always show diff before writing changes.
 - Follow `superteam:project-awareness` for codebase context.
-- Follow `superteam:core-principles`. Load references: questioning.
+- Follow `superteam:core-principles`. Load references: visual-first, questioning.

@@ -67,7 +67,7 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
      - Make abstract concrete: "Walk me through using this"
      - 4 question types: Motivation, Concreteness, Clarification, Success
      - NEVER: checklist walking, canned questions, interrogation, rushing, shallow acceptance, premature constraints, multiple questions in one message
-   - Checkpoint after 15 exchanges (or >= 4/5 areas covered):
+   - Checkpoint when >= 4/5 areas covered (adaptive — do NOT pad questions to reach a number):
      - Present SCOPE SUMMARY (full format, 10 sections):
        1. WHAT WE KNOW — WHO, WHAT, EXIST, DONE, CONSTRAINTS from answers
        2. PROJECT OVERVIEW — narrative (2-3 sentences) + functional areas table (effort S/M/L/XL) + user roles table
@@ -147,67 +147,18 @@ Full project setup: configure preferences, auto-detect tech stack, deep question
    - Do not ask additional context questions — all context already gathered from steps 2-5
 
    **6.2. Propose each dimension one at a time**
-   - **ONE dimension per message. Wait for user response before proposing the next.**
-   - **NEVER batch multiple dimensions into one message. NEVER present a "full proposal" upfront.**
-     This is the user's chance to choose fonts, colors, spacing etc. according to their taste.
-     Skipping this interaction removes their agency over the design.
-   - Order: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
-
-   **VISUAL-FIRST REQUIRED for EVERY dimension proposal:**
-   Read `core-principles/references/visual-first.md` before proposing the first dimension.
-   For EACH dimension, follow this sequence (NOT text-only):
-     ```
-     1. Create HTML at .superteam/preview/<dimension>.html showing 2-4 options as side-by-side visual cards
-     2. Serve: python3 -m http.server [port] -d .superteam/preview
-     3. browser_navigate → browser_take_screenshot
-     4. Present screenshot + text labels + recommendation:
-        [DIMENSION]: Recommend [option] — [why]. Confidence: High/Med/Low.
-     5. Ask: "Which do you prefer?" → user sees options visually BEFORE choosing
-     ```
-   Text-only proposals for design dimensions = VIOLATION. "Clean & Minimal" means nothing until the user SEES it rendered.
-   If Playwright unavailable: provide URL for manual viewing + flag reduced confidence.
-   - If user approves → next dimension
-   - If user adjusts → drill-down inline (1 focused question: fonts: 3-5 candidates, colors: 2-3 palette options)
-   - Coherence check after each dimension vs previously approved dimensions:
-     - Mismatch → nudge once, explain why unusual, offer alternative
-     - Always accept user decision, never block, never ask again
-   - Adaptive: if user's answer on one dimension already implies another → skip or pre-fill with confirmation
-   - After each dimension approved → record in `.superteam/decisions.json` (follow `core-principles/references/decision-continuity.md`)
-   - If init research has landscape data → use to inform each recommendation
-   - If not → use built-in design knowledge
-   - Apply full font rules (blacklist, overused warnings) and AI slop anti-patterns from `/st:design-system`
+   - Follow the full `/st:design-system` flow (step 5) for proposing dimensions.
+   - Key rules carried from `/st:design-system`:
+     - ONE dimension per message, VISUAL-FIRST mandatory, order: AESTHETIC → DECORATION → TYPOGRAPHY → COLOR → SPACING → LAYOUT → MOTION
+     - After each dimension approved → record in `.superteam/decisions.json`
+   - Init-specific additions:
+     - If init research has landscape data → use to inform each recommendation
+     - If not → use built-in design knowledge
 
    **6.3. Full summary + Preview**
-   - Summary and preview MUST use approved values from DECISIONS block verbatim — do NOT re-generate or re-propose
-   - After all 7 dimensions approved → present compact summary:
-     ```
-     ┌──────────────────────────────────────────────┐
-     │ DESIGN SYSTEM SUMMARY                        │
-     ├──────────────────────────────────────────────┤
-     │ AESTHETIC: [approved value]                   │
-     │ DECORATION: [approved value]                  │
-     │ TYPOGRAPHY: [approved value]                  │
-     │ COLOR: [approved value]                       │
-     │ SPACING: [approved value]                     │
-     │ LAYOUT: [approved value]                      │
-     │ MOTION: [approved value]                      │
-     ├──────────────────────────────────────────────┤
-     │ SAFE CHOICES: [2-3 decisions matching norms]  │
-     │ RISKS: [2-3 departures + rationale]           │
-     ├──────────────────────────────────────────────┤
-     │ AI SLOP CHECK: [flagged patterns, if any]     │
-     └──────────────────────────────────────────────┘
-     ```
+   - Follow `/st:design-system` steps 6-7 (summary + coherence preview).
+   - Summary MUST use approved values from DECISIONS block verbatim — do NOT re-generate or re-propose.
    - User options: Approve all / Adjust [section] / Start over
-   - Adjust [section] → revisit that dimension (1 question), then update summary
-   - Start over → return to 6.2 from AESTHETIC
-   - Playwright preview if available:
-     - Generate self-contained HTML preview page
-     - Load approved fonts, apply approved color palette
-     - Realistic mockups by project type (dashboard/marketing/admin)
-     - Light/dark mode toggle, responsive
-     - User feedback → adjust → regenerate loop
-   - Playwright unavailable → skip preview, text-based only
 
    **6.4. Save and commit**
    - Cross-check: DESIGN-SYSTEM.md content MUST match DECISIONS block values
