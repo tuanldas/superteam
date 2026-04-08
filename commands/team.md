@@ -308,6 +308,55 @@ When all phases are done, SM presents summary:
 └─────────────────────────────────────────┘
 ```
 
+### Checkpoint Protocol
+
+Every checkpoint uses this format:
+
+```
+┌─────────────────────────────────────────┐
+│ ST > TEAM CHECKPOINT                    │
+│─────────────────────────────────────────│
+│ Phase: [N] — [name]                     │
+│ Step:  [Research / UI Design / Plan]    │
+│─────────────────────────────────────────│
+│ Summary:                                │
+│   • [key point 1]                       │
+│   • [key point 2]                       │
+│   • [key point 3]                       │
+│                                         │
+│ Team input:                             │
+│   TL: [opinion if TL on team]           │
+│   QA: [concerns if QA on team]          │
+│─────────────────────────────────────────│
+│ [approve] [adjust]                      │
+└─────────────────────────────────────────┘
+```
+
+**Checkpoint actions (NO skip option):**
+
+| Action | Behavior |
+|--------|----------|
+| `approve` | SM continues to next step |
+| `adjust` | User provides feedback → SM adjusts → reruns the step → presents again |
+
+**Blocker checkpoint** (during execute, Level 3+):
+
+```
+┌─────────────────────────────────────────┐
+│ ST > TEAM BLOCKER                       │
+│─────────────────────────────────────────│
+│ Phase: [N] — [name]                     │
+│ Task:  #[id] — [description]            │
+│ Level: [3/4]                            │
+│─────────────────────────────────────────│
+│ Issue: [blocker description]            │
+│ Impact: [consequences if unresolved]    │
+│ SM recommendation: [proposed solution]  │
+│─────────────────────────────────────────│
+│ [accept recommendation] [provide guidance]│
+└─────────────────────────────────────────┘
+```
+
 ---
 
 ## Natural Language Routing
