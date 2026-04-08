@@ -151,6 +151,44 @@ Quản lý Scrum team gồm AI agents. Tạo team theo project context (type + s
 3. User monitors via /st:team status
 ```
 
+### run
+
+```
+1. Check preconditions
+   - Team active? → if not: "No active team. /st:team create"
+   - ROADMAP.md exists? → if not: "No ROADMAP.md. /st:init first"
+   - Pending phases? → if none: "All phases done. /st:milestone-complete"
+   - Previous run paused? → "Resume phase [N] from step [X]?"
+    ↓
+2. For each phase (pending, prerequisites met):
+    ↓
+   2a. Research
+       SM dispatches /st:phase-research
+       → CHECKPOINT: present findings → user approve/adjust
+    ↓
+   2b. UI/UX Design (if frontend phase + UI framework detected)
+       SM dispatches /st:ui-design
+       → CHECKPOINT: present UI spec → user approve/adjust
+    ↓
+   2c. Plan
+       SM dispatches /st:phase-plan
+       TL reviews (if on team)
+       → CHECKPOINT: present plan + TL review → user approve/adjust
+    ↓
+   2d. Execute
+       SM dispatches /st:phase-execute
+       QA + SrDev at wave checkpoints (if on team)
+       Blocker L3+ → CHECKPOINT: escalate to user
+    ↓
+   2e. Verify & Advance
+       QA final verification (if on team)
+       SM updates ROADMAP → done
+       SM updates CONTEXT.md
+       → next phase
+    ↓
+3. All phases done → milestone summary
+```
+
 ## Tích hợp
 
 ### Team-Coordination Skill
