@@ -18,10 +18,11 @@ Parse arguments to determine action:
 | `create` or `create --size <size>` | Create a new team |
 | `status` | Show team status |
 | `disband` | Graceful shutdown |
+| `run` | Orchestrate roadmap phases with team |
 | *(empty)* | Show help if no team active, show status if team active |
 | *(anything else)* | Natural language → route to Scrum Master |
 
-**Routing disambiguation:** Match sub-commands (`create`, `status`, `disband`) as exact first-word match ONLY. If the first word is `create` but followed by a task description (e.g., "create a login page"), route to Scrum Master — do NOT trigger the `create` sub-command.
+**Routing disambiguation:** Match sub-commands (`create`, `status`, `disband`, `run`) as exact first-word match ONLY. If the first word is `create` but followed by a task description (e.g., "create a login page"), route to Scrum Master — do NOT trigger the `create` sub-command. Similarly, if the first word is "run" but followed by a task description (e.g., "run the tests"), route to Scrum Master — do NOT trigger the "run" sub-command.
 
 ---
 
