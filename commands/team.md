@@ -472,6 +472,58 @@ Freeze the team and stop any running workflow at the nearest checkpoint.
 
 ---
 
+## resume — Resume Paused Team
+
+Resume a paused team with selective options.
+
+1. **Check team status**
+   - Read `.superteam/team/config.json`
+   - If status is not `"paused"`: "Team is not paused. Current status: [status]."
+   - If status is `"paused"`: proceed
+
+2. **Load handoff state**
+   - Read `.superteam/team/TEAM-HANDOFF.json`
+   - If handoff exists: display summary
+   - If handoff missing: fallback to `.superteam/team/CONTEXT.md` for state reconstruction
+
+3. **Check for codebase changes**
+   - Compare current HEAD commit with `pausedAt` timestamp
+   - If new commits since pause:
+     ```
+     ⚠ [N] commits since team was paused.
+     Review changes before resuming? [yes / skip]
+     ```
+   - If "yes": show `git log --oneline` since pause timestamp
+
+4. **Present resume options**
+   ```
+   ┌─────────────────────────────────────────┐
+   │ ST > RESUME TEAM                        │
+   │─────────────────────────────────────────│
+   │ Paused: [timestamp] ([duration] ago)    │
+   │ Phase: [N] — [name]                     │
+   │ Step: [current step]                    │
+   │ Completed: [steps]                      │
+   │ Pending: [steps]                        │
+   │─────────────────────────────────────────│
+   │ Options:                                │
+   │  [1] Resume all — unfreeze + continue   │
+   │  [2] Resume team only — unfreeze only   │
+   └─────────────────────────────────────────┘
+   ```
+
+5. **Execute chosen option**
+   - **Resume all:**
+     1. Set `config.json` status → `"active"`
+     2. Clear handoff files (delete `TEAM-HANDOFF.json` + `TEAM-HANDOFF.md`)
+     3. Invoke `team run` — the existing run resumption logic in CONTEXT.md will pick up where it left off
+   - **Resume team only:**
+     1. Set `config.json` status → `"active"`
+     2. Clear handoff files
+     3. Report: "Team active. Run `/st:team run` to continue workflow, or use agents individually."
+
+---
+
 ## Natural Language Routing
 
 When arguments don't match any sub-command:
