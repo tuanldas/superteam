@@ -495,6 +495,21 @@ describe('buildTeamContext', () => {
     assert.ok(context.includes('2 members'));
     assert.ok(context.includes('scrum-master'));
   });
+
+  it('returns context string with paused indicator when team is paused', () => {
+    saveTeamConfig(tmpDir, {
+      team_name: 'test-team',
+      status: 'paused',
+      members: [
+        { role: 'scrum-master', name: 'scrum-master' },
+        { role: 'developer', name: 'dev' },
+      ],
+    });
+    const context = buildTeamContext(tmpDir);
+    assert.ok(context !== null);
+    assert.ok(context.includes('paused'));
+    assert.ok(context.includes('test-team'));
+  });
 });
 
 // ---------------------------------------------------------------------------

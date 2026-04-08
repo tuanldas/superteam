@@ -511,16 +511,19 @@ function assembleTeam(rootDir, detectionResult, config, overrideSize) {
  */
 function buildTeamContext(rootDir) {
   const config = loadTeamConfig(rootDir);
-  if (!config || config.status !== 'active') {
+  if (!config || config.status === 'disbanded') {
     return null;
   }
+
+  if (!config.status) return null;
 
   const memberCount = config.members ? config.members.length : 0;
   const roles = config.members
     ? config.members.map(m => m.name).join(', ')
     : 'none';
 
-  return `Active team: ${config.team_name} (${memberCount} members: ${roles})`;
+  const statusLabel = config.status === 'active' ? '' : ` [${config.status}]`;
+  return `Active team: ${config.team_name}${statusLabel} (${memberCount} members: ${roles})`;
 }
 
 // ---------------------------------------------------------------------------
