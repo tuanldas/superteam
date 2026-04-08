@@ -214,6 +214,29 @@ Parse arguments to determine action:
 
 ---
 
+## run — Orchestrate Roadmap Phases
+
+SM takes over the roadmap and orchestrates each phase through the full pipeline with team checkpoints. Semi-autonomous: team runs independently but pauses at key points for user approval.
+
+**Preconditions:**
+1. Team must be active. If not: "No active team. Run `/st:team create` first."
+2. ROADMAP.md must exist. If not: "No ROADMAP.md found. Run `/st:init` first."
+3. At least 1 phase with status pending or planned. If all done: "All phases completed. Milestone ready for `/st:milestone-complete`."
+4. If already running (CONTEXT.md has `## Run Progress` with active phase): "Resuming phase [N] from step [X]. Continue?"
+
+### Flow Overview
+
+```
+For each phase (pending, prerequisites met):
+  STEP 1: Research     → /st:phase-research  → CHECKPOINT
+  STEP 2: UI/UX Design → /st:ui-design       → CHECKPOINT (conditional)
+  STEP 3: Plan         → /st:phase-plan      → CHECKPOINT
+  STEP 4: Execute      → /st:phase-execute   → CHECKPOINT (on blocker only)
+  STEP 5: Verify       → update ROADMAP      → next phase
+```
+
+---
+
 ## Natural Language Routing
 
 When arguments don't match any sub-command:
