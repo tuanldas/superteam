@@ -237,6 +237,34 @@ For each phase (pending, prerequisites met):
   STEP 5: Verify       → update ROADMAP      → next phase
 ```
 
+### Pause Check (every step boundary)
+
+Before starting each step (Research, UI/UX Design, Plan, Execute, Verify), SM MUST:
+
+1. Read `.superteam/team/config.json`
+2. If `status === "pausing"`:
+   - Snapshot current run progress to `TEAM-HANDOFF.json` + `TEAM-HANDOFF.md`:
+     - `currentPhase`: current phase number
+     - `currentStep`: the step that was ABOUT to start (not the one that just finished)
+     - `completedSteps`: steps already done for this phase
+     - `pendingSteps`: steps remaining including current
+     - `agentAssignments`: current TaskList assignments
+   - Set `config.json` status → `"paused"`
+   - Display pause confirmation and STOP the run loop:
+     ```
+     ┌─────────────────────────────────────────┐
+     │ ST > TEAM PAUSED (graceful stop)        │
+     │─────────────────────────────────────────│
+     │ Stopped before: [step name]             │
+     │ Phase: [N] — [name]                     │
+     │ Completed steps: [list]                 │
+     │                                         │
+     │ Resume: /st:team resume                 │
+     └─────────────────────────────────────────┘
+     ```
+   - Return — do NOT continue to the next step
+3. If `status !== "pausing"`: continue normally
+
 ### Step 1: Research
 
 1. SM reads ROADMAP.md, identifies next phase (pending, prerequisites met)
@@ -394,8 +422,11 @@ Started: [ISO timestamp]
 
 | Scenario | Behavior |
 |---|---|
+| `/st:team pause` during run | SM detects `"pausing"` at next step boundary → saves TEAM-HANDOFF → sets `"paused"` → stops |
+| `/st:team resume` → Resume all | SM reads TEAM-HANDOFF → sets `"active"` → continues from saved step |
+| `/st:team resume` → Resume team only | Sets `"active"` → clears handoff → user runs `/st:team run` manually |
 | Session closes mid-run | SM writes progress to CONTEXT.md before shutdown |
-| Next `/st:team run` | SM reads CONTEXT.md → detects in-progress phase → asks "Resume phase [N] from step [X]?" |
+| Next `/st:team run` after pause | SM reads CONTEXT.md → detects in-progress phase → asks "Resume phase [N] from step [X]?" |
 | `/st:team disband` | Run progress archived with backlog per existing disband flow |
 
 Compatible with `/st:pause` and `/st:resume` — SM progress in CONTEXT.md complements handoff files, no conflict.
@@ -409,6 +440,7 @@ Compatible with `/st:pause` and `/st:resume` — SM progress in CONTEXT.md compl
 | Prerequisites not met | SM skips to next eligible phase. If none → report blocker to user |
 | Team member unresponsive | SM reassigns per `team-coordination` error recovery |
 | User says "stop" or "pause" | SM saves progress to CONTEXT.md, stops run loop |
+| `/st:team pause` during run | SM detects `"pausing"` at next step boundary → graceful stop |
 | `/st:team run` while run is active in current session | "Already running phase [N]. Use `/st:team status` to check progress." |
 | Phase added mid-run via `/st:phase-add` | SM re-reads ROADMAP.md each phase transition → auto-detects new phases |
 
