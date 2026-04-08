@@ -19,10 +19,12 @@ Parse arguments to determine action:
 | `status` | Show team status |
 | `disband` | Graceful shutdown |
 | `run` | Orchestrate roadmap phases with team |
+| `pause` | Graceful pause — freeze team + stop workflow |
+| `resume` | Resume paused team with options |
 | *(empty)* | Show help if no team active, show status if team active |
 | *(anything else)* | Natural language → route to Scrum Master |
 
-**Routing disambiguation:** Match sub-commands (`create`, `status`, `disband`, `run`) as exact first-word match ONLY. If the first word is `create` but followed by a task description (e.g., "create a login page"), route to Scrum Master — do NOT trigger the `create` sub-command. Similarly, if the first word is `run` but followed by a task description (e.g., "run the tests"), route to Scrum Master — do NOT trigger the `run` sub-command.
+**Routing disambiguation:** Match sub-commands (`create`, `status`, `disband`, `run`, `pause`, `resume`) as exact first-word match ONLY. If the first word is `create` but followed by a task description (e.g., "create a login page"), route to Scrum Master — do NOT trigger the `create` sub-command. Similarly, if the first word is `run` but followed by a task description (e.g., "run the tests"), route to Scrum Master — do NOT trigger the `run` sub-command.
 
 ---
 
@@ -409,6 +411,64 @@ Compatible with `/st:pause` and `/st:resume` — SM progress in CONTEXT.md compl
 | User says "stop" or "pause" | SM saves progress to CONTEXT.md, stops run loop |
 | `/st:team run` while run is active in current session | "Already running phase [N]. Use `/st:team status` to check progress." |
 | Phase added mid-run via `/st:phase-add` | SM re-reads ROADMAP.md each phase transition → auto-detects new phases |
+
+---
+
+## pause — Graceful Team Pause
+
+Freeze the team and stop any running workflow at the nearest checkpoint.
+
+1. **Check team status**
+   - Read `.superteam/team/config.json`
+   - If status is `"paused"`: "Team already paused. Use `/st:team resume` to continue."
+   - If status is `"pausing"`: "Pause already requested. Waiting for current step to finish."
+   - If status is `"disbanded"` or no config: "No active team. Run `/st:team create` first."
+   - If status is `"active"`: proceed
+
+2. **Set pausing flag**
+   - Update `config.json` status → `"pausing"`
+   - This signals the `run` orchestration loop to stop after the current step
+
+3. **Check if workflow is running**
+   - Read `.superteam/team/CONTEXT.md` for `## Run Progress` section
+   - If run progress exists with an in-progress phase:
+     - The orchestration loop will detect `"pausing"` and stop at the next checkpoint
+     - Wait for the current step to complete, then snapshot state
+   - If no run in progress:
+     - Skip graceful stop — pause immediately
+
+4. **Snapshot team state**
+   - Build handoff data from CONTEXT.md run progress:
+     ```json
+     {
+       "pausedAt": "[ISO timestamp]",
+       "workflow": "run",
+       "currentPhase": "[phase number from CONTEXT.md]",
+       "currentStep": "[step from CONTEXT.md]",
+       "completedSteps": ["steps done for current phase"],
+       "pendingSteps": ["steps remaining for current phase"],
+       "agentAssignments": ["from TaskList if available"],
+       "reason": "user requested pause"
+     }
+     ```
+   - Save to `.superteam/team/TEAM-HANDOFF.json` + `TEAM-HANDOFF.md`
+   - If no run was in progress, save minimal handoff (no workflow/phase info)
+
+5. **Set paused status**
+   - Update `config.json` status → `"paused"`
+
+6. **Report**
+   ```
+   ┌─────────────────────────────────────────┐
+   │ ST > TEAM PAUSED                        │
+   │─────────────────────────────────────────│
+   │ Team: [team-name]                       │
+   │ Phase: [N] — [name] (step: [step])      │
+   │ Agents: available for individual use     │
+   │                                         │
+   │ Resume: /st:team resume                 │
+   └─────────────────────────────────────────┘
+   ```
 
 ---
 
