@@ -90,7 +90,10 @@ All commands use the `/st:` prefix.
 
 | Command | Description |
 |---------|-------------|
-| `/st:team` | Create and manage Scrum team of specialized agents |
+| `/st:team create` | Create Scrum team of specialized agents |
+| `/st:team run` | SM orchestrates roadmap phases with checkpoints |
+| `/st:team status` | Show team dashboard |
+| `/st:team disband` | Graceful team shutdown |
 
 ### Session
 
@@ -122,9 +125,9 @@ Skills are cross-cutting methodologies shared across commands. They enforce disc
 
 ## Agents
 
-21 specialized subagents for parallel and focused work:
+22 specialized subagents for parallel and focused work:
 
-`reviewer` `planner` `executor` `debugger` `verifier` `phase-researcher` `research-orchestrator` `research-synthesizer` `codebase-mapper` `integration-checker` `plan-checker` `ui-researcher` `ui-auditor` `ux-designer` `test-auditor` `developer` `senior-developer` `tech-lead` `scrum-master` `qa-engineer` `devops-engineer`
+`reviewer` `planner` `executor` `debugger` `verifier` `phase-researcher` `research-orchestrator` `research-synthesizer` `roadmapper` `codebase-mapper` `integration-checker` `plan-checker` `ui-researcher` `ui-auditor` `ux-designer` `test-auditor` `developer` `senior-developer` `tech-lead` `scrum-master` `qa-engineer` `devops-engineer`
 
 ## Project Detection
 
@@ -177,10 +180,10 @@ superteam/
 ├── hooks/
 │   ├── hooks.json               # Hook registration
 │   └── session-start.cjs        # Inject project context
-├── commands/st/                  # 27 commands (Markdown prompts)
+├── commands/                     # 30 commands (Markdown prompts)
 ├── skills/                       # 14 skills (Markdown prompts)
-├── agents/                       # 21 agent definitions
-├── templates/                    # 7 document templates
+├── agents/                       # 22 agent definitions
+├── templates/                    # 8 document templates
 └── tests/                        # node --test
 ```
 
