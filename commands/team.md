@@ -235,6 +235,79 @@ For each phase (pending, prerequisites met):
   STEP 5: Verify       → update ROADMAP      → next phase
 ```
 
+### Step 1: Research
+
+1. SM reads ROADMAP.md, identifies next phase (pending, prerequisites met)
+2. SM checks prerequisites: all preceding phases must be completed or in-progress
+   - If a prerequisite is not met and no other phase is eligible: CHECKPOINT — report blocker to user
+3. SM dispatches `/st:phase-research [phase]`
+4. SM reviews research findings, summarizes key points
+5. **CHECKPOINT** — present findings to user
+
+### Step 2: UI/UX Design (conditional)
+
+SM evaluates whether phase needs UI/UX design:
+- Phase description contains UI/frontend keywords (component, page, layout, form, dashboard, etc.)
+- AND project has UI framework detected (`detectUIFramework()` = true)
+
+If both conditions met:
+1. SM dispatches `/st:ui-design [phase]`
+2. SM reviews UI spec
+3. **CHECKPOINT** — present UI spec to user
+
+If conditions not met: skip to Step 3 (SM decides, not user — no checkpoint needed).
+
+### Step 3: Plan
+
+1. SM dispatches `/st:phase-plan [phase]`
+2. If Tech Lead is on team: SM sends plan to TL for architecture review
+   ```
+   SendMessage(to: "tech-lead"):
+     "Phase [N] plan ready for review. Check architecture, dependencies, risks."
+   ```
+3. SM collects TL feedback (if any)
+4. **CHECKPOINT** — present plan + TL review to user
+
+### Step 4: Execute
+
+1. SM dispatches `/st:phase-execute [phase]`
+2. During execution, team roles participate at wave checkpoints:
+   - If Senior Dev on team: Senior Dev reviews code at each wave checkpoint
+   - If QA on team: QA verifies at each wave checkpoint
+3. If blocker Level 3+: **CHECKPOINT** — escalate to user
+4. Normal deviation handling (L1-L2 auto-fix) follows existing pipeline
+
+### Step 5: Verify & Advance
+
+1. If QA on team: QA runs final verification on entire phase
+2. SM checks success criteria from ROADMAP.md
+3. If all criteria pass:
+   - SM updates ROADMAP phase status → done
+   - SM updates `.superteam/team/CONTEXT.md` with:
+     - Architecture decisions made during phase
+     - Patterns discovered
+     - Phase completion timestamp
+   - SM advances to next phase → back to Step 1
+4. If criteria fail:
+   - SM routes rework following task lifecycle (max 3 cycles)
+   - After rework, re-verify
+   - After 3 failed cycles: CHECKPOINT — escalate to user
+
+### Milestone Complete
+
+When all phases are done, SM presents summary:
+```
+┌─────────────────────────────────────────┐
+│ ST > MILESTONE COMPLETE                 │
+│─────────────────────────────────────────│
+│ Phases completed: [N]/[N]               │
+│ Duration: [start] → [end]              │
+│ Key decisions: [from CONTEXT.md]        │
+│                                         │
+│ > /st:milestone-complete to archive     │
+└─────────────────────────────────────────┘
+```
+
 ---
 
 ## Natural Language Routing
